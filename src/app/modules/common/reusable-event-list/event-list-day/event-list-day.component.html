@@ -1,0 +1,6 @@
+<h2>{{dateInfo.date}}</h2>
+<ul>
+    <li *ngFor="let eventInfo of dateInfo.eventInfos">
+        <app-event-list-item [eventInfo]="eventInfo"></app-event-list-item>
+    </li>
+</ul>

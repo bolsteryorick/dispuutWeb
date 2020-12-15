@@ -1,0 +1,21 @@
+<div class="form-div">
+  <form [formGroup]="registrationForm" (ngSubmit)="register()">
+    <div class="container">
+
+      <label>Email: </label> <br />
+      <input type="text" formControlName="emailInput"> <br />
+      <div *ngIf="!registrationForm.controls.emailInput.valid && registrationForm.controls.emailInput.touched">
+        <p class="error"> {{emailMessage}}</p>
+      </div>
+
+      <label>Password: </label> <br />
+      <input type="password" formControlName="passwordInput"> <br />
+      <div *ngIf="!registrationForm.controls.passwordInput.valid && registrationForm.controls.passwordInput.touched">
+        <p class="error"> {{passwordMessage}}</p>
+      </div>
+
+      <button type="submit" [disabled]="buttonDisabled()">Register</button>
+    </div>
+
+  </form>
+</div>

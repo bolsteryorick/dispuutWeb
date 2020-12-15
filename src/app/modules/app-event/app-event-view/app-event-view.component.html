@@ -1,0 +1,18 @@
+<p>App event</p>
+<div *ngIf="showData" class="container">
+    <div class="row">
+        <div class="col-sm-4" style="word-wrap: break-word;">
+            <h1>{{appEvent.name}}</h1>
+            <p>{{appEvent.description}}</p>
+            <p>{{appEvent.maxAttendees}}</p>
+        </div>
+        <div class="col-sm-4">
+            <h1>Members</h1>
+            <app-member-list [members]="appEvent.group.members"></app-member-list>
+        </div>
+        <div class="col-sm-4">
+            <h1>Attendees</h1>
+            <app-attendee-list [attendees]="appEvent.attendees"></app-attendee-list>
+        </div>
+    </div>
+</div>
