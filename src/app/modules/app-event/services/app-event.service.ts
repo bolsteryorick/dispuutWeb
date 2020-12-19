@@ -19,7 +19,31 @@ export class AppEventService {
     const headers = new HttpHeaders()
       .set('content-type', 'application/json')
       .set('Authorization', `bearer ${token}`);
-    let query = `query{getAppEvent(id: "${eventId}"){endTime,id,name,description,startTime,maxAttendees,group{members{isAdmin,user{userName}}},attendees{user{userName},paid}}}`
+    let query = `
+    query{
+      getAppEvent(id: "${eventId}"){
+        endTime,
+        id,
+        name,
+        description,
+        startTime,
+        maxAttendees,
+        group{
+          members{
+            isAdmin,
+            user{
+              userName
+            }
+          }
+        },
+        attendees{
+          user{
+            userName
+          },
+          paid
+        }
+      }
+    }`
     var request = {"query": query};
     return this.httpClient.post<GetAppEventData>(this.url, request, { headers: headers });
   }

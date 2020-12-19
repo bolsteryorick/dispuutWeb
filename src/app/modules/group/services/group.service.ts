@@ -20,7 +20,28 @@ export class GroupService {
     const headers = new HttpHeaders()
       .set('content-type', 'application/json')
       .set('Authorization', `bearer ${token}`);
-    let query = `query{getGroup(id: "${groupId}"){id,name,description,appEvents{id,name,description,startTime,endTime},members{isAdmin,user{userName}}}}`
+      
+    let query = `
+    query{
+      getGroup(id: "${groupId}"){
+        id,
+        name,
+        description,
+        appEvents{
+          id,
+          name,
+          description,
+          startTime,
+          endTime
+        },
+        members{
+          isAdmin,
+          user{
+            userName
+          }
+        }
+      }
+    }`
     var request = {"query": query};
     return this.httpClient.post<GetGroupData>(this.url, request, { headers: headers });
   }

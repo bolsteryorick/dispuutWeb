@@ -1,4 +1,3 @@
-import { IncomingHttpHeaders } from "http";
 import { Attendee } from "./attendee";
 import { Group } from "./group";
 

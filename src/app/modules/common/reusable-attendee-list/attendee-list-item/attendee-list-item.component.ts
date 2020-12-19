@@ -13,7 +13,6 @@ export class AttendeeListItemComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    console.log(this.attendee)
   }
 
 }
