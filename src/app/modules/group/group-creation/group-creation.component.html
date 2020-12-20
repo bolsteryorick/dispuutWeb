@@ -1,0 +1,48 @@
+<div class="form-div">
+    <h1>Create group</h1>
+    <form [formGroup]="groupForm" (ngSubmit)="createGroup()">
+      <div class="container">
+  
+        <label>Name: </label> <br />
+        <input type="text" formControlName="groupNameInput"> <br />
+        <div *ngIf="!groupForm.controls.groupNameInput.valid && groupForm.controls.groupNameInput.touched">
+          <p class="error"> {{groupNameMessage}}</p>
+        </div>
+  
+        <label>Description: </label> <br />
+        <input type="text" formControlName="groupDescriptionInput"> <br />
+        <div *ngIf="!groupForm.controls.groupDescriptionInput.valid && groupForm.controls.groupDescriptionInput.touched">
+            <p class="error"> {{groupDescriptionMessage}}</p>
+        </div>
+        
+
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+
+        <ng-multiselect-dropdown
+            name="contacts"
+            [placeholder]="'Select contacts'"
+            [settings]="dropdownSettings"
+            [data]="contacts"
+            formControlName="contacts"
+            (onSelect)="onItemSelect($event)">
+        </ng-multiselect-dropdown>
+        <div *ngIf="!groupForm.controls.contacts.valid && groupForm.controls.contacts.touched">
+            <p class="error"> {{contactsMessage}}</p>
+        </div>
+
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+
+        <button type="submit" [disabled]="buttonDisabled()">Create</button>
+      </div>
+  
+    </form>
+  </div>
+  

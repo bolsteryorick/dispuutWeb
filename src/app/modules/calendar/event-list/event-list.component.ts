@@ -29,7 +29,7 @@ export class EventListComponent implements OnInit {
       console.log(error);
     });
   }
-
+  
   private setDateEventInfoDict(userData: GetUserData): void{
     let groups = userData.data.getUser.memberships.map(event => event.group);
     this.dateEventInfoDict = this._eventInfoService.getDateEvents(groups);

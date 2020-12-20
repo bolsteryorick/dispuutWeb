@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { AuthenticationModule } from './modules/authentication/authentication.module';
 import { JwtModule } from '@auth0/angular-jwt';
 import { CommonAppModule } from './modules/common/common-app.module';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { CommonAppModule } from './modules/common/common-app.module';
     AuthenticationModule,
     AppRoutingModule,
     CommonAppModule,
+    NgMultiSelectDropDownModule.forRoot(),
     JwtModule.forRoot({
       config: {
         tokenGetter: function  tokenGetter() { 

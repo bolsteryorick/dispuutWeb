@@ -1,8 +1,6 @@
-import { group } from '@angular/animations';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { IDatasource } from 'ngx-ui-scroll';
 import { EventInfo } from '../../calendar/event-list/models/event-info';
 import { EventInfoService } from '../../common/reusable-event-list/services/event-info.service';
 import { Group } from '../../models/app-models/group';
@@ -28,6 +26,7 @@ export class GroupViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("view group")
     const request = this._groupService.getGroupInformation(this.groupId);
     request.subscribe((result: GetGroupData) => {
       this.group = result.data.getGroup;
@@ -42,6 +41,10 @@ export class GroupViewComponent implements OnInit {
   private setDateEventInfoDict(group: Group): void{
     let groups : Group[] = [group];
     this.dateEventInfoDict = this._eventInfoService.getDateEvents(groups);
+  }
+
+  createEvent(){
+      
   }
 
 }

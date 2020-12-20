@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { GroupBaseComponent } from './group-base/group-base.component';
+import { GroupCreationComponent } from './group-creation/group-creation.component';
 import { GroupViewComponent } from './group-view/group-view.component';
 
 const routes: Routes = [
@@ -10,10 +11,10 @@ const routes: Routes = [
      children: [
        {path: '', redirectTo: '/calendar/list', pathMatch: "full"},
        {path: 'view', redirectTo: '/calendar/list', pathMatch: "full"},
+       {path: 'create', component: GroupCreationComponent},
        {path: 'view/:id', component: GroupViewComponent}
      ]
   }
-
 ];
 
 @NgModule({

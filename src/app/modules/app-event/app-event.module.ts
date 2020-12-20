@@ -4,11 +4,12 @@ import { AppEventBaseComponent } from './app-event-base/app-event-base.component
 import { AppEventViewComponent } from './app-event-view/app-event-view.component';
 import { CommonAppModule } from '../common/common-app.module';
 import { AppEventRoutingModule } from './app-event-routing.module';
+import { AppEventCreateComponent } from './app-event-create/app-event-create.component';
 
 
 
 @NgModule({
-  declarations: [AppEventBaseComponent, AppEventViewComponent],
+  declarations: [AppEventBaseComponent, AppEventViewComponent, AppEventCreateComponent],
   imports: [
     CommonModule,
     CommonAppModule,
