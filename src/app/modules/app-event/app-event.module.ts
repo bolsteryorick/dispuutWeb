@@ -4,16 +4,23 @@ import { AppEventBaseComponent } from './app-event-base/app-event-base.component
 import { AppEventViewComponent } from './app-event-view/app-event-view.component';
 import { CommonAppModule } from '../common/common-app.module';
 import { AppEventRoutingModule } from './app-event-routing.module';
-import { AppEventCreateComponent } from './app-event-create/app-event-create.component';
+import { AppEventCreationComponent } from './app-event-creation/app-event-creation.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { EventDateEditComponent } from './event-date-edit/event-date-edit.component';
 
 
 
 @NgModule({
-  declarations: [AppEventBaseComponent, AppEventViewComponent, AppEventCreateComponent],
+  declarations: [
+    AppEventBaseComponent, 
+    AppEventViewComponent, 
+    AppEventCreationComponent, EventDateEditComponent
+  ],
   imports: [
     CommonModule,
     CommonAppModule,
-    AppEventRoutingModule
+    AppEventRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class AppEventModule { }

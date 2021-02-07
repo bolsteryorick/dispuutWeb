@@ -1,0 +1,32 @@
+$lightGray: #c8c8c8;
+
+.cell {
+  width: 100%;
+  padding: 2px;  
+  &:hover.edit {
+    cursor: pointer;
+    border: 2px dashed $lightGray;
+  };
+  white-space: pre-wrap;
+}
+
+.cellInput {
+  width: 100%;
+  padding: 2px;
+}
+
+textarea:focus, input:focus{
+  outline: none;
+}
+
+textarea{
+  min-height: 140px;
+}
+
+.input-error {
+  border: red 1px solid;
+}
+
+.error-message{
+  color: red;
+}

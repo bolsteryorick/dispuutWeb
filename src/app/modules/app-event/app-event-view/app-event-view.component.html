@@ -2,17 +2,33 @@
 <div *ngIf="showData" class="container">
     <div class="row">
         <div class="col-sm-4" style="word-wrap: break-word;">
-            <h1>{{appEvent.name}}</h1>
-            <p>{{appEvent.description}}</p>
-            <p>{{appEvent.maxAttendees}}</p>
+            <app-edit-in-place
+                [data]='appEvent.name' [styling]='appEventNameStyling' [validators]='eventNameValidators' 
+                [errorMessage]="eventNameMessage" (focusOut)='saveEventName($event)' [editPossible]='isAdminOfGroup'>
+            </app-edit-in-place>
+
+            <app-edit-in-place
+                [data]='appEvent.description' [textArea]='true' [validators]='eventDescriptionValidators' 
+                [errorMessage]="eventDescriptionMessage" (focusOut)='saveEventDescription($event)' [editPossible]='isAdminOfGroup'>
+            </app-edit-in-place>
+
+            <app-edit-in-place
+                [data]='getMaxAttendees()' [type]='maxAttendeesType' [validators]='maxAttendeesValidators' 
+                [errorMessage]="maxAttendeesMessage" (focusOut)='saveMaxAttendees($event)' [editPossible]='isAdminOfGroup'>
+            </app-edit-in-place>
+
+            <app-event-date-edit
+                [appEventId]='appEventId' [startDateTime]='appEvent.startTime' 
+                [endDateTime]='appEvent.endTime' [editPossible]='isAdminOfGroup'>
+            </app-event-date-edit>
         </div>
         <div class="col-sm-4">
             <h1>Members</h1>
-            <app-member-list [members]="appEvent.group.members"></app-member-list>
+            <app-member-list [members]="appEvent.group.members" [userIsAdmin]="isAdminOfGroup" [inGroupView]="false"></app-member-list>
         </div>
         <div class="col-sm-4">
             <h1>Attendees</h1>
-            <app-attendee-list [attendees]="appEvent.attendees"></app-attendee-list>
+            <app-attendee-list [attendees]="appEvent.attendees" [editPossible]='isAdminOfGroup'></app-attendee-list>
         </div>
     </div>
 </div>

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Member } from 'src/app/modules/models/app-models/member';
+import { MemberService } from 'src/app/services/member.service';
 
 @Component({
   selector: 'app-member-list',
@@ -9,9 +10,17 @@ import { Member } from 'src/app/modules/models/app-models/member';
 export class MemberListComponent implements OnInit {
 
   @Input() members!: Member[];
-  constructor() { }
+  @Input() userIsAdmin: boolean = false;
+  @Input() inGroupView: boolean = false;
+  constructor(
+    private _memberService: MemberService
+  ) { }
 
   ngOnInit(): void {
   }
 
+  deleteMember(memberId: string){
+    this.members = this.members.filter(x => x.id != memberId);
+    this._memberService.deleteMember(memberId).subscribe();
+  }
 }

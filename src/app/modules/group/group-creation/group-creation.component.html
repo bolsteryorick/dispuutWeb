@@ -10,7 +10,7 @@
         </div>
   
         <label>Description: </label> <br />
-        <input type="text" formControlName="groupDescriptionInput"> <br />
+        <textarea formControlName="groupDescriptionInput"></textarea>
         <div *ngIf="!groupForm.controls.groupDescriptionInput.valid && groupForm.controls.groupDescriptionInput.touched">
             <p class="error"> {{groupDescriptionMessage}}</p>
         </div>

@@ -1,0 +1,18 @@
+.error-message{
+    color: red;
+}
+
+.date-shower{
+    width: 50%;
+}
+
+.time-shower{
+    width: 40%;
+    float: right;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+}

@@ -1,26 +1,29 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BaseUrl } from 'src/app/constants/baseUrl';
+import { GraphqlService } from 'src/app/services/graphql.service';
+import { CreateGroupData } from '../../models/create-group';
 import { GetGroupData } from '../../models/get-group';
-import { GetUserData } from '../../models/get-user';
+import { UpdateGroupData } from '../../models/update-group';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GroupService {
-  private url: string;
-  constructor(private httpClient: HttpClient) {
-    this.url = `${BaseUrl.baseUrlGraphQL}`;
+  constructor(private graphqlService: GraphqlService) {
+  }
+
+  public createGroup(name: string, description: string, userIds : string[]): Observable<CreateGroupData>{
+    var userIdsJson = JSON.stringify(userIds);
+    let query = `
+    mutation{
+      createGroup(name: "${name}", description: "${description}", userIds: ${userIdsJson}){
+        id
+      }
+    }`
+    return this.graphqlService.sendGraphqlRequest<CreateGroupData>(query);
   }
 
   public getGroupInformation(groupId: string): Observable<GetGroupData>{
-    // make graphql service
-    var token = localStorage.getItem("token");
-    const headers = new HttpHeaders()
-      .set('content-type', 'application/json')
-      .set('Authorization', `bearer ${token}`);
-      
     let query = `
     query{
       getGroup(id: "${groupId}"){
@@ -35,14 +38,35 @@ export class GroupService {
           endTime
         },
         members{
+          id,
           isAdmin,
+          userId,
           user{
             userName
           }
         }
       }
-    }`
-    var request = {"query": query};
-    return this.httpClient.post<GetGroupData>(this.url, request, { headers: headers });
+    }`;
+    return this.graphqlService.sendGraphqlRequest<GetGroupData>(query);
+  }
+
+  public updateGroup(id: string, name: string | null, description: string | null): Observable<UpdateGroupData>{
+    let descripArg = this.getArg(description, 'description');
+    let nameArg = this.getArg(name, 'name');
+    let query = `
+    mutation{
+      updateGroup(
+        id: "${id}"
+        ${descripArg}
+        ${nameArg}
+      ){
+        id
+      }
+    }`;
+    return this.graphqlService.sendGraphqlRequest<UpdateGroupData>(query);
+  }
+
+  private getArg(value: string | null, name: string){
+    return value != null ? `, ${name}: "${value}"` : "";
   }
 }

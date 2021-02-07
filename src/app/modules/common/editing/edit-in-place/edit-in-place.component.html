@@ -1,0 +1,33 @@
+<div 
+  *ngIf='showView()' 
+  [ngStyle]="styling" 
+  [ngClass]="{'edit' : editPossible}"
+  (click)='onFocusIn()' 
+  class='cell'>
+    {{ viewData }}
+</div>
+
+<input 
+  *ngIf='showInput()' 
+  [type]='type'
+  [ngStyle]="styling" 
+  class='cellInput' 
+  [formControl]='editInPlaceControl' 
+  [class.input-error]="!inputIsValid()" 
+  (focusout)="onFocusOut()" 
+  appAutoFocus>
+
+<textarea
+  *ngIf='showTextArea()' 
+  [ngStyle]="styling" 
+  class='cellInput' 
+  [formControl]='editInPlaceControl' 
+  [class.input-error]="!inputIsValid()" 
+  (focusout)="onFocusOut()" 
+  appAutoFocus
+>
+
+</textarea>
+
+
+<p class="error-message" *ngIf='!inputIsValid()'>{{ errorMessage }}</p>

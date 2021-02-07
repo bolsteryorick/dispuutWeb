@@ -8,7 +8,7 @@ export interface AppEvent{
     startTime: Date;
     endTime: Date;
     groupId: string;
-    maxAttendees: number;
+    maxAttendees?: number | null;
     group: Group;
     attendees: Attendee[];
 }

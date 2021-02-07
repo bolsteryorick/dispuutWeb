@@ -11,6 +11,9 @@ import { MemberListItemComponent } from './reusable-member-list/member-list-item
 import { MemberListComponent } from './reusable-member-list/member-list/member-list.component';
 import { AttendeeListItemComponent } from './reusable-attendee-list/attendee-list-item/attendee-list-item.component';
 import { AttendeeListComponent } from './reusable-attendee-list/attendee-list/attendee-list.component';
+import { EditInPlaceComponent } from './editing/edit-in-place/edit-in-place.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AutoFocusDirective } from './editing/directives/auto-focus.directive';
 
 
 
@@ -24,12 +27,16 @@ import { AttendeeListComponent } from './reusable-attendee-list/attendee-list/at
     MemberListItemComponent,
     MemberListComponent,
     AttendeeListItemComponent,
-    AttendeeListComponent
+    AttendeeListComponent,
+    EditInPlaceComponent,
+    AutoFocusDirective
   ],
   imports: [
     CommonModule,
     RouterModule,
     UiScrollModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports:[
     HomeNavBarComponent,
@@ -40,7 +47,8 @@ import { AttendeeListComponent } from './reusable-attendee-list/attendee-list/at
     MemberListItemComponent,
     MemberListComponent,
     AttendeeListItemComponent,
-    AttendeeListComponent
+    AttendeeListComponent,
+    EditInPlaceComponent
   ]
 })
 export class CommonAppModule { }

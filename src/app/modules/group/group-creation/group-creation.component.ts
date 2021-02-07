@@ -3,11 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { GroupConstants } from 'src/app/constants/group-constants';
 import { CreateGroupData } from '../../models/create-group';
 import { GetUserData } from '../../models/get-user';
 import { ContactsService } from '../services/contacts.service';
-import { CreateGroupService } from '../services/create-group.service';
-import { CreateMembersService } from '../services/create-members.service';
+import { GroupService } from '../services/group.service';
 import { ContactItem } from './models/contactItem';
 
 @Component({
@@ -17,13 +17,13 @@ import { ContactItem } from './models/contactItem';
 })
 export class GroupCreationComponent implements OnInit {
 
-  public readonly groupNameValidators: ValidatorFn[] = [Validators.required, Validators.minLength(1), Validators.maxLength(20)];
-  public readonly groupDescriptionValidators: ValidatorFn[] = [Validators.maxLength(150)];
-  public readonly contactsValidators: ValidatorFn[] = [Validators.required];
+  public readonly groupNameValidators: ValidatorFn[] = GroupConstants.groupNameValidators;
+  public readonly groupDescriptionValidators: ValidatorFn[] = GroupConstants.groupDescriptionValidators;
+  public readonly contactsValidators: ValidatorFn[] = GroupConstants.contactsValidators;
 
-  public groupNameMessage: string = 'Vul een naam in van max 20 tekens.';
-  public groupDescriptionMessage: string = 'Maximale lengte is 150 tekens.';
-  public contactsMessage: string = 'Voeg minstens één contact toe.';
+  public readonly groupNameMessage: string = GroupConstants.groupNameMessage;
+  public readonly groupDescriptionMessage: string = GroupConstants.groupDescriptionMessage;
+  public readonly contactsMessage: string = GroupConstants.contactsMessage;
   public groupForm!: FormGroup;
 
   contacts: Array<ContactItem> = [];
@@ -32,7 +32,7 @@ export class GroupCreationComponent implements OnInit {
   constructor(
     private _contactsService: ContactsService,
     private _formBuilder: FormBuilder,
-    private _createGroupService: CreateGroupService,
+    private _groupService: GroupService,
     private _router: Router
   ) 
   {
@@ -91,7 +91,7 @@ export class GroupCreationComponent implements OnInit {
     let contacts : [ContactItem] = formVal.contacts;
     let platformContacts = contacts.filter(x => x.userId != null);
     let userIds = platformContacts.map(c => c.userId);
-    const request = this._createGroupService.createGroup(name, description, userIds);
+    const request = this._groupService.createGroup(name, description, userIds);
     request.subscribe((result: CreateGroupData) => {
       let groupId = result.data.createGroup.id;
       this._router.navigate([`/group/view/${groupId}`])

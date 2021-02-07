@@ -1,0 +1,57 @@
+<div class="form-div">
+    <h1>Create event</h1>
+    <form [formGroup]="eventForm" (ngSubmit)="createEvent()">
+      <div class="container">
+  
+        <label>Name: </label> <br />
+        <input type="text" formControlName="eventNameInput"> <br />
+        <div *ngIf="nameError()">
+          <p class="error"> {{eventNameMessage}}</p>
+        </div>
+  
+        <label>Description: </label> <br />
+        <textarea formControlName="eventDescriptionInput"></textarea>
+        
+        <div *ngIf="descriptionError()">
+            <p class="error"> {{eventDescriptionMessage}}</p>
+        </div>
+
+        <br/>
+        <br/>
+
+        <label>Start date: </label> <br />
+        <input type="date" formControlName="startDate">
+        <input type="time" formControlName="startTime">
+        <div *ngIf="startDateTimeError()">
+            <p class="error"> {{dateTimeMessage}}</p>
+        </div>
+        
+        <br/>
+        <br/>
+
+        <label>End date: </label> <br />
+        <input type="date" formControlName="endDate"> 
+        <input type="time" formControlName="endTime">
+        <div *ngIf="endDateTimeError()">
+            <p class="error"> {{dateTimeMessage}}</p>
+        </div>
+
+        <br/>
+        <br/>
+
+        <label>Max attendees: </label> <br />
+        <input type="number" formControlName="maxAttendees"> 
+        <div *ngIf="maxAttendeesError()">
+            <p class="error"> {{maxAttendeesMessage}}</p>
+        </div>
+
+        <br/>
+        <br/>
+        <br/>
+
+        <button type="submit" [disabled]="buttonDisabled()">Create</button>
+      </div>
+  
+    </form>
+  </div>
+  

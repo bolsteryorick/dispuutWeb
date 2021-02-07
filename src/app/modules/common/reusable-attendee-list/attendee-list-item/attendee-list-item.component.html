@@ -1,6 +1,7 @@
 <li>
     <ul>
         <li>{{attendee.user.userName}}</li>
-        <li *ngIf="attendee.paid">Paid</li>        
+        <li>{{getPaidText()}} <button *ngIf="showChangePaidStatus()" (click)='updateAttendee(attendee.id, !attendee.paid)'>change</button></li>
+        <li *ngIf="showDeleteAttendee()"><button (click)='deleteAttendee(attendee.id)'>Delete</button></li>
     </ul>
 </li>

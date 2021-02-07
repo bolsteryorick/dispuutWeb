@@ -2,17 +2,17 @@
 <div *ngIf="showData" class="container">
     <div class="row">
         <div class="col-sm-4" style="word-wrap: break-word;">
-            <h1>{{group.name}}</h1>
-            <p>{{group.description}}</p>
+            <app-edit-in-place [data]='group.name' [styling]='groupNameStyling' [validators]='groupNameValidators' [errorMessage]="groupNameMessage" (focusOut)='saveGroupName($event)'></app-edit-in-place>
+            <app-edit-in-place [data]='group.description' [textArea]='true' [validators]='groupDescriptionValidators' [errorMessage]="groupDescriptionMessage" (focusOut)='saveGroupDescription($event)'></app-edit-in-place>
         </div>
         <div class="col-sm-4">
             <h1>AppEvents</h1>
             <app-reusable-event-list [dateEventInfoDict]="dateEventInfoDict"></app-reusable-event-list>
-            <button class="mat-raised-button" (click)="createEvent()">Create event</button>
+            <button *ngIf="isAdminOfGroup" class="mat-raised-button" (click)="createEvent()">Create event</button>
         </div>
         <div class="col-sm-4">
             <h1>Members</h1>
-            <app-member-list [members]="group.members"></app-member-list>
+            <app-member-list [members]="group.members"  [userIsAdmin]="isAdminOfGroup" [inGroupView]="true"></app-member-list>
         </div>
     </div>
 </div>

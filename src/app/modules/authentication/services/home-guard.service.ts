@@ -14,6 +14,6 @@ export class HomeGuardService  implements CanActivate {
       this._router.navigate(['calendar']);
       return false;
     }
-    return true;
+    return true; 
   }
 }

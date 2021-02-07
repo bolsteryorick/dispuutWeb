@@ -1,6 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ValidatorFn, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { GroupConstants } from 'src/app/constants/group-constants';
+import { UserService } from '../../authentication/services/user.service';
 import { EventInfo } from '../../calendar/event-list/models/event-info';
 import { EventInfoService } from '../../common/reusable-event-list/services/event-info.service';
 import { Group } from '../../models/app-models/group';
@@ -14,28 +17,45 @@ import { GroupService } from '../services/group.service';
 })
 export class GroupViewComponent implements OnInit {
   private groupId!: string;
+  public isAdminOfGroup!: boolean;
   public group!: Group;
   public dateEventInfoDict!: { [date: string] : EventInfo[]; };
   public showData: boolean = false;
+
+  public readonly groupNameValidators: ValidatorFn[] = GroupConstants.groupNameValidators;
+  public readonly groupDescriptionValidators: ValidatorFn[] = GroupConstants.groupDescriptionValidators;
+
+  public readonly groupNameMessage: string = GroupConstants.groupNameMessage;
+  public readonly groupDescriptionMessage: string = GroupConstants.groupDescriptionMessage;
+  public readonly groupNameStyling = GroupConstants.groupNameStyling;
+  groupName = "group name";
+
   constructor(
     private route: ActivatedRoute, 
     private _groupService: GroupService,
-    private _eventInfoService: EventInfoService
+    private _eventInfoService: EventInfoService,
+    private _router: Router,
+    private _userService: UserService
     ) {
     this.route.params.subscribe( params => this.groupId = params.id );
   }
 
   ngOnInit(): void {
-    console.log("view group")
     const request = this._groupService.getGroupInformation(this.groupId);
     request.subscribe((result: GetGroupData) => {
       this.group = result.data.getGroup;
       this.setDateEventInfoDict(this.group)
       this.showData = true;
+      this.isAdminOfGroup = this.userisAdminOfGroup();
     },
     (error: HttpErrorResponse) => {
       console.log(error);
     });
+  }
+
+  private userisAdminOfGroup() : boolean{
+    let userId = this._userService.userId();
+    return this.group.members.some(m => m.userId == userId && m.isAdmin);
   }
 
   private setDateEventInfoDict(group: Group): void{
@@ -44,7 +64,17 @@ export class GroupViewComponent implements OnInit {
   }
 
   createEvent(){
-      
+    this._router.navigate([`event/create/${this.groupId}`])
+  }
+
+  saveGroupName(value: string){
+    this.group.name = value;
+    this._groupService.updateGroup(this.groupId, this.group.name, null).subscribe();
+  }
+
+  saveGroupDescription(value: string){
+    this.group.description = value;
+    this._groupService.updateGroup(this.groupId, null, this.group.description).subscribe();
   }
 
 }

@@ -16,6 +16,7 @@ export class AppEventsService {
   public getAppEventsForUser(): Observable<GetUserData>{
     // make graphql service
     var token = localStorage.getItem("token");
+    console.log(token);
     const headers = new HttpHeaders()
       .set('content-type', 'application/json')
       .set('Authorization', `bearer ${token}`);

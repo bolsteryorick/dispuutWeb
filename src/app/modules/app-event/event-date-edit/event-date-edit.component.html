@@ -1,0 +1,33 @@
+<br>
+<br>
+<label>Start: </label> <br />
+<div class="grid-container">
+    <div class="grid-child">
+        <app-edit-in-place 
+            [data]='startDateString' [type]='dateType' [validators]='dateTimeValidators' 
+            [errorMessage]="dateMessage" (focusOut)='saveStartDate($event)' [editPossible]='editPossible'>
+        </app-edit-in-place>
+    </div>
+    <div class="grid-child">
+        <app-edit-in-place 
+            [data]='startTimeString' [type]='timeType' [validators]='dateTimeValidators' 
+            [errorMessage]="timeMessage" (focusOut)='saveStartTime($event)' [editPossible]='editPossible'>
+        </app-edit-in-place>
+    </div>
+</div>
+
+<label>End: </label> <br />
+<div class="grid-container">
+    <div class="grid-child">
+        <app-edit-in-place
+            [data]='endDateString' [type]='dateType' [validators]='dateTimeValidators' 
+            [errorMessage]="dateMessage" (focusOut)='saveEndDate($event)' [editPossible]='editPossible'>
+        </app-edit-in-place>
+    </div>
+    <div class="grid-child">
+        <app-edit-in-place
+            [data]='endTimeString' [type]='timeType' [validators]='dateTimeValidators' 
+            [errorMessage]="timeMessage" (focusOut)='saveEndTime($event)' [editPossible]='editPossible'>
+        </app-edit-in-place>
+    </div>
+</div>
