@@ -15,6 +15,13 @@ const routes: Routes = [
     canActivate: [HomeGuardService]
   },
   {
+    path: 'profile',
+    loadChildren: () => {
+      return import('src/app/modules/profile/profile.module').then(m => m.ProfileModule);
+    },
+    canActivate: [AuthGuardService]
+  },
+  {
     path: 'calendar',
     loadChildren: () => {
       return import('src/app/modules/calendar/calendar.module').then(m => m.CalendarModule);

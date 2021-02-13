@@ -2,11 +2,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { GroupConstants } from 'src/app/constants/group-constants';
 import { CreateGroupData } from '../../models/create-group';
-import { GetUserData } from '../../models/get-user';
-import { ContactsService } from '../services/contacts.service';
 import { GroupService } from '../services/group.service';
 import { ContactItem } from './models/contactItem';
 
@@ -19,18 +16,13 @@ export class GroupCreationComponent implements OnInit {
 
   public readonly groupNameValidators: ValidatorFn[] = GroupConstants.groupNameValidators;
   public readonly groupDescriptionValidators: ValidatorFn[] = GroupConstants.groupDescriptionValidators;
-  public readonly contactsValidators: ValidatorFn[] = GroupConstants.contactsValidators;
 
   public readonly groupNameMessage: string = GroupConstants.groupNameMessage;
   public readonly groupDescriptionMessage: string = GroupConstants.groupDescriptionMessage;
-  public readonly contactsMessage: string = GroupConstants.contactsMessage;
   public groupForm!: FormGroup;
 
-  contacts: Array<ContactItem> = [];
-  dropdownSettings!: IDropdownSettings;
-  
+  selectedContacts: Array<ContactItem> = [];
   constructor(
-    private _contactsService: ContactsService,
     private _formBuilder: FormBuilder,
     private _groupService: GroupService,
     private _router: Router
@@ -39,56 +31,29 @@ export class GroupCreationComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("group creation init");
-    // get user contacts
-
-    const request = this._contactsService.getUserContactsInformation();
-    request.subscribe((result: GetUserData) => {
-      this.contacts = result.data.getUser.contacts?.map(x => <ContactItem>{userId : x.contactUserId, email: x.emailAddress});
-    },
-    (error: HttpErrorResponse) => {
-      console.log(error);
-    });
-
-    this.dropdownSettings = {
-      singleSelection: false,
-      idField: 'userId',
-      textField: 'email',
-      enableCheckAll: false,
-      itemsShowLimit: 100,
-      allowSearchFilter: true,
-      defaultOpen: true
-    };
-
     this.groupForm = this._formBuilder.group({
       groupNameInput: new FormControl({ value: '', disabled: false }),
       groupDescriptionInput: new FormControl({ value: '', disabled: false }),
-      contacts: [[]]
     });
 
     this.groupForm?.controls?.groupNameInput?.setValidators(this.groupNameValidators);
     this.groupForm?.controls?.groupDescriptionInput?.setValidators(this.groupDescriptionValidators);
-    this.groupForm?.controls?.contacts?.setValidators(this.contactsValidators);
   }
 
-  onItemSelect(item: any) {
-      console.log('onItemSelect', item);
+  selectedContactsChanged(items: ContactItem[]){
+    this.selectedContacts = items;
   }
-  onSelectAll(items: any) {
-      console.log('onSelectAll', items);
-  }
-
-
   
   public buttonDisabled() {
-    return !this.groupForm.controls.groupNameInput.valid || !this.groupForm.controls.groupDescriptionInput.valid || !this.groupForm.controls.contacts.valid;
+    return !this.groupForm.controls.groupNameInput.valid || !this.groupForm.controls.groupDescriptionInput.valid || !(this.selectedContacts.length > 0);
   }
 
   public createGroup(){
     const formVal = this.groupForm.getRawValue();
     let name = formVal.groupNameInput.toString();
     let description = formVal.groupDescriptionInput.toString();
-    let contacts : [ContactItem] = formVal.contacts;
+    let contacts : ContactItem[] = this.selectedContacts;
+    console.log(contacts);
     let platformContacts = contacts.filter(x => x.userId != null);
     let userIds = platformContacts.map(c => c.userId);
     const request = this._groupService.createGroup(name, description, userIds);

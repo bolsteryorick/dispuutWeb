@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/modules/authentication/services/user.service';
 import { Member } from 'src/app/modules/models/app-models/member';
 
@@ -14,8 +15,10 @@ export class MemberListItemComponent implements OnInit {
   @Output() delete: EventEmitter<string> = new EventEmitter<string>();
   private _userId!: string;
 
-  constructor(_userService: UserService) {
-    this._userId = _userService.userId();
+  constructor(
+    userService: UserService,
+    private _router: Router) {
+    this._userId = userService.userId();
   }
   
   ngOnInit(): void {
@@ -27,6 +30,10 @@ export class MemberListItemComponent implements OnInit {
 
   deleteMember(memberId: string){
     this.delete.emit(memberId);
+  }
+
+  goToOtherProfile(){
+    this._router.navigate([`/profile/profile/${this.member.userId}`]);
   }
 
 }

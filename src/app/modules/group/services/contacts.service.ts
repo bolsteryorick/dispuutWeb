@@ -22,13 +22,16 @@ export class ContactsService {
       
     let query = `
     query{
-        getUser{
-            id,
-            contacts{
-                emailAddress,
-                contactUserId
-            }
-        }
+      getUser{
+          id,
+          contacts{
+              emailAddress,
+              contactUserId,
+              user{
+                userName
+              }
+          }
+      }
     }`;
     var request = {"query": query};
     return this.httpClient.post<GetUserData>(this.url, request, { headers: headers });

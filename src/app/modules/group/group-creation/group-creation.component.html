@@ -22,17 +22,7 @@
         <br/>
         <br/>
 
-        <ng-multiselect-dropdown
-            name="contacts"
-            [placeholder]="'Select contacts'"
-            [settings]="dropdownSettings"
-            [data]="contacts"
-            formControlName="contacts"
-            (onSelect)="onItemSelect($event)">
-        </ng-multiselect-dropdown>
-        <div *ngIf="!groupForm.controls.contacts.valid && groupForm.controls.contacts.touched">
-            <p class="error"> {{contactsMessage}}</p>
-        </div>
+        <app-contact-select (selectedContactsChanged)='selectedContactsChanged($event)'></app-contact-select>
 
         <br/>
         <br/>

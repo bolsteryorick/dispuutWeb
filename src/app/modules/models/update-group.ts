@@ -5,5 +5,5 @@ export interface UpdateGroupData{
 }
 
 export interface UpdateGroup{
-    ureateGroup: Group;
+    updateGroup: Group;
 }

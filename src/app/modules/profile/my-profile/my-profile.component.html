@@ -1,0 +1,20 @@
+My Profile
+<br>
+<br>
+<br>
+
+Email:
+<p>{{email}}</p>
+
+Username:
+<p>{{userName}}</p>
+
+Contacts:
+<ul class="viewport">
+    <li *ngFor="let contact of contacts" (click)="goToOtherProfile(contact.contactUserId)">
+        <div *ngIf="contact.emailAddress;then content else other_content">here is ignored</div>    
+        <ng-template #content>{{contact.emailAddress}}</ng-template>
+        <ng-template #other_content>{{contact.user.email}}</ng-template>
+    </li>
+</ul>
+

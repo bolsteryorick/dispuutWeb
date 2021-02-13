@@ -17,6 +17,7 @@ import { GroupService } from '../services/group.service';
 })
 export class GroupViewComponent implements OnInit {
   private groupId!: string;
+  private userId: string;
   public isAdminOfGroup!: boolean;
   public group!: Group;
   public dateEventInfoDict!: { [date: string] : EventInfo[]; };
@@ -37,7 +38,8 @@ export class GroupViewComponent implements OnInit {
     private _router: Router,
     private _userService: UserService
     ) {
-    this.route.params.subscribe( params => this.groupId = params.id );
+      this.userId = this._userService.userId();
+      this.route.params.subscribe( params => this.groupId = params.id );
   }
 
   ngOnInit(): void {
@@ -54,8 +56,7 @@ export class GroupViewComponent implements OnInit {
   }
 
   private userisAdminOfGroup() : boolean{
-    let userId = this._userService.userId();
-    return this.group.members.some(m => m.userId == userId && m.isAdmin);
+    return this.group.members.some(m => m.userId == this.userId && m.isAdmin);
   }
 
   private setDateEventInfoDict(group: Group): void{
@@ -65,6 +66,20 @@ export class GroupViewComponent implements OnInit {
 
   createEvent(){
     this._router.navigate([`event/create/${this.groupId}`])
+  }
+
+  addMembers(){
+    this._router.navigate([`group/addMembers/${this.groupId}`])
+  }
+
+  leaveGroup(){
+    let memberId = this.group.members.find(m => m.userId == this.userId)!.id;
+    console.log(memberId)
+    this._groupService.leaveGroup(memberId).subscribe(() => {
+      this._router.navigate([`calendar/list`])
+    }, (error: HttpErrorResponse) => {
+      console.log(error);
+    });
   }
 
   saveGroupName(value: string){

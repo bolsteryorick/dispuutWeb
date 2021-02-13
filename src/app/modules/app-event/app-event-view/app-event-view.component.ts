@@ -17,7 +17,9 @@ export class AppEventViewComponent implements OnInit {
   public appEventId!: string;
   public appEvent!: AppEvent;
   public showData: boolean = false;
-  public isAdminOfGroup!: boolean;
+  public isAdminOfGroup: boolean = false;
+  public isAttendingEvent: boolean = false;
+  private _userId!: string;
 
   public readonly eventNameValidators: ValidatorFn[] = AppEventConstants.appEventNameValidators;
   public readonly eventDescriptionValidators: ValidatorFn[] = AppEventConstants.appEventDescriptionValidators;
@@ -37,6 +39,7 @@ export class AppEventViewComponent implements OnInit {
     private _appEventService: AppEventService,
     private _userService: UserService
     ) {
+    this._userId = this._userService.userId();
     this.route.params.subscribe( params => this.appEventId = params.id );
   }
 
@@ -57,6 +60,7 @@ export class AppEventViewComponent implements OnInit {
       this.appEvent = result.data.getAppEvent;
       this.showData = true;
       this.isAdminOfGroup = this.userisAdminOfGroup();
+      this.isAttendingEvent = this.userisAttendingEvent();
     },
     (error: HttpErrorResponse) => {
       console.log(error);
@@ -65,7 +69,7 @@ export class AppEventViewComponent implements OnInit {
 
   saveEventName(value: string){
     this.appEvent.name = value;
-    this._appEventService.updateName(this.appEventId, value);
+    this._appEventService.updateName(this.appEventId, value)
   }
 
   saveEventDescription(value: string){
@@ -78,8 +82,39 @@ export class AppEventViewComponent implements OnInit {
     this._appEventService.updateMaxAttendees(this.appEventId, value);
   }
 
+  joinLeaveButtonText(): string{
+    if(this.isAttendingEvent){
+      return "Leave event";
+    }
+    return "Join event"
+  }
+
+  joinLeaveEvent(): void{
+    if(this.isAttendingEvent){
+      let attendeeId = this.appEvent.attendees.find(m => m.user.id == this._userId)!.id;
+      this._appEventService.leaveEvent(attendeeId).subscribe(() => {
+        this.ngOnInit()
+      }, (error: HttpErrorResponse) => {
+        console.log(error);
+      });
+    }
+    else{
+      this._appEventService.joinEvent(this.appEventId).subscribe(() => {
+        this.ngOnInit()
+      }, (error: HttpErrorResponse) => {
+        console.log(error);
+      });
+    }    
+  }
+
   private userisAdminOfGroup() : boolean{
-    let userId = this._userService.userId();
-    return this.appEvent.group.members.some(m => m.userId == userId && m.isAdmin);
+    return this.appEvent.group.members.some(m => m.userId == this._userId && m.isAdmin);
+  }
+
+  private userisAttendingEvent() : boolean{
+    if(this.appEvent.attendees == null){
+      return false;
+    }
+    return this.appEvent.attendees.some(m => m.user.id == this._userId);
   }
 }

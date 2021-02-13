@@ -1,8 +1,12 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GraphqlService } from 'src/app/services/graphql.service';
 import { CreateAppEventData } from '../../models/create-app-event';
 import { GetAppEventData } from '../../models/get-app-event';
+import { JoinEventData } from '../../models/join-event';
+import { LeaveEventData } from '../../models/leave-event';
+import { UpdateAppEventData } from '../../models/update-app-event';
 
 @Injectable({
   providedIn: 'root'
@@ -73,36 +77,64 @@ export class AppEventService {
     return this.graphqlService.sendGraphqlRequest<CreateAppEventData>(query);
   }
 
+  public joinEvent(eventId: string): Observable<JoinEventData>{
+    let query = `
+    mutation{
+      joinEvent(eventId: "${eventId}"){
+        id
+      }
+    }`
+    return this.graphqlService.sendGraphqlRequest<JoinEventData>(query);
+  }
+
+  public leaveEvent(attendeeId: string): Observable<LeaveEventData>{
+    let query = `
+    mutation{
+      leaveEvent(attendeeId: "${attendeeId}"){
+        id
+      }
+    }`
+    return this.graphqlService.sendGraphqlRequest<LeaveEventData>(query);
+  }
+
   public updateName(id: string, name: string){
-    this.updateAppEventStringProperty(id, name, 'name').subscribe();
+    return this.updateAppEventStringProperty(id, name, 'name').subscribe(() => {}, (error: HttpErrorResponse) => {
+      console.log(error);
+    });
   }
 
   public updateDescription(id: string, description: string){
-    this.updateAppEventStringProperty(id, description, 'description').subscribe();
+    this.updateAppEventStringProperty(id, description, 'description').subscribe(() => {}, (error: HttpErrorResponse) => {
+      console.log(error);
+    });
   }
 
   public updateMaxAttendees(id: string, maxAttendees: string){
-    this.updateAppEventStringProperty(id, maxAttendees, 'maxAttendees').subscribe();
+    this.updateAppEventStringProperty(id, maxAttendees, 'maxAttendees').subscribe(() => {}, (error: HttpErrorResponse) => {
+      console.log(error);
+    });
   }
 
   public updateStartDateTime(id: string, startTime: Date){
-    this.updateAppEventDateProperty(id, startTime, 'startTime').subscribe();
+    this.updateAppEventDateProperty(id, startTime, 'startTime').subscribe(() => {}, (error: HttpErrorResponse) => {
+      console.log(error);
+    });
   }
 
   public updateEndDateTime(id: string, endTime: Date){
-    this.updateAppEventDateProperty(id, endTime, 'endTime').subscribe();
+    this.updateAppEventDateProperty(id, endTime, 'endTime').subscribe(() => {}, (error: HttpErrorResponse) => {
+      console.log(error);
+    });
   }
 
-  private updateAppEventStringProperty(id: string, value: string, propertyName: string){
+  private updateAppEventStringProperty(id: string, value: string, propertyName: string): Observable<UpdateAppEventData>{
     let query = this.makeQuery(id, this.getArg(value, propertyName));
-    console.log(query)
-    return this.graphqlService.sendGraphqlRequest<CreateAppEventData>(query);
+    return this.graphqlService.sendGraphqlRequest<UpdateAppEventData>(query);
   }
 
-  private updateAppEventDateProperty(id: string, value: Date, propertyName: string){
+  private updateAppEventDateProperty(id: string, value: Date, propertyName: string): Observable<UpdateAppEventData>{
     let query = this.makeQuery(id, this.getDateArg(value, propertyName));
-    console.log(query)
-    return this.graphqlService.sendGraphqlRequest<CreateAppEventData>(query);
+    return this.graphqlService.sendGraphqlRequest<UpdateAppEventData>(query);
   }
 
   private makeQuery(id: string, arg: string): string{

@@ -7,11 +7,13 @@ import { GroupViewComponent } from './group-view/group-view.component';
 import { GroupCreationComponent } from './group-creation/group-creation.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { GroupAddMembersComponent } from './group-add-members/group-add-members.component';
+import { ContactSelectComponent } from './contact-select/contact-select.component';
 
 
 
 @NgModule({
-  declarations: [GroupBaseComponent, GroupViewComponent, GroupCreationComponent],
+  declarations: [GroupBaseComponent, GroupViewComponent, GroupCreationComponent, GroupAddMembersComponent, ContactSelectComponent],
   imports: [
     CommonModule,
     GroupRoutingModule,

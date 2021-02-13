@@ -1,0 +1,11 @@
+<ng-multiselect-dropdown
+    name="contacts"
+    [placeholder]="'Select contacts'"
+    [settings]="dropdownSettings"
+    [data]="contacts"
+    [formControl]='contactSelectControl' 
+    (onSelect)="onItemChange($event)"
+    (onDeSelect)="onItemChange($event)">
+</ng-multiselect-dropdown>
+<div *ngIf="showErrorMessage()">
+    <p class="error-message">{{contactsMessage}}</p>

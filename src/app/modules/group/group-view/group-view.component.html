@@ -2,8 +2,13 @@
 <div *ngIf="showData" class="container">
     <div class="row">
         <div class="col-sm-4" style="word-wrap: break-word;">
-            <app-edit-in-place [data]='group.name' [styling]='groupNameStyling' [validators]='groupNameValidators' [errorMessage]="groupNameMessage" (focusOut)='saveGroupName($event)'></app-edit-in-place>
-            <app-edit-in-place [data]='group.description' [textArea]='true' [validators]='groupDescriptionValidators' [errorMessage]="groupDescriptionMessage" (focusOut)='saveGroupDescription($event)'></app-edit-in-place>
+            <app-edit-in-place 
+                [data]='group.name' [styling]='groupNameStyling' [validators]='groupNameValidators' 
+                [errorMessage]="groupNameMessage" (focusOut)='saveGroupName($event)' [editPossible]='isAdminOfGroup'></app-edit-in-place>
+            <app-edit-in-place 
+                [data]='group.description' [textArea]='true' [validators]='groupDescriptionValidators' 
+                [errorMessage]="groupDescriptionMessage" (focusOut)='saveGroupDescription($event)' [editPossible]='isAdminOfGroup'></app-edit-in-place>
+                <button class="mat-raised-button" (click)='leaveGroup()'>Leave Group</button>
         </div>
         <div class="col-sm-4">
             <h1>AppEvents</h1>
@@ -13,6 +18,7 @@
         <div class="col-sm-4">
             <h1>Members</h1>
             <app-member-list [members]="group.members"  [userIsAdmin]="isAdminOfGroup" [inGroupView]="true"></app-member-list>
+            <button *ngIf="isAdminOfGroup" class="mat-raised-button" (click)="addMembers()">Add members</button>
         </div>
     </div>
 </div>

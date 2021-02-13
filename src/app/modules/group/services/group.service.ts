@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 import { GraphqlService } from 'src/app/services/graphql.service';
 import { CreateGroupData } from '../../models/create-group';
 import { GetGroupData } from '../../models/get-group';
+import { LeaveGroupData } from '../../models/leave-group';
+import { CreateMembers, CreateMembersData } from '../../models/members/create-members';
 import { UpdateGroupData } from '../../models/update-group';
 
 @Injectable({
@@ -21,6 +23,27 @@ export class GroupService {
       }
     }`
     return this.graphqlService.sendGraphqlRequest<CreateGroupData>(query);
+  }
+
+  public createGroupMembers(groupId: string, userIds : string[]): Observable<CreateMembersData>{
+    var userIdsJson = JSON.stringify(userIds);
+    let query = `
+    mutation{
+      createMembers(userIds: ${userIdsJson}, groupId: "${groupId}"){
+        groupId
+      }
+    }`
+    return this.graphqlService.sendGraphqlRequest<CreateMembersData>(query);
+  }
+
+  public leaveGroup(memberId: string): Observable<LeaveGroupData>{
+    let query = `
+    mutation{
+      leaveGroup(memberId: "${memberId}"){
+        id
+      }
+    }`;
+    return this.graphqlService.sendGraphqlRequest<LeaveGroupData>(query);
   }
 
   public getGroupInformation(groupId: string): Observable<GetGroupData>{
@@ -43,6 +66,20 @@ export class GroupService {
           userId,
           user{
             userName
+          }
+        }
+      }
+    }`;
+    return this.graphqlService.sendGraphqlRequest<GetGroupData>(query);
+  }
+
+  public getGroupMemberEmails(groupId: string): Observable<GetGroupData>{
+    let query = `
+    query{
+      getGroup(id: "${groupId}"){
+        members{
+          user{
+            email
           }
         }
       }

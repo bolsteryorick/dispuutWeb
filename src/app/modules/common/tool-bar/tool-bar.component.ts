@@ -21,4 +21,8 @@ export class ToolBarComponent implements OnInit {
   home(){
     this._router.navigate(['/']);
   }
+
+  profile(){
+    this._router.navigate(['/profile']);
+  }
 }

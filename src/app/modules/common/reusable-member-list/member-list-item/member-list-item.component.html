@@ -1,6 +1,6 @@
 <li>
     <ul>
-        <li>{{member.user.userName}}</li>
+        <li (click)="goToOtherProfile()">{{member.user.userName}}</li>
         <li *ngIf="member.isAdmin">Admin</li>      
         <li *ngIf="showDeleteMember()"><button (click)='deleteMember(member.id)'>Delete</button></li>  
     </ul>

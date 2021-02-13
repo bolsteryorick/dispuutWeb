@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from 'src/app/modules/authentication/services/user.service';
 import { Attendee } from 'src/app/modules/models/app-models/attendee';
 import { IAttendeeUpdate } from '../attendee-update';
@@ -16,8 +17,10 @@ export class AttendeeListItemComponent implements OnInit {
   @Output() update: EventEmitter<IAttendeeUpdate> = new EventEmitter<IAttendeeUpdate>();
   private _userId!: string;
 
-  constructor(_userService: UserService) {
-    this._userId = _userService.userId();
+  constructor(
+    userService: UserService,
+    private _router: Router) {
+    this._userId = userService.userId();
   }
   
   ngOnInit(): void {}
@@ -45,5 +48,10 @@ export class AttendeeListItemComponent implements OnInit {
     }
     this.attendee.paid = paid;
     this.update.emit(attendeeUpdate);
+  }
+
+  goToOtherProfile(){
+    console.log(this.attendee);
+    this._router.navigate([`/profile/profile/${this.attendee.user.id}`]);
   }
 }

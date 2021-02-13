@@ -1,0 +1,14 @@
+Add members to group
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<app-contact-select [alreadyUsedEmails]='usedEmails' (selectedContactsChanged)='selectedContactsChanged($event)'></app-contact-select>
+
+<button type="default" [disabled]="buttonDisabled()" (click)='addGroupMembers()'>Create</button>
