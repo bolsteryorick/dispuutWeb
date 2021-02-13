@@ -1,7 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ApolloQueryResult } from '@apollo/client';
 import { EventInfoService } from '../../common/reusable-event-list/services/event-info.service';
-import { GetUserData } from '../../models/get-user';
+import { GetUser, GetUserData } from '../../models/get-user';
 import { AppEventsService } from '../services/app-events/app-events-service';
 import { EventInfo } from './models/event-info';
 
@@ -21,8 +22,8 @@ export class EventListComponent implements OnInit {
     
   ngOnInit(): void {
     const request = this._appEventsService.getAppEventsForUser();
-    request.subscribe((result: GetUserData) => {
-      this.setDateEventInfoDict(result);
+    request.subscribe((result: ApolloQueryResult<GetUser>) => {
+      this.setDateEventInfoDict(result.data);
       this.showList = true;
     },
     (error: HttpErrorResponse) => {
@@ -30,8 +31,8 @@ export class EventListComponent implements OnInit {
     });
   }
   
-  private setDateEventInfoDict(userData: GetUserData): void{
-    let groups = userData.data.getUser.memberships.map(event => event.group);
+  private setDateEventInfoDict(userData: GetUser): void{
+    let groups = userData.getUser.memberships.map(event => event.group);
     this.dateEventInfoDict = this._eventInfoService.getDateEvents(groups);
   }
 }

@@ -8,6 +8,8 @@ import { AuthenticationModule } from './modules/authentication/authentication.mo
 import { JwtModule } from '@auth0/angular-jwt';
 import { CommonAppModule } from './modules/common/common-app.module';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { GraphQLModule } from './graphql.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
         return localStorage.getItem('token');
         } 
      }
-   })
+   }),
+    GraphQLModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,44 +1,39 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ApolloQueryResult } from '@apollo/client/core';
+import { Apollo, gql } from 'apollo-angular';
 import { Observable } from 'rxjs';
-import { BaseUrl } from 'src/app/constants/baseUrl';
-import { GetUserData } from 'src/app/modules/models/get-user';
+import { GetUser} from 'src/app/modules/models/get-user';
+
+const USER_APP_EVENTS = gql`
+  query{
+    getUser{
+    memberships{
+      group{
+        name,
+        id,
+        appEvents{
+          id,
+          name,
+          startTime,
+          endTime
+        }
+      }
+    }
+  }
+}
+`;
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppEventsService {
-  private url: string;
-  constructor(private httpClient: HttpClient) {
-    this.url = `${BaseUrl.baseUrlGraphQL}`;
+  constructor(
+    private apollo: Apollo) {
   }
 
-  public getAppEventsForUser(): Observable<GetUserData>{
-    // make graphql service
-    var token = localStorage.getItem("token");
-    console.log(token);
-    const headers = new HttpHeaders()
-      .set('content-type', 'application/json')
-      .set('Authorization', `bearer ${token}`);
-    var query = `
-    query{
-      getUser{
-        memberships{
-          group{
-            name,
-            id,
-            appEvents{
-              id,
-              name,
-              startTime,
-              endTime
-            }
-          }
-        }
-      }
-    }`;
-    var request = {"query": query};
-    return this.httpClient.post<GetUserData>(this.url, request, { headers: headers });
+  public getAppEventsForUser(): Observable<ApolloQueryResult<GetUser>>{
+    return this.apollo.query<GetUser>({
+      query: USER_APP_EVENTS
+    });
   }
-
 }

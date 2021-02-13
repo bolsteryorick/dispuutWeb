@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Apollo, gql } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { GraphqlService } from 'src/app/services/graphql.service';
 import { CreateGroupData } from '../../models/create-group';
@@ -11,7 +12,9 @@ import { UpdateGroupData } from '../../models/update-group';
   providedIn: 'root'
 })
 export class GroupService {
-  constructor(private graphqlService: GraphqlService) {
+  constructor(
+    private graphqlService: GraphqlService,
+    private apollo: Apollo) {
   }
 
   public createGroup(name: string, description: string, userIds : string[]): Observable<CreateGroupData>{
