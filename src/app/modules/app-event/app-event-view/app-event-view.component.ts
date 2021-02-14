@@ -4,9 +4,9 @@ import { ValidatorFn } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { AppEventConstants } from 'src/app/constants/app-event-constants';
+import { AppEvent } from 'src/app/models/app-models/app-event';
+import { GetAppEvent } from 'src/app/models/event-models/get-app-event';
 import { UserService } from '../../authentication/services/user.service';
-import { AppEvent } from '../../models/app-models/app-event';
-import { GetAppEvent } from '../../models/event-models/get-app-event';
 import { AppEventService } from '../services/app-event.service';
 
 @Component({
@@ -81,31 +81,6 @@ export class AppEventViewComponent implements OnInit {
   saveMaxAttendees(value: string){
     this.appEvent.maxAttendees = +value;
     this._appEventService.updateAppEvent({id: this.appEventId, maxAttendees: +value});
-  }
-
-  joinLeaveButtonText(): string{
-    if(this.isAttendingEvent){
-      return "Leave event";
-    }
-    return "Join event"
-  }
-
-  joinLeaveEvent(): void{
-    if(this.isAttendingEvent){
-      let attendeeId = this.appEvent.attendees.find(m => m.user.id == this._userId)!.id;
-      this._appEventService.leaveEvent(attendeeId).subscribe(() => {
-        this.ngOnInit()
-      }, (error: HttpErrorResponse) => {
-        console.log(error);
-      });
-    }
-    else{
-      this._appEventService.joinEvent(this.appEventId).subscribe(() => {
-        this.ngOnInit()
-      }, (error: HttpErrorResponse) => {
-        console.log(error);
-      });
-    }    
   }
 
   private userisAdminOfGroup() : boolean{

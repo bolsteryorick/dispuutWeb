@@ -1,5 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { Attendee } from 'src/app/modules/models/app-models/attendee';
+import { ApolloQueryResult } from '@apollo/client/core';
+import { Attendee } from 'src/app/models/app-models/attendee';
+import { Member } from 'src/app/models/app-models/member';
+import { GetAppEvent } from 'src/app/models/event-models/get-app-event';
+import { UserService } from 'src/app/modules/authentication/services/user.service';
 import { AttendeeService } from 'src/app/services/attendee.service';
 import { IAttendeeUpdate } from '../attendee-update';
 
@@ -10,12 +15,52 @@ import { IAttendeeUpdate } from '../attendee-update';
 })
 export class AttendeeListComponent implements OnInit {
 
-  @Input() attendees!: Attendee[];
+  @Input() appEventId!: string;
   @Input() editPossible: boolean = false;
+  attendees: Attendee[] = [];
+  private _userId: string = "";
+  isAdminOfGroup: boolean = false;
+  isAttendingEvent: boolean = false;
   constructor(
-    private _attendeeService: AttendeeService) { }
+    private _attendeeService: AttendeeService,
+    userService: UserService) {
+      this._userId = userService.userId();
+     }
 
   ngOnInit(): void {
+    const request = this._attendeeService.getAttendeesData(this.appEventId);
+    request.subscribe((result: ApolloQueryResult<GetAppEvent>) => {
+      this.attendees = result.data.getAppEvent.attendees;
+      this.isAttendingEvent = this.userIsAttendingEvent();
+    },
+    (error: HttpErrorResponse) => {
+      console.log(error);
+    });
+  }
+
+  joinLeaveButtonText(): string{
+    if(this.isAttendingEvent){
+      return "Leave event";
+    }
+    return "Join event"
+  }
+
+  joinLeaveEvent(): void{
+    if(this.isAttendingEvent){
+      let attendeeId = this.attendees.find(m => m.user.id == this._userId)!.id;
+      this._attendeeService.leaveEvent(attendeeId).subscribe(() => {
+        this.ngOnInit()
+      }, (error: HttpErrorResponse) => {
+        console.log(error);
+      });
+    }
+    else{
+      this._attendeeService.joinEvent(this.appEventId).subscribe(() => {
+        this.ngOnInit()
+      }, (error: HttpErrorResponse) => {
+        console.log(error);
+      });
+    }    
   }
 
   deleteAttendee(attendeeId: string){
@@ -27,5 +72,12 @@ export class AttendeeListComponent implements OnInit {
     let attendeeId = attendeeUpdate.attendeeId;
     let paid = attendeeUpdate.paid;     
     this._attendeeService.updateAttendee(attendeeId, paid).subscribe();
+  }
+
+  private userIsAttendingEvent() : boolean{
+    if(this.attendees == null){
+      return false;
+    }
+    return this.attendees.some(m => m.user.id == this._userId);
   }
 }

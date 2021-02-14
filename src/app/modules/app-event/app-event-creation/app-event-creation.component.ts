@@ -4,7 +4,7 @@ import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@a
 import { ActivatedRoute, Router } from '@angular/router';
 import { FetchResult } from '@apollo/client/core';
 import { AppEventConstants } from 'src/app/constants/app-event-constants';
-import { CreateAppEvent} from '../../models/event-models/create-app-event';
+import { CreateAppEvent} from '../../../models/event-models/create-app-event';
 import { AppEventService } from '../services/app-event.service';
 
 @Component({

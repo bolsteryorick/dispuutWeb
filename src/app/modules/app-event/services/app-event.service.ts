@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { ApolloQueryResult, FetchResult, gql } from '@apollo/client/core';
 import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
-import { CreateAppEvent } from '../../models/event-models/create-app-event';
-import { GetAppEvent } from '../../models/event-models/get-app-event';
-import { JoinEvent } from '../../models/event-models/join-event';
-import { LeaveEvent } from '../../models/event-models/leave-event';
+import { CreateAppEvent } from '../../../models/event-models/create-app-event';
+import { GetAppEvent } from '../../../models/event-models/get-app-event';
+import { JoinEvent } from '../../../models/event-models/join-event';
+import { LeaveEvent } from '../../../models/event-models/leave-event';
 import { AppEventQueries } from './app-event-queries';
 
 
@@ -42,24 +42,6 @@ export class AppEventService {
         endTime: endTime,
         maxAttendees: maxAttendees,
         groupId: groupId,
-      }
-    });
-  }
-
-  public joinEvent(eventId: string): Observable<FetchResult<JoinEvent>>{
-    return this.apollo.mutate({
-      mutation: AppEventQueries.joinEventMutation,
-      variables:{
-        eventId: eventId
-      }
-    });
-  }
-
-  public leaveEvent(attendeeId: string): Observable<FetchResult<LeaveEvent>>{
-    return this.apollo.mutate({
-      mutation: AppEventQueries.leaveEventMutation,
-      variables:{
-        attendeeId: attendeeId
       }
     });
   }

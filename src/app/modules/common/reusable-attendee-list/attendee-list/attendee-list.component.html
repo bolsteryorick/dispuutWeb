@@ -3,3 +3,4 @@
         <app-attendee-list-item [attendee]="attendee" [editPossible]="editPossible" (update)="updatePaidAttendee($event)" (delete)="deleteAttendee($event)" ></app-attendee-list-item>
     </div>
 </ul>
+<button class="mat-raised-button" (click)='joinLeaveEvent()'>{{joinLeaveButtonText()}}</button>

@@ -1,20 +1,29 @@
 import { Injectable } from '@angular/core';
-import { DeleteMemberData } from '../modules/models/member-models/delete-member';
-import { GraphqlService } from './graphql.service';
+import { gql } from '@apollo/client/core';
+import { Apollo } from 'apollo-angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MemberService {
 
-  constructor(private graphqlService: GraphqlService) { }
+  constructor(private apollo: Apollo) { }
 
-  public deleteMember(id: string){
-    let query = `mutation{
-      deleteMember(memberId: "${id}"){
-        id
+  public deleteMember(memberId: string){
+    return this.apollo.mutate({
+      mutation: DELETEMEMBERMUTATION,
+      variables: {
+        memberId: memberId
       }
-    }`;
-    return this.graphqlService.sendGraphqlRequest<DeleteMemberData>(query);
+    });
   }
 }
+
+const DELETEMEMBERMUTATION = gql`
+  mutation DeleteMember(
+      $memberId: ID!
+      ) {
+        deleteMember(memberId: $memberId){
+          id
+        }
+  }`;

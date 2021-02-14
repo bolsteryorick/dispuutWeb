@@ -7,8 +7,8 @@ import { GroupConstants } from 'src/app/constants/group-constants';
 import { UserService } from '../../authentication/services/user.service';
 import { EventInfo } from '../../calendar/event-list/models/event-info';
 import { EventInfoService } from '../../common/reusable-event-list/services/event-info.service';
-import { Group } from '../../models/app-models/group';
-import { GetGroup } from '../../models/group-models/get-group';
+import { Group } from '../../../models/app-models/group';
+import { GetGroup } from '../../../models/group-models/get-group';
 import { GroupService } from '../services/group.service';
 
 @Component({

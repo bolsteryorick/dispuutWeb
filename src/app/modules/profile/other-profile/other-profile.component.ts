@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApolloQueryResult } from '@apollo/client/core';
-import { GetOtherUser } from '../../models/user-models/get-other-user';
+import { GetOtherUser } from '../../../models/user-models/get-other-user';
 import { ProfileService } from '../services/profile.service';
 
 @Component({

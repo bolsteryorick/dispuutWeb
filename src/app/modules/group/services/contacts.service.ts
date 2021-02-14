@@ -3,7 +3,7 @@ import { ApolloQueryResult, gql } from '@apollo/client/core';
 import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { BaseUrl } from 'src/app/constants/baseUrl';
-import { GetUser } from '../../models/user-models/get-user';
+import { GetUser } from '../../../models/user-models/get-user';
 
 @Injectable({
   providedIn: 'root'

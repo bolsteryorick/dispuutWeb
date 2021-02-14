@@ -22,7 +22,6 @@
                 [endDateTime]='appEvent.endTime' [editPossible]='isAdminOfGroup'>
             </app-event-date-edit>
 
-            <button class="mat-raised-button" (click)='joinLeaveEvent()'>{{joinLeaveButtonText()}}</button>
         </div>
         <div class="col-sm-4">
             <h1>Members</h1>
@@ -30,7 +29,7 @@
         </div>
         <div class="col-sm-4">
             <h1>Attendees</h1>
-            <app-attendee-list [attendees]="appEvent.attendees" [editPossible]='isAdminOfGroup'></app-attendee-list>
+            <app-attendee-list [appEventId]="appEventId" [editPossible]='isAdminOfGroup'></app-attendee-list>
         </div>
     </div>
 </div>

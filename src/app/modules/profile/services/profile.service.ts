@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { Apollo, gql } from 'apollo-angular';
 import { Observable } from 'rxjs';
-import { GraphqlService } from 'src/app/services/graphql.service';
-import { GetOtherUser } from '../../models/user-models/get-other-user';
-import { GetUser } from '../../models/user-models/get-user';
+import { GetOtherUser } from '../../../models/user-models/get-other-user';
+import { GetUser } from '../../../models/user-models/get-user';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +11,7 @@ import { GetUser } from '../../models/user-models/get-user';
 export class ProfileService {
 
   constructor(
-    private apollo: Apollo,
-    private graphqlService: GraphqlService) {
+    private apollo: Apollo) {
   }
 
   public getProfile(): Observable<ApolloQueryResult<GetUser>>{

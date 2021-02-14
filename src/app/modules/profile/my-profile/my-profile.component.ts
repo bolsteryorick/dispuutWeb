@@ -2,8 +2,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApolloQueryResult } from '@apollo/client/core';
-import { Contact } from '../../models/app-models/contact';
-import { GetUser } from '../../models/user-models/get-user';
+import { Contact } from '../../../models/app-models/contact';
+import { GetUser } from '../../../models/user-models/get-user';
 import { ProfileService } from '../services/profile.service';
 
 @Component({

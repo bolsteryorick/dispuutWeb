@@ -11,21 +11,21 @@ export class AppEventQueries{
                 startTime,
                 maxAttendees,
                 group{
-                members{
-                    isAdmin,
-                    userId,
-                    user{
-                    userName
+                    members{
+                        isAdmin,
+                        userId,
+                        user{
+                        userName
+                        }
                     }
-                }
                 },
                 attendees{
-                user{
-                    userName,
-                    id
-                },
-                id,
-                paid
+                    user{
+                        userName,
+                        id
+                    },
+                    id,
+                    paid
                 }
             }
         }`;
@@ -71,17 +71,5 @@ export class AppEventQueries{
             name,
             description
             }
-        }`;
-    public static joinEventMutation = gql`
-        mutation JoinEventMutation($eventId: ID!) {
-            joinEvent(eventId: $eventId){
-                id
-            }
-        }`;
-    public static leaveEventMutation = gql`
-        mutation JoinEventMutation($attendeeId: ID!) {
-            leaveEvent(attendeeId: $attendeeId){
-                id
-              }
         }`;
 }
