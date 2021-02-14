@@ -4,8 +4,8 @@ import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@a
 import { Router } from '@angular/router';
 import { FetchResult } from '@apollo/client/core';
 import { GroupConstants } from 'src/app/constants/group-constants';
+import { GroupService } from 'src/app/services/group/group.service';
 import { CreateGroup } from '../../../models/group-models/create-group';
-import { GroupService } from '../services/group.service';
 import { ContactItem } from './models/contactItem';
 
 @Component({

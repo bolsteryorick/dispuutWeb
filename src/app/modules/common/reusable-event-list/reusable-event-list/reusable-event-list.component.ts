@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IDatasource } from 'ngx-ui-scroll';
 import { EventInfo } from 'src/app/modules/calendar/event-list/models/event-info';
-import { EventInfoService } from '../services/event-info.service';
+import { EventInfoService } from '../../../../services/appEvent/event-info.service';
 
 @Component({
   selector: 'app-reusable-event-list',

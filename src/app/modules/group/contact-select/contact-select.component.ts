@@ -6,7 +6,7 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { GroupConstants } from 'src/app/constants/group-constants';
 import { GetUser } from '../../../models/user-models/get-user';
 import { ContactItem } from '../group-creation/models/contactItem';
-import { ContactsService } from '../services/contacts.service';
+import { ContactsService } from '../../../services/contact/contacts.service';
 
 @Component({
   selector: 'app-contact-select',

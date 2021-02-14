@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { GetOtherUser } from '../../../models/user-models/get-other-user';
-import { ProfileService } from '../services/profile.service';
+import { ProfileService } from '../../../services/profile/profile.service';
 
 @Component({
   selector: 'app-other-profile',

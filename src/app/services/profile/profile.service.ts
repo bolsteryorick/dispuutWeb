@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { Apollo, gql } from 'apollo-angular';
 import { Observable } from 'rxjs';
-import { GetOtherUser } from '../../../models/user-models/get-other-user';
-import { GetUser } from '../../../models/user-models/get-user';
+import { GetOtherUser } from '../../models/user-models/get-other-user';
+import { GetUser } from '../../models/user-models/get-user';
 
 @Injectable({
   providedIn: 'root'

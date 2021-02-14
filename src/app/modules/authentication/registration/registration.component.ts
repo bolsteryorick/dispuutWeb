@@ -2,8 +2,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserCredentials } from '../models/userCredentials';
-import { RegistrationService } from '../services/registration.service';
+import { RegistrationService } from 'src/app/services/authentication/registration.service';
+import { UserCredentials } from '../../../models/auth-models/userCredentials';
 
 @Component({
   selector: 'app-registration',

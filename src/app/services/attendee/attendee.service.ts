@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { ApolloQueryResult, FetchResult, gql } from '@apollo/client/core';
-import { GetAppEvent } from '../models/event-models/get-app-event';
+import { GetAppEvent } from '../../models/event-models/get-app-event';
 import { Observable } from 'rxjs';
 import { Apollo } from 'apollo-angular';
-import { JoinEvent } from '../models/event-models/join-event';
+import { JoinEvent } from '../../models/event-models/join-event';
 import { AttendeeQueries } from './attendee-queries';
-import { LeaveEvent } from '../models/event-models/leave-event';
+import { LeaveEvent } from '../../models/event-models/leave-event';
 
 @Injectable({
   providedIn: 'root'

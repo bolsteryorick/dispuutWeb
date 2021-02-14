@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { AppEventConstants } from 'src/app/constants/app-event-constants';
-import { UserService } from '../../authentication/services/user.service';
 import { AppEventService } from '../services/app-event.service';
 
 @Component({

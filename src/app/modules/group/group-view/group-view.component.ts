@@ -4,12 +4,12 @@ import { ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { GroupConstants } from 'src/app/constants/group-constants';
-import { UserService } from '../../authentication/services/user.service';
 import { EventInfo } from '../../calendar/event-list/models/event-info';
-import { EventInfoService } from '../../common/reusable-event-list/services/event-info.service';
+import { EventInfoService } from '../../../services/appEvent/event-info.service';
 import { Group } from '../../../models/app-models/group';
 import { GetGroup } from '../../../models/group-models/get-group';
-import { GroupService } from '../services/group.service';
+import { UserService } from 'src/app/services/authentication/user.service';
+import { GroupService } from 'src/app/services/group/group.service';
 
 @Component({
   selector: 'app-group-view',

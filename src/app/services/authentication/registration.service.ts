@@ -2,22 +2,22 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BaseUrl } from 'src/app/constants/baseUrl';
-import { TokenObject } from '../login/models/token-object';
-import { UserCredentials } from '../models/userCredentials';
+import { UserCredentials } from 'src/app/models/auth-models/userCredentials';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class RegistrationService {
+
   private url: string;
   constructor(private httpClient: HttpClient) {
-    this.url = `${BaseUrl.baseUrl}users/gettoken`;
+    this.url = `${BaseUrl.baseUrl}users/register`;
   }
 
-  public login(userCredentials: UserCredentials): Observable<TokenObject> {
+  public register(userCredentials: UserCredentials): Observable<boolean> {
     const headers = new HttpHeaders()
       .set('content-type', 'application/json')
       .set('Access-Control-Allow-Origin', '*');
-    return this.httpClient.post<TokenObject>(this.url, JSON.stringify(userCredentials), { headers: headers });
+    return this.httpClient.post<boolean>(this.url, JSON.stringify(userCredentials), { headers: headers });
   }
 }

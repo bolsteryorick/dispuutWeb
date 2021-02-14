@@ -3,8 +3,8 @@ import { tokenName } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserCredentials } from '../models/userCredentials';
-import { LoginService } from '../services/login.service';
+import { LoginService } from 'src/app/services/authentication/login.service';
+import { UserCredentials } from '../../../models/auth-models/userCredentials';
 import { TokenObject } from './models/token-object';
 
 @Component({

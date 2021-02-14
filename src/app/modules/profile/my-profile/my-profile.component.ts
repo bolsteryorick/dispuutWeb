@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { Contact } from '../../../models/app-models/contact';
 import { GetUser } from '../../../models/user-models/get-user';
-import { ProfileService } from '../services/profile.service';
+import { ProfileService } from '../../../services/profile/profile.service';
 
 @Component({
   selector: 'app-my-profile',

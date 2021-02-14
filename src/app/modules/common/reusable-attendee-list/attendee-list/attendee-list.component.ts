@@ -2,10 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { Attendee } from 'src/app/models/app-models/attendee';
-import { Member } from 'src/app/models/app-models/member';
 import { GetAppEvent } from 'src/app/models/event-models/get-app-event';
-import { UserService } from 'src/app/modules/authentication/services/user.service';
-import { AttendeeService } from 'src/app/services/attendee.service';
+import { AttendeeService } from 'src/app/services/attendee/attendee.service';
+import { UserService } from 'src/app/services/authentication/user.service';
 import { IAttendeeUpdate } from '../attendee-update';
 
 @Component({

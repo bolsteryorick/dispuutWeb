@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Member } from 'src/app/models/app-models/member';
-import { MemberService } from 'src/app/services/member.service';
+import { MemberService } from 'src/app/services/member/member.service';
 
 @Component({
   selector: 'app-member-list',

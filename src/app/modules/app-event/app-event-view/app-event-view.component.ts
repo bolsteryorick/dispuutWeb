@@ -6,7 +6,7 @@ import { ApolloQueryResult } from '@apollo/client/core';
 import { AppEventConstants } from 'src/app/constants/app-event-constants';
 import { AppEvent } from 'src/app/models/app-models/app-event';
 import { GetAppEvent } from 'src/app/models/event-models/get-app-event';
-import { UserService } from '../../authentication/services/user.service';
+import { UserService } from 'src/app/services/authentication/user.service';
 import { AppEventService } from '../services/app-event.service';
 
 @Component({

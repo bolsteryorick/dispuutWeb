@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Datasource, IDatasource } from 'ngx-ui-scroll';
-import { DateInfo } from '../../../calendar/event-list/models/date-info';
-import { EventInfo } from '../../../calendar/event-list/models/event-info';
-import { AppEvent } from '../../../../models/app-models/app-event';
-import { Group } from '../../../../models/app-models/group';
+import { DateInfo } from '../../modules/calendar/event-list/models/date-info';
+import { EventInfo } from '../../modules/calendar/event-list/models/event-info';
+import { AppEvent } from '../../models/app-models/app-event';
+import { Group } from '../../models/app-models/group';
 
 @Injectable({
   providedIn: 'root'

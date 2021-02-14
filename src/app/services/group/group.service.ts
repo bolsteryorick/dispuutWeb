@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { ApolloQueryResult, FetchResult } from '@apollo/client/core';
 import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
-import { CreateGroup } from '../../../models/group-models/create-group';
-import { GetGroup } from '../../../models/group-models/get-group';
-import { LeaveGroup } from '../../../models/group-models/leave-group';
-import { CreateMembers } from '../../../models/member-models/create-members';
-import { UpdateGroup } from '../../../models/group-models/update-group';
+import { CreateGroup } from 'src/app/models/group-models/create-group';
+import { GetGroup } from 'src/app/models/group-models/get-group';
+import { LeaveGroup } from 'src/app/models/group-models/leave-group';
+import { UpdateGroup } from 'src/app/models/group-models/update-group';
+import { CreateMembers } from 'src/app/models/member-models/create-members';
 import { GroupQueries } from './group-queries';
 
 @Injectable({

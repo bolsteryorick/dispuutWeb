@@ -3,10 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { FetchResult } from '@apollo/client/core';
+import { GroupService } from 'src/app/services/group/group.service';
 import { GetGroup } from '../../../models/group-models/get-group';
 import { CreateMembers } from '../../../models/member-models/create-members';
 import { ContactItem } from '../group-creation/models/contactItem';
-import { GroupService } from '../services/group.service';
 
 @Component({
   selector: 'app-group-add-members',
