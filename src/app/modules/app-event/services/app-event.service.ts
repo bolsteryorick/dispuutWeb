@@ -1,49 +1,28 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ApolloQueryResult, FetchResult, gql } from '@apollo/client/core';
+import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
-import { GraphqlService } from 'src/app/services/graphql.service';
-import { CreateAppEventData } from '../../models/create-app-event';
-import { GetAppEventData } from '../../models/get-app-event';
-import { JoinEventData } from '../../models/join-event';
-import { LeaveEventData } from '../../models/leave-event';
-import { UpdateAppEventData } from '../../models/update-app-event';
+import { CreateAppEvent } from '../../models/event-models/create-app-event';
+import { GetAppEvent } from '../../models/event-models/get-app-event';
+import { JoinEvent } from '../../models/event-models/join-event';
+import { LeaveEvent } from '../../models/event-models/leave-event';
+import { AppEventQueries } from './app-event-queries';
+
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppEventService {
-  constructor(private graphqlService: GraphqlService) {}
+  constructor(private apollo: Apollo) {}
   
-  public getAppEventData(eventId: string): Observable<GetAppEventData>{
-    let query = `
-    query{
-      getAppEvent(id: "${eventId}"){
-        endTime,
-        id,
-        name,
-        description,
-        startTime,
-        maxAttendees,
-        group{
-          members{
-            isAdmin,
-            userId,
-            user{
-              userName
-            }
-          }
-        },
-        attendees{
-          user{
-            userName,
-            id
-          },
-          id,
-          paid
-        }
+  public getAppEventData(eventId: string): Observable<ApolloQueryResult<GetAppEvent>>{
+    return this.apollo.query<GetAppEvent>({
+      query: AppEventQueries.GetAppEventDataQuery,
+      variables: {
+        eventId: eventId,
       }
-    }`
-    return this.graphqlService.sendGraphqlRequest<GetAppEventData>(query);
+    });
   }
 
   public createAppEvent(
@@ -51,109 +30,59 @@ export class AppEventService {
     description: string, 
     startTime: Date, 
     endTime: Date,
-    maxAttendees: string,
-    groupId: string): Observable<CreateAppEventData>
+    maxAttendees: number | null,
+    groupId: string): Observable<FetchResult<CreateAppEvent>>
   {
-    let maxAttendeesString = ``;
-    if(maxAttendees != null && maxAttendees != ""){
-        maxAttendeesString = `maxattendees: ${maxAttendees},`
-    }
-    console.log(startTime.toISOString())
-    
-    let query = `
-    mutation{
-        createAppEvent(
-            name: "${name}", 
-            description: "${description}", 
-            startTime:"${startTime.toISOString()}", 
-            endTime: "${endTime.toISOString()}",
-            ${maxAttendeesString}
-            groupId: "${groupId}"){
-          id,
-          name,
-          description
+    return this.apollo.mutate({
+      mutation: AppEventQueries.CreateAppEventMutation,
+      variables: {
+        name: name,
+        description: description,
+        startTime: startTime,
+        endTime: endTime,
+        maxAttendees: maxAttendees,
+        groupId: groupId,
+      }
+    });
+  }
+
+  public joinEvent(eventId: string): Observable<FetchResult<JoinEvent>>{
+    return this.apollo.mutate({
+      mutation: AppEventQueries.joinEventMutation,
+      variables:{
+        eventId: eventId
+      }
+    });
+  }
+
+  public leaveEvent(attendeeId: string): Observable<FetchResult<LeaveEvent>>{
+    return this.apollo.mutate({
+      mutation: AppEventQueries.leaveEventMutation,
+      variables:{
+        attendeeId: attendeeId
+      }
+    });
+  }
+
+  public updateAppEvent(
+    update: {id: string, 
+    name?: string, 
+    description?: string,
+    maxAttendees?: number,
+    startTime?: Date,
+    endTime?: Date}){
+      console.log(update)
+      this.apollo.mutate({
+        mutation: AppEventQueries.UpdateAppEventMutation,
+        variables: {
+          id: update.id,
+          name: update.name,
+          description: update.description,
+          startTime: update.startTime,
+          endTime: update.endTime,
+          maxAttendees: update.maxAttendees,
         }
-      }`;
-    return this.graphqlService.sendGraphqlRequest<CreateAppEventData>(query);
-  }
-
-  public joinEvent(eventId: string): Observable<JoinEventData>{
-    let query = `
-    mutation{
-      joinEvent(eventId: "${eventId}"){
-        id
-      }
-    }`
-    return this.graphqlService.sendGraphqlRequest<JoinEventData>(query);
-  }
-
-  public leaveEvent(attendeeId: string): Observable<LeaveEventData>{
-    let query = `
-    mutation{
-      leaveEvent(attendeeId: "${attendeeId}"){
-        id
-      }
-    }`
-    return this.graphqlService.sendGraphqlRequest<LeaveEventData>(query);
-  }
-
-  public updateName(id: string, name: string){
-    return this.updateAppEventStringProperty(id, name, 'name').subscribe(() => {}, (error: HttpErrorResponse) => {
-      console.log(error);
-    });
-  }
-
-  public updateDescription(id: string, description: string){
-    this.updateAppEventStringProperty(id, description, 'description').subscribe(() => {}, (error: HttpErrorResponse) => {
-      console.log(error);
-    });
-  }
-
-  public updateMaxAttendees(id: string, maxAttendees: string){
-    this.updateAppEventStringProperty(id, maxAttendees, 'maxAttendees').subscribe(() => {}, (error: HttpErrorResponse) => {
-      console.log(error);
-    });
-  }
-
-  public updateStartDateTime(id: string, startTime: Date){
-    this.updateAppEventDateProperty(id, startTime, 'startTime').subscribe(() => {}, (error: HttpErrorResponse) => {
-      console.log(error);
-    });
-  }
-
-  public updateEndDateTime(id: string, endTime: Date){
-    this.updateAppEventDateProperty(id, endTime, 'endTime').subscribe(() => {}, (error: HttpErrorResponse) => {
-      console.log(error);
-    });
-  }
-
-  private updateAppEventStringProperty(id: string, value: string, propertyName: string): Observable<UpdateAppEventData>{
-    let query = this.makeQuery(id, this.getArg(value, propertyName));
-    return this.graphqlService.sendGraphqlRequest<UpdateAppEventData>(query);
-  }
-
-  private updateAppEventDateProperty(id: string, value: Date, propertyName: string): Observable<UpdateAppEventData>{
-    let query = this.makeQuery(id, this.getDateArg(value, propertyName));
-    return this.graphqlService.sendGraphqlRequest<UpdateAppEventData>(query);
-  }
-
-  private makeQuery(id: string, arg: string): string{
-    return `
-    mutation{
-      updateAppEvent(
-        id: "${id}"
-        ${arg}
-      ){
-        id
-      }
-    }`
-  }
-
-  private getArg(value: string | null, name: string){
-    return `, ${name}: "${value}"`;
-  }
-
-  private getDateArg(value: Date | null, name: string){
-    return value != null ? `, ${name}: "${value.toISOString()}"` : "";
-  }
+      })
+      .subscribe();
+    }
 }

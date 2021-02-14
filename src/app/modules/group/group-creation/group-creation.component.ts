@@ -2,8 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FetchResult } from '@apollo/client/core';
 import { GroupConstants } from 'src/app/constants/group-constants';
-import { CreateGroupData } from '../../models/create-group';
+import { CreateGroup } from '../../models/group-models/create-group';
 import { GroupService } from '../services/group.service';
 import { ContactItem } from './models/contactItem';
 
@@ -44,7 +45,7 @@ export class GroupCreationComponent implements OnInit {
     this.selectedContacts = items;
   }
   
-  public buttonDisabled() {
+  public buttonDisabled(){
     return !this.groupForm.controls.groupNameInput.valid || !this.groupForm.controls.groupDescriptionInput.valid || !(this.selectedContacts.length > 0);
   }
 
@@ -57,8 +58,8 @@ export class GroupCreationComponent implements OnInit {
     let platformContacts = contacts.filter(x => x.userId != null);
     let userIds = platformContacts.map(c => c.userId);
     const request = this._groupService.createGroup(name, description, userIds);
-    request.subscribe((result: CreateGroupData) => {
-      let groupId = result.data.createGroup.id;
+    request.subscribe((result: FetchResult<CreateGroup>) => {
+      let groupId = result.data?.createGroup.id;
       this._router.navigate([`/group/view/${groupId}`])
     },
     (error: HttpErrorResponse) => {

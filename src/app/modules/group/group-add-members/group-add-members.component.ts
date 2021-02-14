@@ -1,8 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GetGroupData } from '../../models/get-group';
-import { CreateMembersData } from '../../models/members/create-members';
+import { ApolloQueryResult } from '@apollo/client/core';
+import { FetchResult } from '@apollo/client/core';
+import { GetGroup } from '../../models/group-models/get-group';
+import { CreateMembers } from '../../models/member-models/create-members';
 import { ContactItem } from '../group-creation/models/contactItem';
 import { GroupService } from '../services/group.service';
 
@@ -26,7 +28,7 @@ export class GroupAddMembersComponent implements OnInit {
 
   ngOnInit(): void {
     const request = this._groupService.getGroupMemberEmails(this.groupId);
-    request.subscribe((result: GetGroupData) => {
+    request.subscribe((result: ApolloQueryResult<GetGroup>) => {
       this.usedEmails = result.data.getGroup.members.map(x => x.user.email);
     },
     (error: HttpErrorResponse) => {
@@ -45,7 +47,7 @@ export class GroupAddMembersComponent implements OnInit {
   addGroupMembers(){
     let userIds = this.selectedContacts.map(s => s.userId);
     this._groupService.createGroupMembers(this.groupId, userIds)
-    .subscribe((result: CreateMembersData) => {
+    .subscribe((result: FetchResult<CreateMembers>) => {
       this._router.navigate([`/group/view/${this.groupId}`])
     },
     (error: HttpErrorResponse) => {

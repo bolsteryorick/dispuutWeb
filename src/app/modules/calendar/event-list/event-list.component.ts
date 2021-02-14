@@ -1,8 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ApolloQueryResult } from '@apollo/client';
+import { ApolloQueryResult } from '@apollo/client/core';
 import { EventInfoService } from '../../common/reusable-event-list/services/event-info.service';
-import { GetUser, GetUserData } from '../../models/get-user';
+import { GetUser } from '../../models/user-models/get-user';
 import { AppEventsService } from '../services/app-events/app-events-service';
 import { EventInfo } from './models/event-info';
 

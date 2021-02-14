@@ -2,10 +2,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ValidatorFn } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { ApolloQueryResult } from '@apollo/client/core';
 import { AppEventConstants } from 'src/app/constants/app-event-constants';
 import { UserService } from '../../authentication/services/user.service';
 import { AppEvent } from '../../models/app-models/app-event';
-import { GetAppEventData } from '../../models/get-app-event';
+import { GetAppEvent } from '../../models/event-models/get-app-event';
 import { AppEventService } from '../services/app-event.service';
 
 @Component({
@@ -56,7 +57,7 @@ export class AppEventViewComponent implements OnInit {
 
   ngOnInit(): void {
     const request = this._appEventService.getAppEventData(this.appEventId);
-    request.subscribe((result: GetAppEventData) => {
+    request.subscribe((result: ApolloQueryResult<GetAppEvent>) => {
       this.appEvent = result.data.getAppEvent;
       this.showData = true;
       this.isAdminOfGroup = this.userisAdminOfGroup();
@@ -69,17 +70,17 @@ export class AppEventViewComponent implements OnInit {
 
   saveEventName(value: string){
     this.appEvent.name = value;
-    this._appEventService.updateName(this.appEventId, value)
+    this._appEventService.updateAppEvent({id: this.appEventId, name: value});
   }
 
   saveEventDescription(value: string){
     this.appEvent.description = value;
-    this._appEventService.updateDescription(this.appEventId, value);
+    this._appEventService.updateAppEvent({id: this.appEventId, description: value});
   }
 
   saveMaxAttendees(value: string){
     this.appEvent.maxAttendees = +value;
-    this._appEventService.updateMaxAttendees(this.appEventId, value);
+    this._appEventService.updateAppEvent({id: this.appEventId, maxAttendees: +value});
   }
 
   joinLeaveButtonText(): string{

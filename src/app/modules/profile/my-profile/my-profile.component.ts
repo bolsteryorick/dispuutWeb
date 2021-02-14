@@ -1,8 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ApolloQueryResult } from '@apollo/client/core';
 import { Contact } from '../../models/app-models/contact';
-import { GetUserData } from '../../models/get-user';
+import { GetUser } from '../../models/user-models/get-user';
 import { ProfileService } from '../services/profile.service';
 
 @Component({
@@ -21,7 +22,7 @@ export class MyProfileComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this._profileService.getProfile().subscribe((data: GetUserData) => {
+    this._profileService.getProfile().subscribe((data: ApolloQueryResult<GetUser>) => {
       this.userName = data.data.getUser.userName;
       this.email = data.data.getUser.email;
       this.contacts = data.data.getUser.contacts;

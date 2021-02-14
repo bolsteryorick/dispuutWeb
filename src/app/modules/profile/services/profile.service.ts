@@ -1,47 +1,60 @@
 import { Injectable } from '@angular/core';
+import { ApolloQueryResult } from '@apollo/client/core';
+import { Apollo, gql } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { GraphqlService } from 'src/app/services/graphql.service';
-import { GetOtherUserData } from '../../models/get-other-user';
-import { GetUserData } from '../../models/get-user';
+import { GetOtherUser } from '../../models/user-models/get-other-user';
+import { GetUser } from '../../models/user-models/get-user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfileService {
 
-  constructor(private graphqlService: GraphqlService) {
+  constructor(
+    private apollo: Apollo,
+    private graphqlService: GraphqlService) {
   }
 
-  public getProfile(): Observable<GetUserData>{
-    let query = `
-    query{
-      getUser{
-          id,
-          email,
-          userName,
-          contacts{
-              emailAddress,
-              contactUserId,
-              user{
-                id,
-                userName,
-                email
-              }
-          }
-      }
-    }`;
-    return this.graphqlService.sendGraphqlRequest<GetUserData>(query);
+  public getProfile(): Observable<ApolloQueryResult<GetUser>>{
+    return this.apollo.query<GetUser>({
+      query: GETPROFILEQUERY
+    });
   }
 
-  public getOtherProfile(userId: string): Observable<GetOtherUserData>{
-    let query = `
-    query{
-      getOtherUser(userId: "${userId}"){
-        email,
-        userName,
-        id
+  public getOtherProfile(userId: string): Observable<ApolloQueryResult<GetOtherUser>>{
+    return this.apollo.query<GetOtherUser>({
+      query: GETOTHERPROFILEQUERY,
+      variables: {
+        userId: userId,
       }
-    }`;
-    return this.graphqlService.sendGraphqlRequest<GetOtherUserData>(query);
+    });
   }
 }
+
+const GETPROFILEQUERY = gql`
+  query{
+    getUser{
+        id,
+        email,
+        userName,
+        contacts{
+            emailAddress,
+            contactUserId,
+            user{
+              id,
+              userName,
+              email
+            }
+        }
+    }
+  }`;
+
+const GETOTHERPROFILEQUERY = gql`
+  query GetOtherUserById($userId: String!) {
+    getOtherUser(userId: $userId){
+      email,
+      userName,
+      id
+    }
+  }`;

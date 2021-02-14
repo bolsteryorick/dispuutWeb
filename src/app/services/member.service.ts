@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DeleteMemberData } from '../modules/models/members/delete-member';
+import { DeleteMemberData } from '../modules/models/member-models/delete-member';
 import { GraphqlService } from './graphql.service';
 
 @Injectable({

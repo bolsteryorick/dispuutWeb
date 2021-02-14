@@ -1,39 +1,38 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ApolloQueryResult, gql } from '@apollo/client/core';
+import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { BaseUrl } from 'src/app/constants/baseUrl';
-import { GetUserData } from '../../models/get-user';
+import { GetUser } from '../../models/user-models/get-user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContactsService {
   private url: string;
-  constructor(private httpClient: HttpClient) {
+  constructor(
+    private apollo: Apollo) {
     this.url = `${BaseUrl.baseUrlGraphQL}`;
   }
 
-  public getUserContactsInformation(): Observable<GetUserData>{
-    // make graphql service
-    var token = localStorage.getItem("token");
-    const headers = new HttpHeaders()
-      .set('content-type', 'application/json')
-      .set('Authorization', `bearer ${token}`);
-      
-    let query = `
-    query{
-      getUser{
-          id,
-          contacts{
-              emailAddress,
-              contactUserId,
-              user{
-                userName
-              }
-          }
-      }
-    }`;
-    var request = {"query": query};
-    return this.httpClient.post<GetUserData>(this.url, request, { headers: headers });
+  public getUserContactsInformation(): Observable<ApolloQueryResult<GetUser>>{
+    return this.apollo.query<GetUser>({
+      query: GETCONTACTSFROMUSERQUERY
+    });
   }
+
 }
+
+const GETCONTACTSFROMUSERQUERY = gql`
+  query{
+    getUser{
+        id,
+        contacts{
+            emailAddress,
+            contactUserId,
+            user{
+              userName
+            }
+        }
+    }
+  }`;

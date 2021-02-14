@@ -1,10 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, ValidatorFn } from '@angular/forms';
+import { ApolloQueryResult } from '@apollo/client/core';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { GroupConstants } from 'src/app/constants/group-constants';
-import { Contact } from '../../models/app-models/contact';
-import { GetUserData } from '../../models/get-user';
+import { GetUser } from '../../models/user-models/get-user';
 import { ContactItem } from '../group-creation/models/contactItem';
 import { ContactsService } from '../services/contacts.service';
 
@@ -24,15 +24,14 @@ export class ContactSelectComponent implements OnInit {
   @Output() selectedContactsChanged: EventEmitter<ContactItem[]> = new EventEmitter<ContactItem[]>();
 
   constructor(
-    private _contactsService: ContactsService,
-    private _formBuilder: FormBuilder) { }
+    private _contactsService: ContactsService) { }
 
   
   ngOnInit(): void {
     this.contactSelectControl = new FormControl(null, this.contactsValidators)
 
     const request = this._contactsService.getUserContactsInformation();
-    request.subscribe((result: GetUserData) => {
+    request.subscribe((result: ApolloQueryResult<GetUser>) => {
       let contacts = result.data.getUser.contacts?.map(x => <ContactItem>{userId : x.contactUserId, email: x.user.userName});
       this.contacts = contacts.filter(x => !this.alreadyUsedEmails.includes(x.email))
     },

@@ -1,112 +1,87 @@
 import { Injectable } from '@angular/core';
-import { Apollo, gql } from 'apollo-angular';
+import { ApolloQueryResult, FetchResult } from '@apollo/client/core';
+import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
-import { GraphqlService } from 'src/app/services/graphql.service';
-import { CreateGroupData } from '../../models/create-group';
-import { GetGroupData } from '../../models/get-group';
-import { LeaveGroupData } from '../../models/leave-group';
-import { CreateMembers, CreateMembersData } from '../../models/members/create-members';
-import { UpdateGroupData } from '../../models/update-group';
+import { CreateGroup } from '../../models/group-models/create-group';
+import { GetGroup } from '../../models/group-models/get-group';
+import { LeaveGroup } from '../../models/group-models/leave-group';
+import { CreateMembers } from '../../models/member-models/create-members';
+import { UpdateGroup } from '../../models/group-models/update-group';
+import { GroupQueries } from './group-queries';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GroupService {
-  constructor(
-    private graphqlService: GraphqlService,
-    private apollo: Apollo) {
+  constructor(private apollo: Apollo) {
   }
 
-  public createGroup(name: string, description: string, userIds : string[]): Observable<CreateGroupData>{
-    var userIdsJson = JSON.stringify(userIds);
-    let query = `
-    mutation{
-      createGroup(name: "${name}", description: "${description}", userIds: ${userIdsJson}){
-        id
+  public getGroupData(groupId: string): Observable<ApolloQueryResult<GetGroup>>{
+    return this.apollo.query<GetGroup>({
+      query: GroupQueries.GetGroupDataQuery,
+      variables: {
+        groupId: groupId,
       }
-    }`
-    return this.graphqlService.sendGraphqlRequest<CreateGroupData>(query);
+    });
   }
 
-  public createGroupMembers(groupId: string, userIds : string[]): Observable<CreateMembersData>{
-    var userIdsJson = JSON.stringify(userIds);
-    let query = `
-    mutation{
-      createMembers(userIds: ${userIdsJson}, groupId: "${groupId}"){
-        groupId
+  public createGroup(
+    name: string, 
+    description: string, 
+    userIds : string[]): Observable<FetchResult<CreateGroup>>
+  {
+    return this.apollo.mutate({
+      mutation: GroupQueries.CreateGroupMutation,
+      variables: {
+        name: name,
+        description: description,
+        userIds: userIds
       }
-    }`
-    return this.graphqlService.sendGraphqlRequest<CreateMembersData>(query);
+    });
   }
 
-  public leaveGroup(memberId: string): Observable<LeaveGroupData>{
-    let query = `
-    mutation{
-      leaveGroup(memberId: "${memberId}"){
-        id
+  public createGroupMembers(
+    groupId: string, 
+    userIds : string[]): Observable<FetchResult<CreateMembers>>
+  {
+    return this.apollo.mutate({
+      mutation: GroupQueries.CreateGroupMembersMutation,
+      variables: {
+        groupId: groupId,
+        userIds: userIds
       }
-    }`;
-    return this.graphqlService.sendGraphqlRequest<LeaveGroupData>(query);
+    });
   }
 
-  public getGroupInformation(groupId: string): Observable<GetGroupData>{
-    let query = `
-    query{
-      getGroup(id: "${groupId}"){
-        id,
-        name,
-        description,
-        appEvents{
-          id,
-          name,
-          description,
-          startTime,
-          endTime
-        },
-        members{
-          id,
-          isAdmin,
-          userId,
-          user{
-            userName
-          }
-        }
+  public leaveGroup(memberId: string): Observable<FetchResult<LeaveGroup>>{
+    return this.apollo.mutate({
+      mutation: GroupQueries.LeaveGroupMutation,
+      variables: {
+        memberId: memberId
       }
-    }`;
-    return this.graphqlService.sendGraphqlRequest<GetGroupData>(query);
+    });
   }
 
-  public getGroupMemberEmails(groupId: string): Observable<GetGroupData>{
-    let query = `
-    query{
-      getGroup(id: "${groupId}"){
-        members{
-          user{
-            email
-          }
-        }
+  public getGroupMemberEmails(groupId: string): Observable<ApolloQueryResult<GetGroup>>{
+    return this.apollo.query<GetGroup>({
+      query: GroupQueries.GetGroupMembersQuery,
+      variables: {
+        groupId: groupId,
       }
-    }`;
-    return this.graphqlService.sendGraphqlRequest<GetGroupData>(query);
+    });
   }
 
-  public updateGroup(id: string, name: string | null, description: string | null): Observable<UpdateGroupData>{
-    let descripArg = this.getArg(description, 'description');
-    let nameArg = this.getArg(name, 'name');
-    let query = `
-    mutation{
-      updateGroup(
-        id: "${id}"
-        ${descripArg}
-        ${nameArg}
-      ){
-        id
+  public updateGroup(
+    id: string, 
+    name: string | null, 
+    description: string | null): Observable<FetchResult<UpdateGroup>>{
+    return this.apollo.mutate({
+      mutation: GroupQueries.UpdateGroupMutation,
+      variables: {
+        id: id,
+        name: name,
+        description: description
       }
-    }`;
-    return this.graphqlService.sendGraphqlRequest<UpdateGroupData>(query);
-  }
-
-  private getArg(value: string | null, name: string){
-    return value != null ? `, ${name}: "${value}"` : "";
+    });
   }
 }

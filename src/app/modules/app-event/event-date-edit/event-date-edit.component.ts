@@ -74,7 +74,7 @@ export class EventDateEditComponent implements OnInit {
   }
 
   private updateStartDateTime(){
-    this._appEventService.updateStartDateTime(this.appEventId, this.startDateTime);
+    this._appEventService.updateAppEvent({id: this.appEventId, startTime: this.startDateTime});
   }
 
   saveEndDate(value: string){
@@ -88,7 +88,7 @@ export class EventDateEditComponent implements OnInit {
   }
 
   private updateEndDateTime(){
-    this._appEventService.updateEndDateTime(this.appEventId, this.endDateTime);
+    this._appEventService.updateAppEvent({id: this.appEventId, endTime: this.endDateTime});
   }
 
   private updateDateOnDateTime(newDateString: string, oldDateTime: Date): Date{

@@ -2,12 +2,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ApolloQueryResult } from '@apollo/client/core';
 import { GroupConstants } from 'src/app/constants/group-constants';
 import { UserService } from '../../authentication/services/user.service';
 import { EventInfo } from '../../calendar/event-list/models/event-info';
 import { EventInfoService } from '../../common/reusable-event-list/services/event-info.service';
 import { Group } from '../../models/app-models/group';
-import { GetGroupData } from '../../models/get-group';
+import { GetGroup } from '../../models/group-models/get-group';
 import { GroupService } from '../services/group.service';
 
 @Component({
@@ -43,8 +44,8 @@ export class GroupViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const request = this._groupService.getGroupInformation(this.groupId);
-    request.subscribe((result: GetGroupData) => {
+    const request = this._groupService.getGroupData(this.groupId);
+    request.subscribe((result: ApolloQueryResult<GetGroup>) => {
       this.group = result.data.getGroup;
       this.setDateEventInfoDict(this.group)
       this.showData = true;
