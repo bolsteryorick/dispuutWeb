@@ -1,3 +1,4 @@
 export interface TokenObject{
-    token: string;
+    accessToken: string;
+    refreshToken: string;
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EventInfo } from 'src/app/modules/calendar/event-list/models/event-info';
 
@@ -23,5 +23,4 @@ export class EventListItemComponent implements OnInit {
   groupClicked(){
     this._router.navigate([`/group/view/${this.eventInfo.groupId}`])
   }
-
 }

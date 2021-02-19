@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/authentication/user.service';
 
 @Component({
   selector: 'app-tool-bar',
@@ -8,13 +9,17 @@ import { Router } from '@angular/router';
 })
 export class ToolBarComponent implements OnInit {
 
-  constructor(private _router: Router) { }
+  constructor(
+    private _router: Router,
+    private _userService: UserService
+    ) { }
 
   ngOnInit(): void {
   }
 
   logout(){
-    localStorage.removeItem("token");
+    this._userService.removeTokens();
+    // todo remove refresh token entry in database
     this._router.navigate(['/']);
   }
 

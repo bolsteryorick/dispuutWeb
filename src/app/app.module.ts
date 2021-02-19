@@ -25,7 +25,7 @@ import { HttpClientModule } from '@angular/common/http';
     JwtModule.forRoot({
       config: {
         tokenGetter: function  tokenGetter() { 
-        return localStorage.getItem('token');
+        return localStorage.getItem("accessToken");
         } 
      }
    }),

@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/authentication/login.service';
 import { UserCredentials } from '../../../models/auth-models/userCredentials';
 import { TokenObject } from './models/token-object';
+import { takeUntil } from 'rxjs/operators';
+import { UserService } from 'src/app/services/authentication/user.service';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +28,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private _loginService: LoginService,
-    private _router: Router
+    private _router: Router,
+    private _userService: UserService
   ) 
   { 
     this.loginForm?.controls?.emailInput?.setValidators(this.emailValidators);
@@ -48,7 +51,10 @@ export class LoginComponent implements OnInit {
       Password : formVal.passwordInput.toString()}
     const request = this._loginService.login(userCredentials);
     request.subscribe((token: TokenObject) => {
-      localStorage.setItem("token", token.token);
+      console.log(token);
+      this._userService.setAccesstoken(token.accessToken);
+      this._userService.setRefreshtoken(token.refreshToken);
+      console.log("success")
       this._router.navigate(['/calendar/list']);
     },
     (error: HttpErrorResponse) => {
