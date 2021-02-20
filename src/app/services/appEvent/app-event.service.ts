@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import { ApolloQueryResult, FetchResult, gql } from '@apollo/client/core';
 import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
-import { CreateAppEvent } from '../../../models/event-models/create-app-event';
-import { GetAppEvent } from '../../../models/event-models/get-app-event';
-import { JoinEvent } from '../../../models/event-models/join-event';
-import { LeaveEvent } from '../../../models/event-models/leave-event';
+import { CreateAppEvent } from 'src/app/models/event-models/create-app-event';
+import { GetAppEvent } from 'src/app/models/event-models/get-app-event';
+import { GraphqlWrapper } from '../graphql-wrapper.service';
 import { AppEventQueries } from './app-event-queries';
 
 
@@ -14,10 +13,10 @@ import { AppEventQueries } from './app-event-queries';
   providedIn: 'root'
 })
 export class AppEventService {
-  constructor(private apollo: Apollo) {}
+  constructor(private _graphqlWrapper: GraphqlWrapper) {}
   
   public getAppEventData(eventId: string): Observable<ApolloQueryResult<GetAppEvent>>{
-    return this.apollo.query<GetAppEvent>({
+    return this._graphqlWrapper.query<GetAppEvent>({
       query: AppEventQueries.GetAppEventDataQuery,
       variables: {
         eventId: eventId,
@@ -33,7 +32,7 @@ export class AppEventService {
     maxAttendees: number | null,
     groupId: string): Observable<FetchResult<CreateAppEvent>>
   {
-    return this.apollo.mutate({
+    return this._graphqlWrapper.mutate({
       mutation: AppEventQueries.CreateAppEventMutation,
       variables: {
         name: name,
@@ -53,8 +52,7 @@ export class AppEventService {
     maxAttendees?: number,
     startTime?: Date,
     endTime?: Date}){
-      console.log(update)
-      this.apollo.mutate({
+      this._graphqlWrapper.mutate({
         mutation: AppEventQueries.UpdateAppEventMutation,
         variables: {
           id: update.id,

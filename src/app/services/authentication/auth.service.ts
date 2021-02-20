@@ -1,18 +1,23 @@
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { RefreshService } from './refresh.service';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private jwtHelper: JwtHelperService) { }
+  constructor(
+    private jwtHelper: JwtHelperService,
+    private _userService: UserService,
+    private _refreshService: RefreshService) { }
 
-  public isAuthenticated(): boolean {
-    const token = localStorage.getItem("accessToken");
-    if(token == null){
-      return false;
-    }
-    return !this.jwtHelper.isTokenExpired(token);
+  public async isAuthenticated(): Promise<boolean> {
+    const accessTokenValid = !this._userService.accessTokenExpired();
+    if(accessTokenValid) return true;
+    if(this._userService.refreshTokenExpired()) this._userService.logout();
+    await this._refreshService.ensureAccessToken();
+    return !this._userService.accessTokenExpired();
   }
 }

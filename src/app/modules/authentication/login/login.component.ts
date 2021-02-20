@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/authentication/login.service';
-import { UserCredentials } from '../../../models/auth-models/userCredentials';
+import { UserLoginCredentials } from '../../../models/auth-models/userCredentials';
 import { TokenObject } from './models/token-object';
 import { takeUntil } from 'rxjs/operators';
 import { UserService } from 'src/app/services/authentication/user.service';
@@ -46,23 +46,20 @@ export class LoginComponent implements OnInit {
 
   public login(){
     const formVal = this.loginForm.getRawValue();
-    let userCredentials : UserCredentials = { 
+    let userCredentials : UserLoginCredentials = { 
       Email : formVal.emailInput.toString(), 
-      Password : formVal.passwordInput.toString()}
+      Password : formVal.passwordInput.toString(),
+      AppInstanceId: this._userService.generateAppInstanceId()}
     const request = this._loginService.login(userCredentials);
     request.subscribe((token: TokenObject) => {
       console.log(token);
-      this._userService.setAccesstoken(token.accessToken);
-      this._userService.setRefreshtoken(token.refreshToken);
+      this._userService.setAccessToken(token.accessToken);
+      this._userService.setRefreshToken(token.refreshToken);
       console.log("success")
       this._router.navigate(['/calendar/list']);
     },
     (error: HttpErrorResponse) => {
       console.log(error);
-    },
-    () => {
-      
-      
     });
   }
 }

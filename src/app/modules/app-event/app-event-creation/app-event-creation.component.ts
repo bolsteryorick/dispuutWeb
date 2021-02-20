@@ -4,8 +4,8 @@ import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@a
 import { ActivatedRoute, Router } from '@angular/router';
 import { FetchResult } from '@apollo/client/core';
 import { AppEventConstants } from 'src/app/constants/app-event-constants';
+import { AppEventService } from 'src/app/services/appEvent/app-event.service';
 import { CreateAppEvent} from '../../../models/event-models/create-app-event';
-import { AppEventService } from '../services/app-event.service';
 
 @Component({
   selector: 'app-app-event-creation',
@@ -78,7 +78,7 @@ export class AppEventCreationComponent implements OnInit {
     let startDate = new Date(`${formVal.startDate}T${formVal.startTime}`);
     let endDate = new Date(`${formVal.endDate}T${formVal.endTime}`);
     let maxAttendees = +formVal.maxAttendees;
-    const requestApollo = this._appEventService.createAppEvent(
+    const request = this._appEventService.createAppEvent(
       name,
       description,
       startDate,
@@ -86,7 +86,7 @@ export class AppEventCreationComponent implements OnInit {
       maxAttendees == 0 ? null : maxAttendees,
       this.groupId
     );
-    requestApollo.subscribe((result: FetchResult<CreateAppEvent>) => {
+    request.subscribe((result: FetchResult<CreateAppEvent>) => {
       let eventId = result.data?.createAppEvent.id;
       this._router.navigate([`/event/view/${eventId}`])
     },

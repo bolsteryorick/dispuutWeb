@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ApolloQueryResult, gql } from '@apollo/client/core';
-import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { BaseUrl } from 'src/app/constants/baseUrl';
 import { GetUser } from '../../models/user-models/get-user';
+import { GraphqlWrapper } from '../graphql-wrapper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +11,12 @@ import { GetUser } from '../../models/user-models/get-user';
 export class ContactsService {
   private url: string;
   constructor(
-    private apollo: Apollo) {
+    private _graphqlWrapper: GraphqlWrapper) {
     this.url = `${BaseUrl.baseUrlGraphQL}`;
   }
 
   public getUserContactsInformation(): Observable<ApolloQueryResult<GetUser>>{
-    return this.apollo.query<GetUser>({
+    return this._graphqlWrapper.query<GetUser>({
       query: GETCONTACTSFROMUSERQUERY
     });
   }

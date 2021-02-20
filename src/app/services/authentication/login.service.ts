@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BaseUrl } from 'src/app/constants/baseUrl';
-import { UserCredentials } from 'src/app/models/auth-models/userCredentials';
+import { UserLoginCredentials } from 'src/app/models/auth-models/userCredentials';
 import { TokenObject } from 'src/app/modules/authentication/login/models/token-object';
 
 @Injectable({
@@ -14,7 +14,7 @@ export class LoginService {
     this.url = `${BaseUrl.baseUrl}users/gettoken`;
   }
 
-  public login(userCredentials: UserCredentials): Observable<TokenObject> {
+  public login(userCredentials: UserLoginCredentials): Observable<TokenObject> {
     const headers = new HttpHeaders()
       .set('content-type', 'application/json')
       .set('Access-Control-Allow-Origin', '*');

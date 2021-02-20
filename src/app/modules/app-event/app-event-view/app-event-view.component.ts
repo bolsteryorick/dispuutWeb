@@ -6,8 +6,8 @@ import { ApolloQueryResult } from '@apollo/client/core';
 import { AppEventConstants } from 'src/app/constants/app-event-constants';
 import { AppEvent } from 'src/app/models/app-models/app-event';
 import { GetAppEvent } from 'src/app/models/event-models/get-app-event';
+import { AppEventService } from 'src/app/services/appEvent/app-event.service';
 import { UserService } from 'src/app/services/authentication/user.service';
-import { AppEventService } from '../services/app-event.service';
 
 @Component({
   selector: 'app-app-event-view',
@@ -36,12 +36,12 @@ export class AppEventViewComponent implements OnInit {
   maxAttendeesType = "number";
 
   constructor(
-    private route: ActivatedRoute, 
+    private _route: ActivatedRoute, 
     private _appEventService: AppEventService,
     private _userService: UserService
     ) {
     this._userId = this._userService.userId();
-    this.route.params.subscribe( params => this.appEventId = params.id );
+    this._route.params.subscribe( params => this.appEventId = params.id );
   }
 
   public showMaxAttendees(): boolean{
@@ -56,6 +56,7 @@ export class AppEventViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("app event view component request")
     const request = this._appEventService.getAppEventData(this.appEventId);
     request.subscribe((result: ApolloQueryResult<GetAppEvent>) => {
       this.appEvent = result.data.getAppEvent;

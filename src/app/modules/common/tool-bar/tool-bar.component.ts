@@ -18,9 +18,7 @@ export class ToolBarComponent implements OnInit {
   }
 
   logout(){
-    this._userService.removeTokens();
-    // todo remove refresh token entry in database
-    this._router.navigate(['/']);
+    this._userService.logout();
   }
 
   home(){

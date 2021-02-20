@@ -54,7 +54,6 @@ export class GroupCreationComponent implements OnInit {
     let name = formVal.groupNameInput.toString();
     let description = formVal.groupDescriptionInput.toString();
     let contacts : ContactItem[] = this.selectedContacts;
-    console.log(contacts);
     let platformContacts = contacts.filter(x => x.userId != null);
     let userIds = platformContacts.map(c => c.userId);
     const request = this._groupService.createGroup(name, description, userIds);
@@ -68,6 +67,5 @@ export class GroupCreationComponent implements OnInit {
 
     // todo allow user to send emails for these
     let outsideContacts = contacts.filter(x => x.userId == null);
-    console.log(`Outside contacts: ${outsideContacts}`)
   }
 }

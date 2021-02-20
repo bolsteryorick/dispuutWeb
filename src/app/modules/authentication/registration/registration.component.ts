@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegistrationService } from 'src/app/services/authentication/registration.service';
-import { UserCredentials } from '../../../models/auth-models/userCredentials';
+import { UserRegisterCredentials } from '../../../models/auth-models/userCredentials';
 
 @Component({
   selector: 'app-registration',
@@ -42,7 +42,7 @@ export class RegistrationComponent implements OnInit {
 
   public register(){
     const formVal = this.registrationForm.getRawValue();
-    let userCredentials : UserCredentials = { 
+    let userCredentials : UserRegisterCredentials = { 
       Email : formVal.emailInput.toString(), 
       Password : formVal.passwordInput.toString()}
     const request = this._registrationService.register(userCredentials);

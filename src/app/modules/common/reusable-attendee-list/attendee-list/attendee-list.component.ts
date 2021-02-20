@@ -27,6 +27,7 @@ export class AttendeeListComponent implements OnInit {
      }
 
   ngOnInit(): void {
+    console.log("attendee list component request")
     const request = this._attendeeService.getAttendeesData(this.appEventId);
     request.subscribe((result: ApolloQueryResult<GetAppEvent>) => {
       this.attendees = result.data.getAppEvent.attendees;

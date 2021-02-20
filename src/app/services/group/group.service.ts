@@ -1,23 +1,23 @@
 import { Injectable } from '@angular/core';
 import { ApolloQueryResult, FetchResult } from '@apollo/client/core';
-import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { CreateGroup } from 'src/app/models/group-models/create-group';
 import { GetGroup } from 'src/app/models/group-models/get-group';
 import { LeaveGroup } from 'src/app/models/group-models/leave-group';
 import { UpdateGroup } from 'src/app/models/group-models/update-group';
 import { CreateMembers } from 'src/app/models/member-models/create-members';
+import { GraphqlWrapper } from '../graphql-wrapper.service';
 import { GroupQueries } from './group-queries';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GroupService {
-  constructor(private apollo: Apollo) {
+  constructor(private _graphqlWrapper: GraphqlWrapper) {
   }
 
   public getGroupData(groupId: string): Observable<ApolloQueryResult<GetGroup>>{
-    return this.apollo.query<GetGroup>({
+    return this._graphqlWrapper.query<GetGroup>({
       query: GroupQueries.GetGroupDataQuery,
       variables: {
         groupId: groupId,
@@ -30,7 +30,7 @@ export class GroupService {
     description: string, 
     userIds : string[]): Observable<FetchResult<CreateGroup>>
   {
-    return this.apollo.mutate({
+    return this._graphqlWrapper.mutate({
       mutation: GroupQueries.CreateGroupMutation,
       variables: {
         name: name,
@@ -44,7 +44,7 @@ export class GroupService {
     groupId: string, 
     userIds : string[]): Observable<FetchResult<CreateMembers>>
   {
-    return this.apollo.mutate({
+    return this._graphqlWrapper.mutate({
       mutation: GroupQueries.CreateGroupMembersMutation,
       variables: {
         groupId: groupId,
@@ -54,7 +54,7 @@ export class GroupService {
   }
 
   public leaveGroup(memberId: string): Observable<FetchResult<LeaveGroup>>{
-    return this.apollo.mutate({
+    return this._graphqlWrapper.mutate({
       mutation: GroupQueries.LeaveGroupMutation,
       variables: {
         memberId: memberId
@@ -63,7 +63,7 @@ export class GroupService {
   }
 
   public getGroupMemberEmails(groupId: string): Observable<ApolloQueryResult<GetGroup>>{
-    return this.apollo.query<GetGroup>({
+    return this._graphqlWrapper.query<GetGroup>({
       query: GroupQueries.GetGroupMembersQuery,
       variables: {
         groupId: groupId,
@@ -75,7 +75,7 @@ export class GroupService {
     id: string, 
     name: string | null, 
     description: string | null): Observable<FetchResult<UpdateGroup>>{
-    return this.apollo.mutate({
+    return this._graphqlWrapper.mutate({
       mutation: GroupQueries.UpdateGroupMutation,
       variables: {
         id: id,

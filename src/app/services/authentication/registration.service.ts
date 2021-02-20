@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BaseUrl } from 'src/app/constants/baseUrl';
-import { UserCredentials } from 'src/app/models/auth-models/userCredentials';
+import { UserRegisterCredentials } from 'src/app/models/auth-models/userCredentials';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class RegistrationService {
     this.url = `${BaseUrl.baseUrl}users/register`;
   }
 
-  public register(userCredentials: UserCredentials): Observable<boolean> {
+  public register(userCredentials: UserRegisterCredentials): Observable<boolean> {
     const headers = new HttpHeaders()
       .set('content-type', 'application/json')
       .set('Access-Control-Allow-Origin', '*');

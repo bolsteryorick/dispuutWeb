@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { AppEventConstants } from 'src/app/constants/app-event-constants';
-import { AppEventService } from '../services/app-event.service';
+import { AppEventService } from 'src/app/services/appEvent/app-event.service';
 
 @Component({
   selector: 'app-event-date-edit',

@@ -4,6 +4,7 @@ import { Apollo, gql } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { GetOtherUser } from '../../models/user-models/get-other-user';
 import { GetUser } from '../../models/user-models/get-user';
+import { GraphqlWrapper } from '../graphql-wrapper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,17 +12,17 @@ import { GetUser } from '../../models/user-models/get-user';
 export class ProfileService {
 
   constructor(
-    private apollo: Apollo) {
+    private _graphqlWrapper: GraphqlWrapper) {
   }
 
   public getProfile(): Observable<ApolloQueryResult<GetUser>>{
-    return this.apollo.query<GetUser>({
+    return this._graphqlWrapper.query<GetUser>({
       query: GETPROFILEQUERY
     });
   }
 
   public getOtherProfile(userId: string): Observable<ApolloQueryResult<GetOtherUser>>{
-    return this.apollo.query<GetOtherUser>({
+    return this._graphqlWrapper.query<GetOtherUser>({
       query: GETOTHERPROFILEQUERY,
       variables: {
         userId: userId,

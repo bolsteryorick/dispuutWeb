@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { gql } from '@apollo/client/core';
-import { Apollo } from 'apollo-angular';
+import { GraphqlWrapper } from '../graphql-wrapper.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MemberService {
 
-  constructor(private apollo: Apollo) { }
+  constructor(private _graphqlWrapper: GraphqlWrapper) { }
 
   public deleteMember(memberId: string){
-    return this.apollo.mutate({
+    return this._graphqlWrapper.mutate({
       mutation: DELETEMEMBERMUTATION,
       variables: {
         memberId: memberId

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ApolloQueryResult } from '@apollo/client/core';
-import { Apollo, gql } from 'apollo-angular';
+import { gql } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { GetUser} from 'src/app/models/user-models/get-user';
+import { GraphqlWrapper } from '../graphql-wrapper.service';
 
 const USER_APP_EVENTS = gql`
   query{
@@ -27,11 +28,11 @@ const USER_APP_EVENTS = gql`
 })
 export class AppEventsService {
   constructor(
-    private apollo: Apollo) {
+    private _graphqlWrapper: GraphqlWrapper) {
   }
 
   public getAppEventsForUser(): Observable<ApolloQueryResult<GetUser>>{
-    return this.apollo.query<GetUser>({
+    return this._graphqlWrapper.query<GetUser>({
       query: USER_APP_EVENTS
     });
   }
