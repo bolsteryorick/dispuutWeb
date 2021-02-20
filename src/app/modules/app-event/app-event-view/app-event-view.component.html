@@ -1,7 +1,8 @@
 <p>App event</p>
-<div class="container">
+<app-spinner *ngIf="!showData"></app-spinner>
+<div *ngIf="showData" class="container">
     <div class="row">
-        <div *ngIf="showData"  class="col-sm-4" style="word-wrap: break-word;">
+        <div class="col-sm-4" style="word-wrap: break-word;">
             <app-edit-in-place
                 [data]='appEvent.name' [styling]='appEventNameStyling' [validators]='eventNameValidators' 
                 [errorMessage]="eventNameMessage" (focusOut)='saveEventName($event)' [editPossible]='isAdminOfGroup'>

@@ -14,6 +14,7 @@ import { AttendeeListComponent } from './reusable-attendee-list/attendee-list/at
 import { EditInPlaceComponent } from './editing/edit-in-place/edit-in-place.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AutoFocusDirective } from './editing/directives/auto-focus.directive';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 
 
@@ -29,7 +30,8 @@ import { AutoFocusDirective } from './editing/directives/auto-focus.directive';
     AttendeeListItemComponent,
     AttendeeListComponent,
     EditInPlaceComponent,
-    AutoFocusDirective
+    AutoFocusDirective,
+    SpinnerComponent
   ],
   imports: [
     CommonModule,
@@ -48,7 +50,8 @@ import { AutoFocusDirective } from './editing/directives/auto-focus.directive';
     MemberListComponent,
     AttendeeListItemComponent,
     AttendeeListComponent,
-    EditInPlaceComponent
+    EditInPlaceComponent,
+    SpinnerComponent
   ]
 })
 export class CommonAppModule { }

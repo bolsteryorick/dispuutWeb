@@ -16,6 +16,7 @@ export class AttendeeListComponent implements OnInit {
 
   @Input() appEventId!: string;
   @Input() editPossible: boolean = false;
+  showData: boolean = false;
   attendees: Attendee[] = [];
   private _userId: string = "";
   isAdminOfGroup: boolean = false;
@@ -32,6 +33,7 @@ export class AttendeeListComponent implements OnInit {
     request.subscribe((result: ApolloQueryResult<GetAppEvent>) => {
       this.attendees = result.data.getAppEvent.attendees;
       this.isAttendingEvent = this.userIsAttendingEvent();
+      this.showData = true;
     },
     (error: HttpErrorResponse) => {
       console.log(error);
@@ -46,6 +48,7 @@ export class AttendeeListComponent implements OnInit {
   }
 
   joinLeaveEvent(): void{
+    this.showData = false;
     if(this.isAttendingEvent){
       let attendeeId = this.attendees.find(m => m.user.id == this._userId)!.id;
       this._attendeeService.leaveEvent(attendeeId).subscribe(() => {
