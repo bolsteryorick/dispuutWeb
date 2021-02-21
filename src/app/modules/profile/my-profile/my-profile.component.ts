@@ -16,6 +16,7 @@ export class MyProfileComponent implements OnInit {
   public userName: string = "";
   public email: string = "";
   public contacts: Contact[] = [];
+  loading: boolean = true;
   constructor(
     private _profileService: ProfileService,
     private _router: Router    
@@ -26,6 +27,7 @@ export class MyProfileComponent implements OnInit {
       this.userName = data.data.getUser.userName;
       this.email = data.data.getUser.email;
       this.contacts = data.data.getUser.contacts;
+      this.loading = false;
     }, (error: HttpErrorResponse) => {
       console.log(error);
     });

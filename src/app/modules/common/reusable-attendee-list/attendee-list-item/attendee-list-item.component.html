@@ -1,7 +1,12 @@
 <li>
     <ul>
-        <li (click)="goToOtherProfile()">{{attendee.user.userName}}</li>
-        <li>{{getPaidText()}} <button *ngIf="showChangePaidStatus()" (click)='updateAttendee(attendee.id, !attendee.paid)'>change</button></li>
-        <li *ngIf="showDeleteAttendee()"><button (click)='deleteAttendee(attendee.id)'>Delete</button></li>
+        <li (click)="goToOtherProfile()">{{wa.attendee.user.userName}}</li>
+        <li>{{getPaidText()}} <button *ngIf="showChangePaidStatus()" [attr.disabled]="wa.paidButtonDisabled == true ? true : null" (click)='updateAttendee(wa.attendee.id, !wa.attendee.paid)'>change</button></li>
+        <li *ngIf="showDeleteAttendee()">
+            <app-confirm-dialog
+                [modalId]="'delete-attendee-modal'"
+                [title]="'Delete attendee'" [modalButtonText]="'Delete'" [text]="'Are you sure you want to delete this attendee?'"
+                [confirmButtonText]="'Delete'" [cancelButtonText]="'Cancel'" (confirm)="deleteAttendee(wa.attendee.id)"></app-confirm-dialog>
+        </li>
     </ul>
 </li>

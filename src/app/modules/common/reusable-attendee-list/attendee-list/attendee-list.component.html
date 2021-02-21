@@ -1,8 +1,9 @@
 
-<app-spinner *ngIf="!showData"></app-spinner>
-<ul *ngIf="showData" class="viewport">
-    <div *ngFor="let attendee of attendees">
-        <app-attendee-list-item [attendee]="attendee" [editPossible]="editPossible" (update)="updatePaidAttendee($event)" (delete)="deleteAttendee($event)" ></app-attendee-list-item>
-    </div>
-</ul>
-<button class="mat-raised-button" (click)='joinLeaveEvent()'>{{joinLeaveButtonText()}}</button>
+<app-spinner-wrapper [showSpinner]="!showData" >
+    <ul class="viewport">
+        <div *ngFor="let wa of wrappedAttendees">
+            <app-attendee-list-item [wa]="wa" [editPossible]="editPossible" (update)="updatePaidAttendee($event)" (delete)="deleteAttendee($event)" ></app-attendee-list-item>
+        </div>
+    </ul>
+    <button class="mat-raised-button" (click)='joinLeaveEvent()'>{{joinLeaveButtonText()}}</button>
+</app-spinner-wrapper>

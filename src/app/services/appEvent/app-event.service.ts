@@ -4,6 +4,7 @@ import { Apollo } from 'apollo-angular';
 import { Observable } from 'rxjs';
 import { CreateAppEvent } from 'src/app/models/event-models/create-app-event';
 import { GetAppEvent } from 'src/app/models/event-models/get-app-event';
+import { UpdateAppEvent } from 'src/app/models/event-models/update-app-event';
 import { GraphqlWrapper } from '../graphql-wrapper.service';
 import { AppEventQueries } from './app-event-queries';
 
@@ -51,8 +52,8 @@ export class AppEventService {
     description?: string,
     maxAttendees?: number,
     startTime?: Date,
-    endTime?: Date}){
-      this._graphqlWrapper.mutate({
+    endTime?: Date}) :Observable<FetchResult<UpdateAppEvent>>{
+      return this._graphqlWrapper.mutate({
         mutation: AppEventQueries.UpdateAppEventMutation,
         variables: {
           id: update.id,
@@ -62,7 +63,6 @@ export class AppEventService {
           endTime: update.endTime,
           maxAttendees: update.maxAttendees,
         }
-      })
-      .subscribe();
+      });
     }
 }

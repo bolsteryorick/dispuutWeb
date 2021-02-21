@@ -3,26 +3,27 @@
 <div *ngIf="showData" class="container">
     <div class="row">
         <div class="col-sm-4" style="word-wrap: break-word;">
-            <app-edit-in-place
-                [data]='appEvent.name' [styling]='appEventNameStyling' [validators]='eventNameValidators' 
-                [errorMessage]="eventNameMessage" (focusOut)='saveEventName($event)' [editPossible]='isAdminOfGroup'>
-            </app-edit-in-place>
+            <app-spinner-wrapper [showSpinner]="loadingEventValue" >
+                <app-edit-in-place
+                    [data]='appEvent.name' [styling]='appEventNameStyling' [validators]='eventNameValidators' 
+                    [errorMessage]="eventNameMessage" (focusOut)='saveEventName($event)' [editPossible]='isAdminOfGroup'>
+                </app-edit-in-place>
 
-            <app-edit-in-place
-                [data]='appEvent.description' [textArea]='true' [validators]='eventDescriptionValidators' 
-                [errorMessage]="eventDescriptionMessage" (focusOut)='saveEventDescription($event)' [editPossible]='isAdminOfGroup'>
-            </app-edit-in-place>
+                <app-edit-in-place
+                    [data]='appEvent.description' [textArea]='true' [validators]='eventDescriptionValidators' 
+                    [errorMessage]="eventDescriptionMessage" (focusOut)='saveEventDescription($event)' [editPossible]='isAdminOfGroup'>
+                </app-edit-in-place>
 
-            <app-edit-in-place
-                [data]='getMaxAttendees()' [type]='maxAttendeesType' [validators]='maxAttendeesValidators' 
-                [errorMessage]="maxAttendeesMessage" (focusOut)='saveMaxAttendees($event)' [editPossible]='isAdminOfGroup'>
-            </app-edit-in-place>
+                <app-edit-in-place
+                    [data]='getMaxAttendees()' [type]='maxAttendeesType' [validators]='maxAttendeesValidators' 
+                    [errorMessage]="maxAttendeesMessage" (focusOut)='saveMaxAttendees($event)' [editPossible]='isAdminOfGroup'>
+                </app-edit-in-place>
 
-            <app-event-date-edit
-                [appEventId]='appEventId' [startDateTime]='appEvent.startTime' 
-                [endDateTime]='appEvent.endTime' [editPossible]='isAdminOfGroup'>
-            </app-event-date-edit>
-
+                <app-event-date-edit
+                    [appEventId]='appEventId' [startDateTime]='appEvent.startTime' 
+                    [endDateTime]='appEvent.endTime' [editPossible]='isAdminOfGroup'>
+                </app-event-date-edit>
+            </app-spinner-wrapper>
         </div>
         <div *ngIf="showData" class="col-sm-4">
             <h1>Members</h1>

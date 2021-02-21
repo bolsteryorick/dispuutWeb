@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Attendee } from 'src/app/models/app-models/attendee';
 import { UserService } from 'src/app/services/authentication/user.service';
+import { AttendeeWrapper } from '../attendee-list/models/attendee-wrapper';
 import { IAttendeeUpdate } from '../attendee-update';
 
 @Component({
@@ -9,9 +10,9 @@ import { IAttendeeUpdate } from '../attendee-update';
   templateUrl: './attendee-list-item.component.html',
   styleUrls: ['./attendee-list-item.component.scss']
 })
-export class AttendeeListItemComponent implements OnInit {
+export class AttendeeListItemComponent implements OnInit{
 
-  @Input() attendee!: Attendee;
+  @Input() wa!: AttendeeWrapper;
   @Input() editPossible: boolean = false;
   @Output() delete: EventEmitter<string> = new EventEmitter<string>();
   @Output() update: EventEmitter<IAttendeeUpdate> = new EventEmitter<IAttendeeUpdate>();
@@ -26,11 +27,11 @@ export class AttendeeListItemComponent implements OnInit {
   ngOnInit(): void {}
 
   getPaidText(): string{
-    return this.attendee.paid ? "paid" : "not paid";
+    return this.wa.attendee.paid ? "paid" : "not paid";
   }
 
   showDeleteAttendee(){
-    return this.editPossible && this.attendee.user.id != this._userId;
+    return this.editPossible && this.wa.attendee.user.id != this._userId;
   }
 
   showChangePaidStatus(){
@@ -42,16 +43,15 @@ export class AttendeeListItemComponent implements OnInit {
   }
 
   updateAttendee(attendeeId: string, paid: boolean){
+    this.wa.paidButtonDisabled = true;
     let attendeeUpdate : IAttendeeUpdate = {
       attendeeId: attendeeId,
       paid: paid
     }
-    this.attendee.paid = paid;
     this.update.emit(attendeeUpdate);
   }
 
   goToOtherProfile(){
-    console.log(this.attendee);
-    this._router.navigate([`/profile/profile/${this.attendee.user.id}`]);
+    this._router.navigate([`/profile/profile/${this.wa.attendee.user.id}`]);
   }
 }

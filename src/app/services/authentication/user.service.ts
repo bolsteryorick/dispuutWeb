@@ -25,7 +25,7 @@ export class UserService {
   public accessTokenExpired(): boolean{
     const token = this.getAccessToken();
     if(token == null){
-      return false;
+      return true;
     }
     return this.jwtHelper.isTokenExpired(token);
   }
@@ -60,18 +60,23 @@ export class UserService {
     return refreshToken;
   }
 
+  
   public logout(): void{
+    this.removeAllLocalStorage();  
+    // todo remove refresh token entry in database
+    this._router.navigate(['/']);
+  }
+
+  public removeAllLocalStorage(): void{
     localStorage.removeItem(this._accessTokenKey);
     localStorage.removeItem(this._refreshTokenKey);
     localStorage.removeItem(this._appInstanceIdKey);
-    // todo remove refresh token entry in database
-    this._router.navigate(['/']);
   }
 
   public refreshTokenExpired(): boolean{
     const token = this.getRefreshToken();
     if(token == null){
-      return false;
+      return true;
     }
     return this.jwtHelper.isTokenExpired(token);
   }

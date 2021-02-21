@@ -33,6 +33,8 @@ export class AppEventViewComponent implements OnInit {
   public readonly maxAttendeesMessage: string = AppEventConstants.maxAttendeesMessage;
   public readonly appEventNameStyling = AppEventConstants.appEventNameStyling;
 
+
+  loadingEventValue: boolean = false;
   maxAttendeesType = "number";
 
   constructor(
@@ -56,7 +58,6 @@ export class AppEventViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("app event view component request")
     const request = this._appEventService.getAppEventData(this.appEventId);
     request.subscribe((result: ApolloQueryResult<GetAppEvent>) => {
       this.appEvent = result.data.getAppEvent;
@@ -70,18 +71,27 @@ export class AppEventViewComponent implements OnInit {
   }
 
   saveEventName(value: string){
+    this.loadingEventValue = true;
     this.appEvent.name = value;
-    this._appEventService.updateAppEvent({id: this.appEventId, name: value});
+    this._appEventService.updateAppEvent({id: this.appEventId, name: value}).subscribe(() => {
+      this.loadingEventValue = false;
+    });
   }
 
   saveEventDescription(value: string){
+    this.loadingEventValue = true;
     this.appEvent.description = value;
-    this._appEventService.updateAppEvent({id: this.appEventId, description: value});
+    this._appEventService.updateAppEvent({id: this.appEventId, description: value}).subscribe(() => {
+      this.loadingEventValue = false;
+    });
   }
 
   saveMaxAttendees(value: string){
+    this.loadingEventValue = true;
     this.appEvent.maxAttendees = +value;
-    this._appEventService.updateAppEvent({id: this.appEventId, maxAttendees: +value});
+    this._appEventService.updateAppEvent({id: this.appEventId, maxAttendees: +value}).subscribe(() => {
+      this.loadingEventValue = false;
+    });
   }
 
   private userisAdminOfGroup() : boolean{

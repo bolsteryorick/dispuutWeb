@@ -4,13 +4,19 @@
 <div *ngIf="showData" class="container">
     <div class="row">
         <div class="col-sm-4" style="word-wrap: break-word;">
-            <app-edit-in-place 
-                [data]='group.name' [styling]='groupNameStyling' [validators]='groupNameValidators' 
-                [errorMessage]="groupNameMessage" (focusOut)='saveGroupName($event)' [editPossible]='isAdminOfGroup'></app-edit-in-place>
-            <app-edit-in-place 
-                [data]='group.description' [textArea]='true' [validators]='groupDescriptionValidators' 
-                [errorMessage]="groupDescriptionMessage" (focusOut)='saveGroupDescription($event)' [editPossible]='isAdminOfGroup'></app-edit-in-place>
-                <button class="mat-raised-button" (click)='leaveGroup()'>Leave Group</button>
+            <app-spinner-wrapper [showSpinner]="loadingGroupValue" >
+                <app-edit-in-place 
+                    [data]='group.name' [styling]='groupNameStyling' [validators]='groupNameValidators' 
+                    [errorMessage]="groupNameMessage" (focusOut)='saveGroupName($event)' [editPossible]='isAdminOfGroup'></app-edit-in-place>
+                <app-edit-in-place 
+                    [data]='group.description' [textArea]='true' [validators]='groupDescriptionValidators' 
+                    [errorMessage]="groupDescriptionMessage" (focusOut)='saveGroupDescription($event)' [editPossible]='isAdminOfGroup'></app-edit-in-place>
+                <app-confirm-dialog 
+                    [modalId]="'leave-group-modal'"
+                    [title]="'Leave Group'" [modalButtonText]="'Leave Group'" [text]="'Are you sure you want to leave this group?'"
+                    [confirmButtonText]="'Leave'" [cancelButtonText]="'Cancel'" (confirm)="leaveGroup()"></app-confirm-dialog>
+            </app-spinner-wrapper>
+            
         </div>
         <div class="col-sm-4">
             <h1>AppEvents</h1>

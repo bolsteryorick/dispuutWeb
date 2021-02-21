@@ -12,6 +12,7 @@ export class MemberListComponent implements OnInit {
   @Input() members!: Member[];
   @Input() userIsAdmin: boolean = false;
   @Input() inGroupView: boolean = false;
+  loading : boolean = false;
   constructor(
     private _memberService: MemberService
   ) { }
@@ -20,7 +21,10 @@ export class MemberListComponent implements OnInit {
   }
 
   deleteMember(memberId: string){
-    this.members = this.members.filter(x => x.id != memberId);
-    this._memberService.deleteMember(memberId).subscribe();
+    this.loading = true;
+    this._memberService.deleteMember(memberId).subscribe(() =>{
+      this.members = this.members.filter(x => x.id != memberId);
+      this.loading = false;
+    });
   }
 }

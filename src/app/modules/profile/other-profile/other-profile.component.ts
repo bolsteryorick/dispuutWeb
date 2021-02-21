@@ -15,7 +15,7 @@ export class OtherProfileComponent implements OnInit {
   private otherUserId: string = "";
   public email: string = "";
   public userName: string = "";
-
+  loading: boolean = true;
   constructor(
     private _route: ActivatedRoute,
     private _profileService: ProfileService
@@ -28,6 +28,7 @@ export class OtherProfileComponent implements OnInit {
     request.subscribe((result: ApolloQueryResult<GetOtherUser>) => {
       this.email = result.data.getOtherUser.email;
       this.userName = result.data.getOtherUser.userName;
+      this.loading = false;
     },
     (error: HttpErrorResponse) => {
       console.log(error);

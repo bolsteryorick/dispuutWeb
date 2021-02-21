@@ -1,5 +1,7 @@
-<ul class="viewport">
-    <div *ngFor="let member of members">
-        <app-member-list-item [member]="member" [editPossible]="userIsAdmin && inGroupView" (delete)="deleteMember($event)"></app-member-list-item>
-    </div>
-</ul>
+<app-spinner-wrapper [showSpinner]="loading" >
+    <ul class="viewport">
+        <div *ngFor="let member of members">
+            <app-member-list-item [member]="member" [editPossible]="userIsAdmin && inGroupView" (delete)="deleteMember($event)"></app-member-list-item>
+        </div>
+    </ul>
+</app-spinner-wrapper>

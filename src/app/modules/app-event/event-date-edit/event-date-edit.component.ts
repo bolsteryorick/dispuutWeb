@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { AppEventConstants } from 'src/app/constants/app-event-constants';
 import { AppEventService } from 'src/app/services/appEvent/app-event.service';
@@ -27,6 +27,7 @@ export class EventDateEditComponent implements OnInit {
   startTimeControl!: FormControl;
   endDateControl!: FormControl;
   endTimeControl!: FormControl;
+  loading = false;
   constructor(
     private _appEventService: AppEventService) { }
   
@@ -73,7 +74,10 @@ export class EventDateEditComponent implements OnInit {
   }
 
   private updateStartDateTime(){
-    this._appEventService.updateAppEvent({id: this.appEventId, startTime: this.startDateTime});
+    this.loading = true;
+    this._appEventService.updateAppEvent({id: this.appEventId, startTime: this.startDateTime}).subscribe(() => {
+      this.loading = false;
+    });
   }
 
   saveEndDate(value: string){
@@ -87,7 +91,10 @@ export class EventDateEditComponent implements OnInit {
   }
 
   private updateEndDateTime(){
-    this._appEventService.updateAppEvent({id: this.appEventId, endTime: this.endDateTime});
+    this.loading = true;
+    this._appEventService.updateAppEvent({id: this.appEventId, endTime: this.endDateTime}).subscribe(() => {
+      this.loading = false;
+    });
   }
 
   private updateDateOnDateTime(newDateString: string, oldDateTime: Date): Date{

@@ -15,6 +15,8 @@ import { EditInPlaceComponent } from './editing/edit-in-place/edit-in-place.comp
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AutoFocusDirective } from './editing/directives/auto-focus.directive';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { SpinnerWrapperComponent } from './spinner-wrapper/spinner-wrapper.component';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 
 
@@ -31,7 +33,9 @@ import { SpinnerComponent } from './spinner/spinner.component';
     AttendeeListComponent,
     EditInPlaceComponent,
     AutoFocusDirective,
-    SpinnerComponent
+    SpinnerComponent,
+    SpinnerWrapperComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     CommonModule,
@@ -51,7 +55,9 @@ import { SpinnerComponent } from './spinner/spinner.component';
     AttendeeListItemComponent,
     AttendeeListComponent,
     EditInPlaceComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    SpinnerWrapperComponent,
+    ConfirmDialogComponent
   ]
 })
 export class CommonAppModule { }

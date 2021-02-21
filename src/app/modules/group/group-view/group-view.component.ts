@@ -31,6 +31,7 @@ export class GroupViewComponent implements OnInit {
   public readonly groupDescriptionMessage: string = GroupConstants.groupDescriptionMessage;
   public readonly groupNameStyling = GroupConstants.groupNameStyling;
   groupName = "group name";
+  loadingGroupValue: boolean = false;
 
   constructor(
     private route: ActivatedRoute, 
@@ -74,6 +75,7 @@ export class GroupViewComponent implements OnInit {
   }
 
   leaveGroup(){
+    this.showData = false;
     let memberId = this.group.members.find(m => m.userId == this.userId)!.id;
     console.log(memberId)
     this._groupService.leaveGroup(memberId).subscribe(() => {
@@ -84,13 +86,19 @@ export class GroupViewComponent implements OnInit {
   }
 
   saveGroupName(value: string){
+    this.loadingGroupValue = true;
     this.group.name = value;
-    this._groupService.updateGroup(this.groupId, this.group.name, null).subscribe();
+    this._groupService.updateGroup(this.groupId, this.group.name, null).subscribe(() => {
+      this.loadingGroupValue = false;
+    });
   }
 
   saveGroupDescription(value: string){
+    this.loadingGroupValue = true;
     this.group.description = value;
-    this._groupService.updateGroup(this.groupId, null, this.group.description).subscribe();
+    this._groupService.updateGroup(this.groupId, null, this.group.description).subscribe(() => {
+      this.loadingGroupValue = false;
+    });
   }
 
 }
