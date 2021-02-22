@@ -9,11 +9,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { GroupAddMembersComponent } from './group-add-members/group-add-members.component';
 import { ContactSelectComponent } from './contact-select/contact-select.component';
+import { GroupsOverviewComponent } from './groups-overview/groups-overview.component';
 
 
 
 @NgModule({
-  declarations: [GroupBaseComponent, GroupViewComponent, GroupCreationComponent, GroupAddMembersComponent, ContactSelectComponent],
+  declarations: [GroupBaseComponent, GroupViewComponent, GroupCreationComponent, GroupAddMembersComponent, ContactSelectComponent, GroupsOverviewComponent],
   imports: [
     CommonModule,
     GroupRoutingModule,

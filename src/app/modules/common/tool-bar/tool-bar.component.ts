@@ -28,4 +28,8 @@ export class ToolBarComponent implements OnInit {
   profile(){
     this._router.navigate(['/profile']);
   }
+
+  groupOverview(){
+    this._router.navigate([`/group/overview`])
+  }
 }

@@ -68,7 +68,9 @@ export class GroupQueries{
             getGroup(id: $groupId){
                 members{
                     user{
+                        userName
                         email
+                        id
                     }
                 }
             }
@@ -87,5 +89,17 @@ export class GroupQueries{
             ){
                 id,
             }
+        }`;
+
+    public static UserGroups = gql`
+        query{
+            getUser{
+            memberships{
+            group{
+                name,
+                id
+            }
+            }
+        }
         }`;
 }

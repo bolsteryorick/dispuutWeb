@@ -1,0 +1,6 @@
+<p>groups-overview works!</p>
+<div class="viewport">
+    <ul>
+        <li *ngFor="let group of groups" (click)="groupClicked(group.id)">{{group.name}}</li>
+    </ul>
+</div>

@@ -6,6 +6,7 @@ import { GetGroup } from 'src/app/models/group-models/get-group';
 import { LeaveGroup } from 'src/app/models/group-models/leave-group';
 import { UpdateGroup } from 'src/app/models/group-models/update-group';
 import { CreateMembers } from 'src/app/models/member-models/create-members';
+import { GetUser } from 'src/app/models/user-models/get-user';
 import { GraphqlWrapper } from '../graphql-wrapper.service';
 import { GroupQueries } from './group-queries';
 
@@ -82,6 +83,12 @@ export class GroupService {
         name: name,
         description: description
       }
+    });
+  }
+
+  public getGroupsForUser(): Observable<ApolloQueryResult<GetUser>>{
+    return this._graphqlWrapper.query<GetUser>({
+      query: GroupQueries.UserGroups
     });
   }
 }

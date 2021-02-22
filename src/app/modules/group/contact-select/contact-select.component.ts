@@ -7,6 +7,9 @@ import { GroupConstants } from 'src/app/constants/group-constants';
 import { GetUser } from '../../../models/user-models/get-user';
 import { ContactItem } from '../group-creation/models/contactItem';
 import { ContactsService } from '../../../services/contact/contacts.service';
+import { GetGroup } from 'src/app/models/group-models/get-group';
+import { GroupService } from 'src/app/services/group/group.service';
+import { GetAllContacts } from 'src/app/models/contact-models/get-all-contacts';
 
 @Component({
   selector: 'app-contact-select',
@@ -30,14 +33,14 @@ export class ContactSelectComponent implements OnInit {
   ngOnInit(): void {
     this.contactSelectControl = new FormControl(null, this.contactsValidators)
 
-    const request = this._contactsService.getUserContactsInformation();
-    request.subscribe((result: ApolloQueryResult<GetUser>) => {
-      let contacts = result.data.getUser.contacts?.map(x => <ContactItem>{userId : x.contactUserId, email: x.user.userName});
-      this.contacts = contacts.filter(x => !this.alreadyUsedEmails.includes(x.email))
+    const request = this._contactsService.getAllContacts();
+    request.subscribe((result: ApolloQueryResult<GetAllContacts>) => {
+      console.log(result);
+      this.contacts = result.data.getAllContacts?.map(x => <ContactItem>{userId : x.contactUserId, email: x.emailAddress});
     },
     (error: HttpErrorResponse) => {
       console.log(error);
-    });
+    })
 
     this.dropdownSettings = {
       singleSelection: false,

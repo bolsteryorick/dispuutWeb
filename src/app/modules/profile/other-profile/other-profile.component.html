@@ -9,4 +9,5 @@
     
     Username:
     <p>{{userName}}</p>
+    <button *ngIf="!isContact" type="button" class="mat-raised-button" (click)="addAsContact()">Add as contact</button>
 </app-spinner-wrapper>
