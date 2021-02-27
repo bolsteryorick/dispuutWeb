@@ -51,7 +51,8 @@ export class UserService {
   }
 
   public getAccessToken(): string | null{
-    return localStorage.getItem(this._accessTokenKey);
+    let a = localStorage.getItem(this._accessTokenKey); 
+    return a;
   }
 
   public getRefreshToken(): string{

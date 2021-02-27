@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { BaseUrl } from 'src/app/constants/baseUrl';
 import { RefreshTokenValues } from 'src/app/models/auth-models/refresh-token-values';
 import { TokenObject } from 'src/app/modules/authentication/login/models/token-object';
@@ -17,16 +18,8 @@ export class RefreshService {
     private _userService: UserService) {
     this.url = `${BaseUrl.baseUrl}users/refreshtoken`;
   }
-  
-  public async ensureAccessToken(): Promise<void>{
-    if(!this._userService.accessTokenExpired) return;
-    const request = this.refreshToken();
-    const tokenObject = await request.toPromise();
-    this._userService.setAccessToken(tokenObject.accessToken);
-    this._userService.setRefreshToken(tokenObject.refreshToken);
-  }
 
-  private refreshToken(): Observable<TokenObject> {
+  public refreshToken(): Observable<TokenObject> {
     if(this._userService.refreshTokenExpired()){
       this._userService.logout();
     }
@@ -38,9 +31,10 @@ export class RefreshService {
     const headers = new HttpHeaders()
       .set('content-type', 'application/json')
       .set('Access-Control-Allow-Origin', '*');
-    return this._httpClient.post<TokenObject>(this.url, JSON.stringify(refreshTokenValues), { headers: headers });
+    return this._httpClient.post<TokenObject>(this.url, JSON.stringify(refreshTokenValues), { headers: headers }).pipe(tap((tokens: TokenObject) => {
+        this._userService.setAccessToken(tokens.accessToken);
+        this._userService.setRefreshToken(tokens.refreshToken);
+    }));
   }
-
-
   
 }

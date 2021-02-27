@@ -21,7 +21,8 @@ export class AuthService {
       this._userService.removeAllLocalStorage();
       return false;
     } 
-    await this._refreshService.ensureAccessToken();
+    return true;
+    // await this._refreshService.ensureAccessToken();
     return !this._userService.accessTokenExpired();
   }
 }

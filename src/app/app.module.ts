@@ -9,7 +9,8 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { CommonAppModule } from './modules/common/common-app.module';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { GraphQLModule } from './graphql.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpErrorInterceptor } from './interceptors/http-error-interceptor';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,13 @@ import { HttpClientModule } from '@angular/common/http';
     GraphQLModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
