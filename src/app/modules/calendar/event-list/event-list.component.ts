@@ -36,6 +36,7 @@ export class EventListComponent implements OnInit, OnDestroy{
   
   private setDateEventInfoDict(userData: GetUser): void{
     let groups = userData.getUser.memberships.map(event => event.group);
+    console.log(groups)
     this.dateEventInfoDict = this._eventInfoService.getDateEvents(groups);
   }
 

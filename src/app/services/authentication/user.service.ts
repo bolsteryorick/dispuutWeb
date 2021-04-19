@@ -10,15 +10,22 @@ export class UserService {
   private readonly _accessTokenKey : string = "accessToken";
   private readonly _refreshTokenKey : string = "refreshToken";
   private readonly _appInstanceIdKey : string = "appInstanceId";
-  constructor(private jwtHelper: JwtHelperService,
+  private readonly _userIdKey : string = "userIdKey";
+  constructor(private _jwtHelper: JwtHelperService,
     private _router: Router) { }
 
   public userId(): string {
-    const token = this.getAccessToken();
-    if(token == null){
-      return "";
+    let userId = localStorage.getItem(this._userIdKey);
+    if(userId == null){
+      userId = this.getUserIdFromToken();
     }
-    let decodedToken = this.jwtHelper.decodeToken(token);
+    return userId;
+  }
+
+  private getUserIdFromToken(): string{
+    const accessToken = localStorage.getItem(this._accessTokenKey) ?? "";
+    let decodedToken = this._jwtHelper.decodeToken(accessToken);
+    localStorage.setItem(this._userIdKey, decodedToken.id);
     return decodedToken.id;
   }
 
@@ -27,7 +34,7 @@ export class UserService {
     if(token == null){
       return true;
     }
-    return this.jwtHelper.isTokenExpired(token);
+    return this._jwtHelper.isTokenExpired(token);
   }
 
   public generateAppInstanceId(): string{
@@ -44,6 +51,8 @@ export class UserService {
 
   public setAccessToken(accessToken: string){
     localStorage.setItem(this._accessTokenKey, accessToken);
+    let decodedToken = this._jwtHelper.decodeToken(accessToken);
+    localStorage.setItem(this._userIdKey, decodedToken.id);
   }
 
   public setRefreshToken(refreshToken: string){
@@ -51,8 +60,7 @@ export class UserService {
   }
 
   public getAccessToken(): string | null{
-    let a = localStorage.getItem(this._accessTokenKey); 
-    return a;
+    return localStorage.getItem(this._accessTokenKey); 
   }
 
   public getRefreshToken(): string{
@@ -63,15 +71,25 @@ export class UserService {
 
   
   public logout(): void{
-    this.removeAllLocalStorage();  
-    // todo remove refresh token entry in database
+    this.removeAllLocalStorage();
+    this.loadJsFile("https://apis.google.com/js/platform.js");
+    let event = new Event("signOut");
+    document.dispatchEvent(event);
     this._router.navigate(['/']);
   }
+
+  public loadJsFile(url: string) {  
+    let node = document.createElement('script');  
+    node.src = url;  
+    node.type = 'text/javascript';  
+    document.getElementsByTagName('head')[0].appendChild(node);  
+  }  
 
   public removeAllLocalStorage(): void{
     localStorage.removeItem(this._accessTokenKey);
     localStorage.removeItem(this._refreshTokenKey);
     localStorage.removeItem(this._appInstanceIdKey);
+    localStorage.removeItem(this._userIdKey);
   }
 
   public refreshTokenExpired(): boolean{
@@ -79,7 +97,7 @@ export class UserService {
     if(token == null){
       return true;
     }
-    return this.jwtHelper.isTokenExpired(token);
+    return this._jwtHelper.isTokenExpired(token);
   }
 
   private getNewAppInstanceId(): string{

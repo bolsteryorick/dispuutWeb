@@ -2,7 +2,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BaseUrl } from 'src/app/constants/baseUrl';
-import { UserRegisterCredentials } from 'src/app/models/auth-models/userCredentials';
+import { GoogleRegisterValues, UserRegisterCredentials } from 'src/app/models/auth-models/userCredentials';
+import { TokenObject } from 'src/app/modules/authentication/login/models/token-object';
 
 @Injectable({
   providedIn: 'root'
@@ -19,5 +20,12 @@ export class RegistrationService {
       .set('content-type', 'application/json')
       .set('Access-Control-Allow-Origin', '*');
     return this.httpClient.post<boolean>(this.url, JSON.stringify(userCredentials), { headers: headers });
+  }
+
+  public registerWithGoogle(googleRegisterValues: GoogleRegisterValues): Observable<TokenObject> {
+    const headers = new HttpHeaders()
+      .set('content-type', 'application/json')
+      .set('Access-Control-Allow-Origin', '*');
+    return this.httpClient.post<TokenObject>(this.url + `/google`, JSON.stringify(googleRegisterValues), { headers: headers });
   }
 }
