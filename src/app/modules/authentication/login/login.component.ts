@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
       let registerValues : GoogleRegisterValues = { 
         Token : evt.detail, 
         AppInstanceId: this._userService.generateAppInstanceId()}
-      this._registrationService.registerWithGoogle(registerValues).subscribe(
+      this._registrationService.registerAndLoginWithGoogle(registerValues).subscribe(
         (token: TokenObject) => {
           console.log(token);
           this._userService.setAccessToken(token.accessToken);

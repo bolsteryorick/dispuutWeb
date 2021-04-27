@@ -8,62 +8,38 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <meta name="google-signin-client_id" content="338252237275-or94u76grhpjados1v3au87sa5foljpu.apps.googleusercontent.com">
   <script>
+    // called when user clicks custom "Sign in with Google" button
     function onSignIn(googleUser) {
       gapi.load('auth2', function() {
         
+        // make auth instance
         auth2 = gapi.auth2.getAuthInstance({
           client_id: '338252237275-or94u76grhpjados1v3au87sa5foljpu.apps.googleusercontent.com',
           scope: 'https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.events'
         });
 
+        // extra scopes
         var options = new gapi.auth2.SigninOptionsBuilder();
-        options.setScope('https://www.googleapis.com/auth/contacts.readonly')
+        options.setScope('https://www.googleapis.com/auth/contacts.readonly https://www.googleapis.com/auth/calendar.events')
         googleUser = auth2.currentUser.get();
-            googleUser.grant(options).then(
-                function(success){
-                  auth2.grantOfflineAccess().then(signInCallback);
-                  console.log(JSON.stringify({message: "success", value: success}));
-                },
-                function(fail){
-                  alert(JSON.stringify({message: "fail", value: fail}));
-                });
-        // auth2.grantOfflineAccess().then(
-        //   function(authResult){
-        //     var options = new gapi.auth2.SigninOptionsBuilder();
-        //     options.setScope('https://www.googleapis.com/auth/contacts.readonly')
-            
-        //     googleUser = auth2.currentUser.get();
-        //     googleUser.grant(options).then(
-        //         function(success){
-        //           console.log(JSON.stringify({message: "success", value: success}));
-        //         },
-        //         function(fail){
-        //           alert(JSON.stringify({message: "fail", value: fail}));
-        //         });
-        //   }
-        // );
-        // auth2.grantOfflineAccess().then(signInCallback);
-      });
-    }
 
-    function signInCallback(authResult) {
-      if (authResult['code']) {
-
-        var options = new gapi.auth2.SigninOptionsBuilder();
-        options.setScope('https://www.googleapis.com/auth/contacts.readonly')
-        
-        googleUser = auth2.currentUser.get();
         googleUser.grant(options).then(
             function(success){
+              auth2.grantOfflineAccess().then(signInCallback);
               console.log(JSON.stringify({message: "success", value: success}));
-              let event = new CustomEvent("signedin", {detail: authResult['code']});
-              document.dispatchEvent(event);  
             },
             function(fail){
               alert(JSON.stringify({message: "fail", value: fail}));
             });
+      });
+    }
 
-              
+    function signInCallback(authResult) {
+      console.log("granted offline access (signincallback)")
+      if (authResult['code']) {
+        console.log(`Got code: ${authResult['code']}`)
+        let event = new CustomEvent("signedin", {detail: authResult['code']});
+              document.dispatchEvent(event);  
       } else {
         // There was an error.
       }

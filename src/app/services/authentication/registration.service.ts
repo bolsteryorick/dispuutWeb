@@ -12,20 +12,20 @@ export class RegistrationService {
 
   private url: string;
   constructor(private httpClient: HttpClient) {
-    this.url = `${BaseUrl.baseUrl}users/register`;
+    this.url = `${BaseUrl.baseUrl}users`;
   }
 
   public register(userCredentials: UserRegisterCredentials): Observable<boolean> {
     const headers = new HttpHeaders()
       .set('content-type', 'application/json')
       .set('Access-Control-Allow-Origin', '*');
-    return this.httpClient.post<boolean>(this.url, JSON.stringify(userCredentials), { headers: headers });
+    return this.httpClient.post<boolean>(this.url + `/register`, JSON.stringify(userCredentials), { headers: headers });
   }
 
-  public registerWithGoogle(googleRegisterValues: GoogleRegisterValues): Observable<TokenObject> {
+  public registerAndLoginWithGoogle(googleRegisterValues: GoogleRegisterValues): Observable<TokenObject> {
     const headers = new HttpHeaders()
       .set('content-type', 'application/json')
       .set('Access-Control-Allow-Origin', '*');
-    return this.httpClient.post<TokenObject>(this.url + `/google`, JSON.stringify(googleRegisterValues), { headers: headers });
+    return this.httpClient.post<TokenObject>(this.url + `/login/google`, JSON.stringify(googleRegisterValues), { headers: headers });
   }
 }
