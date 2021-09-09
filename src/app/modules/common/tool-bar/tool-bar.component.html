@@ -1,7 +1,10 @@
-<button class="mat-raised-button" (click)="home()">home</button>
-<div align="end">
-    <button class="mat-raised-button float-right" (click)="logout()">Logout</button>
-    <button class="mat-raised-button float-right" (click)="profile()">Profile</button>
-    <button class="mat-raised-button float-right" (click)="groupOverview()">Group overview</button>
+<div class="columns is-mobile is-centered has-text-centered no-extra">
+    <div class="column is-half no-extra">
+        <button class="button is-primary" (click)="home()">home</button>
+        <button class="button is-link" (click)="groupOverview()">Groups</button>
+    </div>
+    <div class="column is-half no-extra">
+        <button class="button is-info" (click)="profile()">Profile</button>
+        <button class="button is-danger" (click)="logout()">Logout</button>
+    </div>
 </div>
-

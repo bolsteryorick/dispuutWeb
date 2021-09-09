@@ -9,9 +9,15 @@ import { DateInfo } from '../../../calendar/event-list/models/date-info';
 export class EventListDayComponent implements OnInit {
 
   @Input() dateInfo!: DateInfo;
+  public isFirstOfMonth!: boolean;
+  public month!: string;
+  public dayHasEvents!: boolean;
   constructor() { }
 
   ngOnInit(): void {
+    this.isFirstOfMonth = this.dateInfo.date.getDate() == 1;
+    this.month = this.dateInfo.date.toLocaleString('default', { month: 'long' });
+    this.dayHasEvents = this.dateInfo.eventInfos != null && this.dateInfo.eventInfos.length > 0;
   }
 
 }

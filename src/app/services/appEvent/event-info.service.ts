@@ -17,10 +17,12 @@ export class EventInfoService {
       get:(index, count, success) => {
         const data = [];
         for (let i = index; i <= index + count - 1; i++) {
-          let dateOfIndex = new Date(new Date().setDate(new Date().getDate() - 31 + i)).toLocaleDateString();
-          let dateInfo = <DateInfo>{date : dateOfIndex}
-          if(dateEventInfoDict.hasOwnProperty(dateOfIndex)){
-            dateInfo.eventInfos = dateEventInfoDict[dateOfIndex];
+          let dateOfIndexString = new Date(new Date().setDate(new Date().getDate() - 31 + i)).toLocaleDateString();
+          let dateOfIndex = new Date(new Date().setDate(new Date().getDate() - 31 + i));
+
+          let dateInfo = <DateInfo>{date : dateOfIndex, dateString: dateOfIndexString}
+          if(dateEventInfoDict.hasOwnProperty(dateOfIndexString)){
+            dateInfo.eventInfos = dateEventInfoDict[dateOfIndexString];
           }
           data.push(dateInfo);
         }

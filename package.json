@@ -19,17 +19,18 @@
     "@angular/platform-browser": "~11.0.3",
     "@angular/platform-browser-dynamic": "~11.0.3",
     "@angular/router": "~11.0.3",
+    "@apollo/client": "^3.0.0",
     "@auth0/angular-jwt": "^5.0.2",
+    "apollo-angular": "^2.2.0",
     "bootstrap": "^4.5.3",
+    "bulma": "^0.9.3",
+    "graphql": "^15.0.0",
     "jquery": "^3.5.1",
     "ng-multiselect-dropdown": "^0.3.1",
     "ngx-ui-scroll": "^1.11.0-rc.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
-    "zone.js": "~0.10.2",
-    "apollo-angular": "^2.2.0",
-    "@apollo/client": "^3.0.0",
-    "graphql": "^15.0.0"
+    "zone.js": "~0.10.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1100.3",

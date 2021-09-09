@@ -1,4 +1,11 @@
 .viewport {
-    height: 600px;
+    height: 80vh !important;
     overflow-y: auto;
+    max-height: 1500px;
+}
+
+.scroll-style-1::-webkit-scrollbar
+{
+  width: 0px;
+  background-color: #F5F5F5;
 }
