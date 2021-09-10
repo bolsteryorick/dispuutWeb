@@ -17,6 +17,7 @@ import { AutoFocusDirective } from './editing/directives/auto-focus.directive';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { SpinnerWrapperComponent } from './spinner-wrapper/spinner-wrapper.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { EventListWeekComponent } from './reusable-event-list/event-list-week/event-list-week.component';
 
 
 
@@ -35,7 +36,8 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     AutoFocusDirective,
     SpinnerComponent,
     SpinnerWrapperComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    EventListWeekComponent
   ],
   imports: [
     CommonModule,

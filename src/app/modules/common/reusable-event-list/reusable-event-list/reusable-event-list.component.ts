@@ -11,7 +11,7 @@ import { EventInfoService } from '../../../../services/appEvent/event-info.servi
 export class ReusableEventListComponent implements OnInit {
 
   @Input() dateEventInfoDict!: { [date: string] : EventInfo[]; };
-  public dateInfosData!: IDatasource;
+  public weekInfosData!: IDatasource;
   constructor(
     private _eventInfoService: EventInfoService
   ) { 
@@ -19,7 +19,7 @@ export class ReusableEventListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dateInfosData = this._eventInfoService.getDataSource(this.dateEventInfoDict);
+    this.weekInfosData = this._eventInfoService.getDataSource(this.dateEventInfoDict);
   }
 
 } 

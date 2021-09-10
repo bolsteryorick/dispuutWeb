@@ -1,4 +1,8 @@
-<h3 (click)="eventClicked()">{{eventInfo.eventName}}</h3>
-<p (click)="groupClicked()">group: {{eventInfo.groupName}}</p>
-<p>{{eventInfo.startDate}} to {{eventInfo.endDate}}</p>
-<p>{{eventInfo.startTime}} to {{eventInfo.endTime}}</p>
+<div (click)="eventClicked()" class="columns is-mobile event-list-item">
+    <div class="column">
+        <p><b>{{eventInfo.eventName}}</b></p>
+        <p>{{startTime}} - {{eventInfo.endTime}}</p>
+    </div>
+</div>
+
+<!-- <p (click)="groupClicked()">group: {{eventInfo.groupName}}</p> -->

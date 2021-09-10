@@ -5,7 +5,6 @@ export interface EventInfo{
     eventId: string;
     eventName: string;
     groupName: string;
-    startTime: string;
     endTime: string;
     startDate: string;
     endDate: string;

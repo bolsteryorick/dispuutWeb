@@ -1,0 +1,5 @@
+<p class="week-separator">Week {{weekInfo.week}}, {{startWeekDateString}} - {{endWeekDateString}}</p>
+
+<div *ngFor="let dateInfo of dateInfos">
+    <app-event-list-day [dateInfo]="dateInfo"></app-event-list-day>
+</div>
