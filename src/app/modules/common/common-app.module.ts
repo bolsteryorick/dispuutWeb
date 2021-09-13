@@ -18,6 +18,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import { SpinnerWrapperComponent } from './spinner-wrapper/spinner-wrapper.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { EventListWeekComponent } from './reusable-event-list/event-list-week/event-list-week.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 
@@ -44,7 +45,8 @@ import { EventListWeekComponent } from './reusable-event-list/event-list-week/ev
     RouterModule,
     UiScrollModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FontAwesomeModule
   ],
   exports:[
     HomeNavBarComponent,

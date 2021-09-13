@@ -1,2 +1,42 @@
-<router-outlet></router-outlet>
-<button class="mat-raised-button" (click)="createGroup()">Create group</button>
+<div class="calendar-base-wrapper">
+    <router-outlet></router-outlet>
+
+    <div class="fab-wrapper" (click)="openModal()">
+        <label class="fab" for="fabCheckbox">
+            <fa-icon [icon]="faPlus"></fa-icon>
+        </label>
+    </div>
+
+    <div class="modal pick-group-modal" [ngClass]="{'is-active' : groupPickModalActive}">
+        <div class="modal-background" (click)="closeModal()"></div>
+        <div class="modal-content">
+            <div class="modal-card">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Create event for</p>
+                    <button type="button" class="close" (click)="closeModal()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </header>
+                <section class="modal-card-body scrollbar" id="scrollbar-style">
+                    <ul class="group-list">
+                        <li *ngFor="let group of groups" (click)="createEventForGroup(group.id)">
+                            <div class="card">
+                                {{group.name}} <fa-icon [icon]="faUsers"></fa-icon>
+                            </div>
+                        </li>
+                    </ul>
+                </section>
+                <footer class="modal-card-foot">
+                    <div class="new-group-button-wrapper">
+                        <div class="button new-group-button" (click)="createGroup()">
+                            <span class="add-group-text">Add Group</span>
+                            <span class="add-group-plus">
+                                <fa-icon [icon]="faPlusSquare"></fa-icon>
+                            </span>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+</div>

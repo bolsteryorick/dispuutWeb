@@ -1,0 +1,55 @@
+.toolbar{
+    padding:0px;
+    margin: 0px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.home{
+    font-size: large;
+    text-align: left;
+    padding: 5px 5px 5px 15px;
+}
+
+a, u {
+    text-decoration: none;
+    color: black;
+}
+
+a:active, u:active {
+    text-decoration: none;
+    color: #0645AD;
+}
+
+.toolbar-items{
+    width: 100%;
+}
+
+.home-activation{
+
+}
+
+.ellipsis{
+    font-size: large;
+    text-align: right;
+    padding: 5px 15px 5px 5px;
+}
+
+.settings{
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+.dropdown-trigger{
+    border-radius: 15px;
+    padding: 0 8px 0 8px;
+    color: gray;
+}
+
+.dropdown-trigger:active{
+    background-color: darkgray;
+}
+
+.dropdown-trigger:hover{
+    background-color: darkgray;
+    color: black;
+}

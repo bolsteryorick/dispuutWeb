@@ -7,16 +7,6 @@ import { Group } from '../../models/app-models/group';
 import moment from 'moment';
 import { WeekInfo } from 'src/app/modules/calendar/event-list/models/week-info';
 
-
-
-// export interface WeekInfo{
-//   eventInfos: EventInfo[];
-//   year: number;
-//   week: number;
-//   startDate: Date;
-//   endDate: Date;
-// }
-
 @Injectable({
   providedIn: 'root'
 })
@@ -124,9 +114,7 @@ export class EventInfoService {
       groupName: group.name,
       startDateTime: new Date(event.startTime),
       endDateTime: new Date(event.endTime),
-      endTime: new Date(event.endTime).toLocaleTimeString(),
       startDate: new Date(event.startTime).toLocaleDateString(),
-      endDate: new Date(event.endTime).toLocaleDateString(),
       groupId: group.id,
     };
   }

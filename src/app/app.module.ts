@@ -11,6 +11,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpErrorInterceptor } from './interceptors/http-error-interceptor';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { HttpErrorInterceptor } from './interceptors/http-error-interceptor';
      }
    }),
     GraphQLModule,
-    HttpClientModule
+    HttpClientModule,
+    FontAwesomeModule
   ],
   providers: [
     {

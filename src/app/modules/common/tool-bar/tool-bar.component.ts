@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
+import { faEllipsisV, faHome } from '@fortawesome/free-solid-svg-icons';
 import { UserService } from 'src/app/services/authentication/user.service';
 
 @Component({
@@ -9,27 +10,44 @@ import { UserService } from 'src/app/services/authentication/user.service';
 })
 export class ToolBarComponent implements OnInit {
 
+  faHome = faHome;
+  faEllipsisV = faEllipsisV;
+
+  dropdownIsActive:boolean = false;
+
   constructor(
     private _router: Router,
     private _userService: UserService
-    ) { }
+    ) { 
+    }
 
   ngOnInit(): void {
   }
-
-  logout(){
-    this._userService.logout();
-  }
-
+  
   home(){
     this._router.navigate(['/']);
   }
 
-  profile(){
-    this._router.navigate(['/profile']);
+  settings(){
+    this.dropdownIsActive = !this.dropdownIsActive;
   }
 
+  removeSetting(){
+    this.dropdownIsActive = false;
+  }
+
+  profile(){
+    this._router.navigate(['/profile']);
+    this.dropdownIsActive = false;
+  }
+  
   groupOverview(){
-    this._router.navigate([`/group/overview`])
+    this._router.navigate([`/group/overview`]);
+    this.dropdownIsActive = false;
+  }
+
+  logout(){
+    this._userService.logout();
+    this.dropdownIsActive = false;
   }
 }

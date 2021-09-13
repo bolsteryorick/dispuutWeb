@@ -1,10 +1,27 @@
-<div class="columns is-mobile is-centered has-text-centered no-extra">
-    <div class="column is-half no-extra">
-        <button class="button is-primary" (click)="home()">home</button>
-        <button class="button is-link" (click)="groupOverview()">Groups</button>
+<div class="columns is-mobile toolbar">
+    <div class="column is-half home" (click)="home()">
+        <fa-icon [icon]="faHome"></fa-icon>
+        <a class="home-activation"><b>ClubWeb</b></a>
     </div>
-    <div class="column is-half no-extra">
-        <button class="button is-info" (click)="profile()">Profile</button>
-        <button class="button is-danger" (click)="logout()">Logout</button>
+    <div class="column ellipsis">
+        <div tabindex="-1" class="dropdown is-right" [ngClass]="{'is-active' : dropdownIsActive}"  (focusout)="removeSetting()">
+            <div class="dropdown-trigger button-activation" (click)="settings()">
+                <fa-icon [icon]="faEllipsisV" aria-haspopup="true" aria-controls="settings-menu"></fa-icon>
+            </div>
+            <div class="dropdown-menu settings" id="settings-menu" role="menu">
+                <div class="dropdown-content">
+                    <a (click)="groupOverview()" class="dropdown-item">
+                        Groups
+                    </a>
+                    <a (click)="profile()" class="dropdown-item">
+                        Profile
+                    </a>
+                    <hr class="dropdown-divider">
+                    <a (click)="logout()" class="dropdown-item">
+                        Logout
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

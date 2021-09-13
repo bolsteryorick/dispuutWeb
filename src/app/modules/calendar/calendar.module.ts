@@ -5,6 +5,7 @@ import { CalendarRoutingModule } from './calendar-routing.module';
 import { CalendarBaseComponent } from './calendar-base/calendar-base.component';
 import { EventListComponent } from './event-list/event-list.component';
 import { CommonAppModule } from '../common/common-app.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { CommonAppModule } from '../common/common-app.module';
   imports: [
     CommonModule,
     CalendarRoutingModule,
-    CommonAppModule
+    CommonAppModule,
+    FontAwesomeModule
   ]
 })
 export class CalendarModule { }
