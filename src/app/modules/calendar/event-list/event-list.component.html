@@ -1,2 +1,38 @@
-<app-reusable-event-list *ngIf="showList" [dateEventInfoDict]="dateEventInfoDict"></app-reusable-event-list>
+<app-reusable-event-list *ngIf="showList" [dateEventInfoDict]="dateEventInfoDict" [viewPortStyling]="viewPortStyling" (addEvent)="openModal()"></app-reusable-event-list>
 <app-spinner *ngIf="!showList"></app-spinner>
+
+<div class="modal pick-group-modal" [ngClass]="{'is-active' : groupPickModalActive}">
+    <div class="modal-background" (click)="closeModal()"></div>
+    <div class="modal-content">
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Create event for</p>
+                <button type="button" class="close" (click)="closeModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </header>
+            <section class="modal-card-body scrollbar" id="scrollbar-style">
+                <ul class="group-list" *ngIf="groups.length > 0">
+                    <li *ngFor="let group of groups" (click)="createEventForGroup(group.id)">
+                        <div class="card">
+                            {{group.name}} <fa-icon [icon]="faUsers"></fa-icon>
+                        </div>
+                    </li>
+                </ul>
+                <div class="no-groups-message" *ngIf="groups.length == 0">
+                    You need to add a group to create events for!
+                </div>
+            </section>
+            <footer class="modal-card-foot">
+                <div class="new-group-button-wrapper">
+                    <div class="button new-group-button" (click)="createGroup()">
+                        <span class="add-group-text">Add Group</span>
+                        <span class="add-group-plus">
+                            <fa-icon [icon]="faPlusSquare"></fa-icon>
+                        </span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+</div>

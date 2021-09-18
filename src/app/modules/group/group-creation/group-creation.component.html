@@ -1,38 +1,27 @@
-<div class="form-div">
-    <h1>Create group</h1>
+<div class="columns">
+  <div class="column">
     <form [formGroup]="groupForm" (ngSubmit)="createGroup()">
-      <div class="container">
-  
-        <label>Name: </label> <br />
-        <input type="text" formControlName="groupNameInput"> <br />
+
+      <div class="input-wrapper">
+        <input class="input" type="text" placeholder="Group name" formControlName="groupNameInput">
         <div *ngIf="!groupForm.controls.groupNameInput.valid && groupForm.controls.groupNameInput.touched">
-          <p class="error"> {{groupNameMessage}}</p>
+          <p class="error-message"> {{groupNameMessage}}</p>
         </div>
-  
-        <label>Description: </label> <br />
-        <textarea formControlName="groupDescriptionInput"></textarea>
-        <div *ngIf="!groupForm.controls.groupDescriptionInput.valid && groupForm.controls.groupDescriptionInput.touched">
-            <p class="error"> {{groupDescriptionMessage}}</p>
-        </div>
-        
-
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-
-        <app-contact-select (selectedContactsChanged)='selectedContactsChanged($event)'></app-contact-select>
-
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-
-        <button type="submit" [disabled]="buttonDisabled()">Create</button>
       </div>
-  
+      
+      <div class="input-wrapper">
+        <textarea class="textarea" placeholder="Optional group description" formControlName="groupDescriptionInput"></textarea>
+        <div *ngIf="!groupForm.controls.groupDescriptionInput.valid && groupForm.controls.groupDescriptionInput.touched">
+            <p class="error-message"> {{groupDescriptionMessage}}</p>
+        </div>
+      </div>
+
+      <div class="input-wrapper">
+        <app-contact-select (selectedContactsChanged)='selectedContactsChanged($event)'></app-contact-select>
+      </div>
+
+      <button class="button create-button" type="submit" [disabled]="buttonDisabled()">Create Group</button>
     </form>
   </div>
+</div>
   

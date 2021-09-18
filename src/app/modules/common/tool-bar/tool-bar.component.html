@@ -1,24 +1,26 @@
 <div class="columns is-mobile toolbar">
-    <div class="column is-half home" (click)="home()">
+    <div class="column is-one-quarter home" (click)="home()">
         <fa-icon [icon]="faHome"></fa-icon>
-        <a class="home-activation"><b>ClubWeb</b></a>
+        <a><b>CW</b></a>
     </div>
-    <div class="column ellipsis">
+    <div class="column page-name is-half" 
+        [ngClass]="{'page-name-short': toolbarTitleSize == 'short', 'page-name-long': toolbarTitleSize == 'long', 'page-name-longer': toolbarTitleSize == 'longer'}">
+        <b>{{toolbarTitle}}</b>
+    </div>
+    <div class="column is-one-quarter ellipsis">
         <div tabindex="-1" class="dropdown is-right" [ngClass]="{'is-active' : dropdownIsActive}"  (focusout)="removeSetting()">
             <div class="dropdown-trigger button-activation" (click)="settings()">
                 <fa-icon [icon]="faEllipsisV" aria-haspopup="true" aria-controls="settings-menu"></fa-icon>
             </div>
             <div class="dropdown-menu settings" id="settings-menu" role="menu">
                 <div class="dropdown-content">
+                    <div #extraMenuOptionsTarget></div>
+
                     <a (click)="groupOverview()" class="dropdown-item">
                         Groups
                     </a>
                     <a (click)="profile()" class="dropdown-item">
-                        Profile
-                    </a>
-                    <hr class="dropdown-divider">
-                    <a (click)="logout()" class="dropdown-item">
-                        Logout
+                        Account
                     </a>
                 </div>
             </div>

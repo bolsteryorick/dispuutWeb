@@ -13,41 +13,7 @@ import { GroupService } from 'src/app/services/group/group.service';
 })
 export class CalendarBaseComponent implements OnInit {
 
-  faPlus = faPlus;
-  groupPickModalActive: boolean = false;
-  faUsers = faUsers;
-  faPlusSquare = faPlusSquare;
-  groups: Group[] = [];
-  
-  constructor(
-    private _router : Router,
-    private _groupService: GroupService
-    ) { }
+  constructor() { }
 
-  ngOnInit(): void {
-    let request = this._groupService.getGroupsForUser();
-    request.subscribe((result: ApolloQueryResult<GetUser>) =>{
-      this.groups = result.data.getUser.memberships.map(x => x.group);
-      this.groups.sort((a,b) => a.name.localeCompare(b.name));
-    },
-    (error)=>{
-      console.log(error);
-    })
-  }
-
-  closeModal(){
-    this.groupPickModalActive = false;
-  }
-  
-  openModal(){
-    this.groupPickModalActive = true;
-  }
-  
-  createEventForGroup(groupId: string){
-    this._router.navigate([`event/create/${groupId}`])
-  }
-
-  createGroup(){
-    this._router.navigate(["/group/create"])
-  }
+  ngOnInit(): void {}
 }

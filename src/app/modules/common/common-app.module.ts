@@ -20,8 +20,6 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 import { EventListWeekComponent } from './reusable-event-list/event-list-week/event-list-week.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-
-
 @NgModule({ 
   declarations: [
     HomeNavBarComponent, 

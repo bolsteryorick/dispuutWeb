@@ -2,12 +2,15 @@ $lightGray: #c8c8c8;
 
 .cell {
   width: 100%;
-  padding: 2px;  
+  word-wrap: break-word;
+  padding: 2px;
+  padding-right: 5px;
   &:hover.edit {
     cursor: pointer;
     border: 2px dashed $lightGray;
   };
   white-space: pre-wrap;
+  position: relative;
 }
 
 .cellInput {
@@ -29,4 +32,14 @@ textarea{
 
 .error-message{
   color: red;
+}
+
+.edit-icon{
+  float: right;
+  margin-top: auto;
+  color: lightgrey;
+  font-size: x-small;
+  position: absolute;
+  bottom: 0.2em;
+  right: 1em;
 }

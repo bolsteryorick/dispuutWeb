@@ -2,3 +2,70 @@
     height: 600px;
     overflow-y: auto;
 }
+
+.modal-content{
+    border: 0px;
+}
+
+.modal-card{
+    margin: 0px;
+}
+
+.modal-card-body{
+    padding: 1em 0 1em 0;
+}
+
+.modal-card-foot{
+    padding: 0.5em;
+    
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.modal-card-head{
+    padding: 1em;
+}
+
+.group-list{
+    padding: 1em;
+    text-align: center;
+    font-size: 1.25em;
+}
+
+.new-group-button{
+    float: right;
+    padding-right: 0.5em;
+}
+
+.add-group-text{
+    float:left;
+    margin-right: 1em;
+    font-size: large;
+}
+
+.add-group-plus{
+    float: right;
+    font-size: large;
+}
+
+.new-group-button-wrapper{
+    float: right;
+}
+
+#scrollbar-style::-webkit-scrollbar
+{
+  width: 12px;
+  background-color: #F5F5F5;
+}
+
+#scrollbar-style::-webkit-scrollbar-thumb
+{
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color:gray;
+}
+
+.no-groups-message{
+    text-align: center;
+    font-size: medium;
+}

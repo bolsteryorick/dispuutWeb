@@ -2,12 +2,32 @@
     padding:0px;
     margin: 0px;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    position: relative;
+    z-index: 10;
+    height: 2.5em;
 }
 
 .home{
     font-size: large;
     text-align: left;
     padding: 5px 5px 5px 15px;
+}
+
+.page-name{
+    text-align: center;
+    padding: 5px 5px 5px 5px;   
+}
+
+.page-name-short{
+    font-size: large;
+}
+
+.page-name-long{
+    font-size: medium;
+}
+
+.page-name-longer{
+    font-size: small;
 }
 
 a, u {
@@ -22,10 +42,6 @@ a:active, u:active {
 
 .toolbar-items{
     width: 100%;
-}
-
-.home-activation{
-
 }
 
 .ellipsis{

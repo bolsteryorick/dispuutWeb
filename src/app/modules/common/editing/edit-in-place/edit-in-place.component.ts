@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, ValidatorFn, Validators } from '@angular/forms';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-edit-in-place',
@@ -15,10 +16,13 @@ export class EditInPlaceComponent implements OnInit {
   @Input() styling = {'font-size': '16px'};
   @Input() textArea = false;
   @Input() editPossible = false;
+  @Input() maxLines = 10;
   @Output() focusOut: EventEmitter<string> = new EventEmitter<string>();
   viewData: string = "";
   viewMode = true;
   editInPlaceControl!: FormControl;
+  faPen = faPen;
+
 
   constructor() {
   }

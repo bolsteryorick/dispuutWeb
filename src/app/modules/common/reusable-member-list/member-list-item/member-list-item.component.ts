@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { Member } from 'src/app/models/app-models/member';
 import { UserService } from 'src/app/services/authentication/user.service';
 
@@ -14,6 +15,8 @@ export class MemberListItemComponent implements OnInit {
   @Input() editPossible: boolean = false;
   @Output() delete: EventEmitter<string> = new EventEmitter<string>();
   private _userId!: string;
+  faUser = faUser;
+  
 
   constructor(
     userService: UserService,

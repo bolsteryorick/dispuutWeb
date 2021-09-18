@@ -1,16 +1,36 @@
-<p>Group</p>
-
 <app-spinner *ngIf="!showData"></app-spinner>
+
+<div *ngIf="showData" class="columns">
+    <div class="column">
+
+        <app-edit-in-place 
+            [data]='group.name' [styling]='groupNameStyling' [validators]='groupNameValidators' 
+            [errorMessage]="groupNameMessage" (focusOut)='saveGroupName($event)' [editPossible]='isAdminOfGroup'>
+        </app-edit-in-place>
+        
+        <div class="description-wrapper">
+            <app-edit-in-place
+                [data]='group.description' [styling]='groupDescriptionStyling' [textArea]='true' [validators]='groupDescriptionValidators' 
+                [errorMessage]="groupDescriptionMessage" (focusOut)='saveGroupDescription($event)' [editPossible]='isAdminOfGroup'>
+            </app-edit-in-place>
+        </div>
+        
+        <div class="columns is-centered">
+            <div class="column">
+                <app-reusable-event-list [dateEventInfoDict]="dateEventInfoDict" [viewPortStyling]="viewPortStyling" (addEvent)="createEvent()"></app-reusable-event-list>
+            </div>
+        </div>
+        
+    </div>
+</div>
+    
+<!-- <app-member-list [members]="group.members"  [userIsAdmin]="isAdminOfGroup" [inGroupView]="true"></app-member-list> -->
+
+<!-- 
 <div *ngIf="showData" class="container">
     <div class="row">
         <div class="col-sm-4" style="word-wrap: break-word;">
             <app-spinner-wrapper [showSpinner]="loadingGroupValue" >
-                <app-edit-in-place 
-                    [data]='group.name' [styling]='groupNameStyling' [validators]='groupNameValidators' 
-                    [errorMessage]="groupNameMessage" (focusOut)='saveGroupName($event)' [editPossible]='isAdminOfGroup'></app-edit-in-place>
-                <app-edit-in-place 
-                    [data]='group.description' [textArea]='true' [validators]='groupDescriptionValidators' 
-                    [errorMessage]="groupDescriptionMessage" (focusOut)='saveGroupDescription($event)' [editPossible]='isAdminOfGroup'></app-edit-in-place>
                 <app-confirm-dialog 
                     [modalId]="'leave-group-modal'"
                     [title]="'Leave Group'" [modalButtonText]="'Leave Group'" [text]="'Are you sure you want to leave this group?'"
@@ -20,13 +40,11 @@
         </div>
         <div class="col-sm-4">
             <h1>AppEvents</h1>
-            <app-reusable-event-list [dateEventInfoDict]="dateEventInfoDict"></app-reusable-event-list>
             <button *ngIf="isAdminOfGroup" class="mat-raised-button" (click)="createEvent()">Create event</button>
         </div>
         <div class="col-sm-4">
             <h1>Members</h1>
-            <app-member-list [members]="group.members"  [userIsAdmin]="isAdminOfGroup" [inGroupView]="true"></app-member-list>
             <button *ngIf="isAdminOfGroup" class="mat-raised-button" (click)="addMembers()">Add members</button>
         </div>
     </div>
-</div>
+</div> -->

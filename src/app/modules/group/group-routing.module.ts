@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { GroupAddMembersComponent } from './group-add-members/group-add-members.component';
 import { GroupBaseComponent } from './group-base/group-base.component';
 import { GroupCreationComponent } from './group-creation/group-creation.component';
+import { GroupInformationComponent } from './group-information/group-information.component';
+import { GroupViewMenuAddonComponent } from './group-view/group-view-menu-addon/group-view-menu-addon.component';
 import { GroupViewComponent } from './group-view/group-view.component';
 import { GroupsOverviewComponent } from './groups-overview/groups-overview.component';
 
@@ -17,7 +19,8 @@ const routes: Routes = [
        {path: 'overview', component: GroupsOverviewComponent},
        {path: 'create', component: GroupCreationComponent},
        {path: 'addMembers/:id', component: GroupAddMembersComponent},
-       {path: 'view/:id', component: GroupViewComponent}
+       {path: 'view/:id', component: GroupViewComponent, data: { toolbar: GroupViewMenuAddonComponent}},
+       {path: 'groupInformation/:id', component: GroupInformationComponent}
      ]
   }
 ];

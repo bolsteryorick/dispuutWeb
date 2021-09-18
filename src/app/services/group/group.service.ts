@@ -26,6 +26,15 @@ export class GroupService {
     });
   }
 
+  public getGroupName(groupId: string): Observable<ApolloQueryResult<GetGroup>>{
+    return this._graphqlWrapper.query<GetGroup>({
+      query: GroupQueries.GetGroupNameQuery,
+      variables: {
+        groupId: groupId,
+      }
+    });
+  }
+
   public createGroup(
     name: string, 
     description: string, 

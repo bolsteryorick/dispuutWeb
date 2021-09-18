@@ -66,6 +66,7 @@ export class GroupQueries{
     public static GetGroupMembersQuery = gql`
         query GetGroupMembersByGroupId($groupId: ID!) {
             getGroup(id: $groupId){
+                name
                 members{
                     user{
                         userName
@@ -95,11 +96,19 @@ export class GroupQueries{
         query{
             getUser{
             memberships{
-            group{
-                name,
-                id
-            }
+                isAdmin
+                group{
+                    name,
+                    id
+                }
             }
         }
+        }`;
+
+    public static GetGroupNameQuery = gql`
+        query GetGroupById($groupId: ID!) {
+            getGroup(id: $groupId){
+                name
+            }
         }`;
 }

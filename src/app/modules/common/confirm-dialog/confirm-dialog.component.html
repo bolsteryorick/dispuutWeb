@@ -1,23 +1,27 @@
-<div class="modal" [attr.id]="modalId">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">{{title}}</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>{{text}}</p>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn-secondary" data-dismiss="modal">{{cancelButtonText}}</button>
-            <button type="button" class="btn-primary" data-dismiss="modal" (click)="confirmButtonClick()">{{confirmButtonText}}</button>
-        </div>
-      </div>
-    </div>
-  </div>
+<button class="button" (click)="openModal()">
+  {{modalButtonText}}
+</button>
 
-  <button type="button" class="mat-raised-button" data-toggle="modal" [attr.data-target]="modalSelector">
-    {{modalButtonText}}
-  </button>
+<div class="modal pick-group-modal" [ngClass]="{'is-active' : confirmModalActive}">
+  <div class="modal-background" (click)="closeModal()"></div>
+  <div class="modal-content">
+      <div class="modal-card">
+          <header class="modal-card-head">
+              <p class="modal-card-title">{{title}}</p>
+              <button type="button" class="close" (click)="closeModal()">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </header>
+          <section class="modal-card-body scrollbar" id="scrollbar-style">
+            <p>{{text}}</p>
+          </section>
+          <footer class="modal-card-foot">
+              <div class="new-group-button-wrapper">
+                  <div class="button new-group-button" (click)="confirmButtonClick()">
+                      <span class="add-group-text">{{confirmButtonText}}</span>
+                  </div>
+              </div>
+          </footer>
+      </div>
+  </div>
+</div>

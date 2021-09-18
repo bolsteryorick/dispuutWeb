@@ -4,11 +4,8 @@ import { FormBuilder, FormControl, ValidatorFn } from '@angular/forms';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { GroupConstants } from 'src/app/constants/group-constants';
-import { GetUser } from '../../../models/user-models/get-user';
 import { ContactItem } from '../group-creation/models/contactItem';
 import { ContactsService } from '../../../services/contact/contacts.service';
-import { GetGroup } from 'src/app/models/group-models/get-group';
-import { GroupService } from 'src/app/services/group/group.service';
 import { GetAllContacts } from 'src/app/models/contact-models/get-all-contacts';
 
 @Component({
@@ -60,5 +57,4 @@ export class ContactSelectComponent implements OnInit {
   showErrorMessage() : boolean{
     return !this.contactSelectControl.valid && this.contactSelectControl.touched
   }
-
 }

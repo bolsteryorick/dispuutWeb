@@ -2,9 +2,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FetchResult } from '@apollo/client/core';
+import { ApolloQueryResult, FetchResult } from '@apollo/client/core';
 import { AppEventConstants } from 'src/app/constants/app-event-constants';
+import { GetGroup } from 'src/app/models/group-models/get-group';
 import { AppEventService } from 'src/app/services/appEvent/app-event.service';
+import { ToolbarAdditionService } from 'src/app/services/DataShareServices/toolbar-addition.service';
+import { GroupService } from 'src/app/services/group/group.service';
 import { CreateAppEvent} from '../../../models/event-models/create-app-event';
 
 @Component({
@@ -20,7 +23,9 @@ export class AppEventCreationComponent implements OnInit {
     private route: ActivatedRoute,
     private _formBuilder: FormBuilder,
     private _appEventService: AppEventService,
-    private _router: Router
+    private _router: Router,
+    private _titleService: ToolbarAdditionService,
+    private _groupService: GroupService
     ) {
     this.route.params.subscribe( params => this.groupId = params.groupId );
   }
@@ -38,7 +43,13 @@ export class AppEventCreationComponent implements OnInit {
 
 
   ngOnInit() {
-    // get user contacts
+    let groupRequest = this._groupService.getGroupName(this.groupId);
+    groupRequest.subscribe((result: ApolloQueryResult<GetGroup>) => {
+      this._titleService.changeTitleMessage(result.data.getGroup.name);
+    },
+    (error: HttpErrorResponse) => {
+      console.log(error);
+    });
 
     this.eventForm = this._formBuilder.group({
       eventNameInput: new FormControl({ value: '', disabled: false }),
@@ -50,7 +61,7 @@ export class AppEventCreationComponent implements OnInit {
       maxAttendees: new FormControl({ value: '', disabled: false })
     });
 
-    // todo auto set end date same as start date, auto set end time 1 hour after start date
+    // todo auto set end date same as start date, auto set end time 1 hour after start time
 
     this.eventForm?.controls?.eventNameInput?.setValidators(this.eventNameValidators);
     this.eventForm?.controls?.eventDescriptionInput?.setValidators(this.eventDescriptionValidators);

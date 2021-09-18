@@ -10,6 +10,8 @@ import { Group } from '../../../models/app-models/group';
 import { GetGroup } from '../../../models/group-models/get-group';
 import { UserService } from 'src/app/services/authentication/user.service';
 import { GroupService } from 'src/app/services/group/group.service';
+import { faCalendarDay, faUserFriends } from '@fortawesome/free-solid-svg-icons';
+import { ToolbarAdditionService } from 'src/app/services/DataShareServices/toolbar-addition.service';
 
 @Component({
   selector: 'app-group-view',
@@ -30,15 +32,23 @@ export class GroupViewComponent implements OnInit {
   public readonly groupNameMessage: string = GroupConstants.groupNameMessage;
   public readonly groupDescriptionMessage: string = GroupConstants.groupDescriptionMessage;
   public readonly groupNameStyling = GroupConstants.groupNameStyling;
+  public readonly groupDescriptionStyling = GroupConstants.groupDescriptionStyling;
+  public viewPortStyling = GroupConstants.groupEventsViewPortStyling;
+
   groupName = "group name";
   loadingGroupValue: boolean = false;
+  eventsTabActive: boolean = true;
+  membersTabActive: boolean = false;
+  faUserFriends = faUserFriends;
+  faCalendarDay = faCalendarDay;
 
   constructor(
     private route: ActivatedRoute, 
     private _groupService: GroupService,
     private _eventInfoService: EventInfoService,
     private _router: Router,
-    private _userService: UserService
+    private _userService: UserService,
+    private _toolbarAdditionService: ToolbarAdditionService
     ) {
       this.userId = this._userService.userId();
       this.route.params.subscribe( params => this.groupId = params.id );
@@ -48,6 +58,10 @@ export class GroupViewComponent implements OnInit {
     const request = this._groupService.getGroupData(this.groupId);
     request.subscribe((result: ApolloQueryResult<GetGroup>) => {
       this.group = result.data.getGroup;
+
+      this._toolbarAdditionService.changeTitleMessage(this.group.name);
+      this._toolbarAdditionService.changeGroupInfoIdMessage(this.group.id);
+
       this.setDateEventInfoDict(this.group)
       this.showData = true;
       this.isAdminOfGroup = this.userisAdminOfGroup();
@@ -63,7 +77,7 @@ export class GroupViewComponent implements OnInit {
 
   private setDateEventInfoDict(group: Group): void{
     let groups : Group[] = [group];
-    this.dateEventInfoDict = this._eventInfoService.getDateEvents(groups);
+    this.dateEventInfoDict = this._eventInfoService.getDateEvents(groups, []);
   }
 
   createEvent(){
@@ -88,6 +102,7 @@ export class GroupViewComponent implements OnInit {
   saveGroupName(value: string){
     this.loadingGroupValue = true;
     this.group.name = value;
+    this._toolbarAdditionService.changeTitleMessage(this.group.name);
     this._groupService.updateGroup(this.groupId, this.group.name, null).subscribe(() => {
       this.loadingGroupValue = false;
     });
@@ -101,4 +116,13 @@ export class GroupViewComponent implements OnInit {
     });
   }
 
+  membersTabClick(){
+    this.membersTabActive = true;
+    this.eventsTabActive = false;
+  }
+
+  eventsTabClick(){
+    this.membersTabActive = false;
+    this.eventsTabActive = true;
+  }
 }

@@ -1,5 +1,14 @@
-<div class="viewport has-text-centered scroll-style-1">
-    <div *uiScroll="let weekInfo of weekInfosData">
-        <app-event-list-week [weekInfo]="weekInfo"></app-event-list-week>
+
+<div class="event-list-wrapper">
+    <div [ngStyle]='viewPortStyling' class="viewport has-text-centered scroll-style-1">
+        <div *uiScroll="let weekInfo of weekInfosData">
+            <app-event-list-week [weekInfo]="weekInfo"></app-event-list-week>
+        </div>
+    </div>
+    
+    <div class="fab-wrapper" (click)="addEventClicked()">
+        <label class="fab" for="fabCheckbox">
+            <fa-icon [icon]="faPlus"></fa-icon>
+        </label>
     </div>
 </div>

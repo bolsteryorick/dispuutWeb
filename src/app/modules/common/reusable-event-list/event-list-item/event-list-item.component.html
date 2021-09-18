@@ -1,4 +1,4 @@
-<div (click)="eventClicked()" class="columns is-mobile event-list-item">
+<div (click)="eventClicked()" class="columns is-mobile event-list-item" [ngClass]="{'event-attending': eventInfo.userIsAttending, 'event-not-attending': !eventInfo.userIsAttending}">
     <div class="column is-four-fifth">
         <p><b>{{eventInfo.eventName}}</b></p>
         <p>{{startTime}} - {{endTime}}</p>

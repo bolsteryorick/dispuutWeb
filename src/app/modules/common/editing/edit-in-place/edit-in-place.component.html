@@ -3,8 +3,10 @@
   [ngStyle]="styling" 
   [ngClass]="{'edit' : editPossible}"
   (click)='onFocusIn()' 
-  class='cell'>
-    {{ viewData }}
+  class='cell'
+  contentEditable=true>
+    <span>{{ viewData }}</span>
+    <span class="edit-icon"><fa-icon [icon]="faPen"></fa-icon></span>
 </div>
 
 <input 
@@ -24,7 +26,8 @@
   [formControl]='editInPlaceControl' 
   [class.input-error]="!inputIsValid()" 
   (focusout)="onFocusOut()" 
-  appAutoFocus
+  appAutoFocus 
+  (keydown.enter)="$event.preventDefault()"
 >
 
 </textarea>

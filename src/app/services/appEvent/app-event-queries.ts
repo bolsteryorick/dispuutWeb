@@ -11,6 +11,7 @@ export class AppEventQueries{
                 startTime,
                 maxAttendees,
                 group{
+                    name
                     members{
                         isAdmin,
                         userId,

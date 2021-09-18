@@ -1,9 +1,16 @@
 .event-list-item{
     margin-top: 15px;
     margin-bottom: 15px;
-    background-color: lightblue;
     border-radius: 10px;
     text-align: left;
+}
+
+.event-not-attending{
+    background-color: lightblue;
+}
+
+.event-attending{
+    background-color: lightgreen;
 }
 
 .event-column{

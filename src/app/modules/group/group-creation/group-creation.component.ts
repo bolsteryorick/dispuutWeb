@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@a
 import { Router } from '@angular/router';
 import { FetchResult } from '@apollo/client/core';
 import { GroupConstants } from 'src/app/constants/group-constants';
+import { ToolbarAdditionService } from 'src/app/services/DataShareServices/toolbar-addition.service';
 import { GroupService } from 'src/app/services/group/group.service';
 import { CreateGroup } from '../../../models/group-models/create-group';
 import { ContactItem } from './models/contactItem';
@@ -26,12 +27,14 @@ export class GroupCreationComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private _groupService: GroupService,
-    private _router: Router
+    private _router: Router,
+    private _titleService: ToolbarAdditionService
   ) 
   {
   }
 
   ngOnInit() {
+    this._titleService.changeTitleMessage("New Group");
     this.groupForm = this._formBuilder.group({
       groupNameInput: new FormControl({ value: '', disabled: false }),
       groupDescriptionInput: new FormControl({ value: '', disabled: false }),

@@ -1,0 +1,11 @@
+<div *ngIf="showData" class="columns">
+    <div class="column">
+        <app-member-list [members]="group.members"  [userIsAdmin]="isAdminOfGroup" [inGroupView]="true"></app-member-list>
+        
+        <app-confirm-dialog 
+            [modalId]="'leave-group-modal'"
+            [title]="'Leave Group'" [modalButtonText]="'Leave Group'" [text]="'Are you sure you want to leave this group?'"
+            [confirmButtonText]="'Leave'" [cancelButtonText]="'Cancel'" (confirm)="leaveGroup()">
+        </app-confirm-dialog>
+    </div>
+</div>

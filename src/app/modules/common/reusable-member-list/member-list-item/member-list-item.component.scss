@@ -1,0 +1,19 @@
+.portrait-columns{
+    padding: 5px;
+}
+
+.portrait-column{
+}
+
+.portrait{
+    height: 1.5em;
+    width: 1.5em;
+    background-color: darkgrey;
+    font-size: x-large;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    text-align: center;
+}

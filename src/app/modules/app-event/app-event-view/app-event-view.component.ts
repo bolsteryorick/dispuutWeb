@@ -8,6 +8,7 @@ import { AppEvent } from 'src/app/models/app-models/app-event';
 import { GetAppEvent } from 'src/app/models/event-models/get-app-event';
 import { AppEventService } from 'src/app/services/appEvent/app-event.service';
 import { UserService } from 'src/app/services/authentication/user.service';
+import { ToolbarAdditionService } from 'src/app/services/DataShareServices/toolbar-addition.service';
 
 @Component({
   selector: 'app-app-event-view',
@@ -40,7 +41,8 @@ export class AppEventViewComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute, 
     private _appEventService: AppEventService,
-    private _userService: UserService
+    private _userService: UserService,
+    private _titleService: ToolbarAdditionService
     ) {
     this._userId = this._userService.userId();
     this._route.params.subscribe( params => this.appEventId = params.id );
@@ -61,6 +63,7 @@ export class AppEventViewComponent implements OnInit {
     const request = this._appEventService.getAppEventData(this.appEventId);
     request.subscribe((result: ApolloQueryResult<GetAppEvent>) => {
       this.appEvent = result.data.getAppEvent;
+      this._titleService.changeTitleMessage(this.appEvent.group.name);
       this.showData = true;
       this.isAdminOfGroup = this.userisAdminOfGroup();
       this.isAttendingEvent = this.userisAttendingEvent();

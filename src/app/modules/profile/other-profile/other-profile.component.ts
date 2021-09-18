@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { UserService } from 'src/app/services/authentication/user.service';
 import { ContactsService } from 'src/app/services/contact/contacts.service';
+import { ToolbarAdditionService } from 'src/app/services/DataShareServices/toolbar-addition.service';
 import { GetOtherUser } from '../../../models/user-models/get-other-user';
 import { ProfileService } from '../../../services/profile/profile.service';
 
@@ -24,7 +25,8 @@ export class OtherProfileComponent implements OnInit {
     private _userService: UserService,
     private _route: ActivatedRoute,
     private _profileService: ProfileService,
-    private _contactService: ContactsService
+    private _contactService: ContactsService,
+    private _titleService: ToolbarAdditionService
     ) {
       this._route.params.subscribe( params => this.otherUserId = params.id )
       if(_userService.userId() == this.otherUserId){
@@ -38,6 +40,7 @@ export class OtherProfileComponent implements OnInit {
       this.email = result.data.getOtherUser.email;
       this.userName = result.data.getOtherUser.userName;
       this.isContact = result.data.getOtherUser.isContact!;
+      this._titleService.changeTitleMessage(this.userName);
       this.loading = false;
     },
     (error: HttpErrorResponse) => {

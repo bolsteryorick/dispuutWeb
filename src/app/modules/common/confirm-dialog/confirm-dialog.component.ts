@@ -15,16 +15,26 @@ export class ConfirmDialogComponent implements OnInit{
   @Output() confirm: EventEmitter<boolean> = new EventEmitter<boolean>();
   modalSelector!: string;
 
+  confirmModalActive: boolean = false;
+
   ngOnInit(): void {
-    this.modalSelector = this.getModalIdSelector();
+    // this.modalSelector = this.getModalIdSelector();
   }
 
   confirmButtonClick(){
     this.confirm.emit(true);
   }
 
-  getModalIdSelector(): string{
-    return `#${this.modalId}`;
+  closeModal(){
+    this.confirmModalActive = false;
   }
+  
+  openModal(){
+    this.confirmModalActive = true;
+  }
+
+  // getModalIdSelector(): string{
+  //   return `#${this.modalId}`;
+  // }
 
 }

@@ -9,6 +9,8 @@ export class GroupConstants{
     public static groupDescriptionMessage: string = 'Maximale lengte is 150 tekens.';
     public static contactsMessage: string = 'Voeg minstens één contact toe.';
 
-    public static groupNameStyling = {'font-size': '32px', 'font-weight': '500'};
+    public static groupNameStyling = {'font-size': 'x-large', 'font-weight': '500', 'text-align': 'left'};
+    public static groupDescriptionStyling = {'font-size': 'small', 'text-align': 'left'};
+    public static groupEventsViewPortStyling = {'height': '80vh', 'overflow-y': 'auto', 'overflow-x': 'hidden', 'max-height': '1500px'};
 }
 

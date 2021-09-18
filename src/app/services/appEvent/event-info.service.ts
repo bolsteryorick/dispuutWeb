@@ -6,6 +6,7 @@ import { AppEvent } from '../../models/app-models/app-event';
 import { Group } from '../../models/app-models/group';
 import moment from 'moment';
 import { WeekInfo } from 'src/app/modules/calendar/event-list/models/week-info';
+import { Attendee } from 'src/app/models/app-models/attendee';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,6 @@ export class EventInfoService {
   constructor() { }
 
   public getDataSource(dateEventInfoDict : { [date: string] : EventInfo[]; }) : IDatasource{
-    console.log(dateEventInfoDict);
     return new Datasource({
       get:(index, count, success) => {
         const data = [];
@@ -42,8 +42,8 @@ export class EventInfoService {
     })
   }
 
-  public getDateEvents(groups: Group[]): { [date: string] : EventInfo[]; }{
-    let sortedEventInfos = this.makeSortedEventInfos(groups);
+  public getDateEvents(groups: Group[], attendences: Attendee[]): { [date: string] : EventInfo[]; }{
+    let sortedEventInfos = this.makeSortedEventInfos(groups, attendences);
     return this.makeDateEventInfosDict(sortedEventInfos);
   }
 
@@ -72,8 +72,8 @@ export class EventInfoService {
     return moment().day(day).week(week).year(year).toDate();
   }
 
-  private makeSortedEventInfos(groups: Group[]) : EventInfo[]{
-    var unsortedEventInfos = this.makeEventInfos(groups);
+  private makeSortedEventInfos(groups: Group[], attendences: Attendee[]) : EventInfo[]{
+    var unsortedEventInfos = this.makeEventInfos(groups, attendences);
     return this.sortEventInfos(unsortedEventInfos);
   }
 
@@ -88,12 +88,12 @@ export class EventInfoService {
     return dateEventInfosDict;
   }
 
-  private makeEventInfos(groups: Group[]) : EventInfo[]{
+  private makeEventInfos(groups: Group[], attendences: Attendee[]) : EventInfo[]{
     let unsortedEventInfos : EventInfo[] = [];
     groups.forEach(group => {
       if(group.appEvents != null){
         let eventInfos = group.appEvents.map(a => 
-          this.makeEventInfo(group, a)
+          this.makeEventInfo(group, a, attendences)
         )
         unsortedEventInfos = unsortedEventInfos.concat(eventInfos);
       }
@@ -107,7 +107,7 @@ export class EventInfoService {
     });
   }
 
-  private makeEventInfo(group: Group, event: AppEvent) : EventInfo{
+  private makeEventInfo(group: Group, event: AppEvent, attendences: Attendee[]) : EventInfo{
     return <EventInfo>{
       eventId: event.id,
       eventName: event.name, 
@@ -116,6 +116,7 @@ export class EventInfoService {
       endDateTime: new Date(event.endTime),
       startDate: new Date(event.startTime).toLocaleDateString(),
       groupId: group.id,
+      userIsAttending: attendences.some(a => a.appEventId == event.id)
     };
   }
 }

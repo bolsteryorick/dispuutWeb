@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { FetchResult } from '@apollo/client/core';
+import { ToolbarAdditionService } from 'src/app/services/DataShareServices/toolbar-addition.service';
 import { GroupService } from 'src/app/services/group/group.service';
 import { GetGroup } from '../../../models/group-models/get-group';
 import { CreateMembers } from '../../../models/member-models/create-members';
@@ -21,7 +22,8 @@ export class GroupAddMembersComponent implements OnInit {
   constructor(
     private route: ActivatedRoute, 
     private _groupService: GroupService,
-    private _router: Router
+    private _router: Router,
+    private _titleService: ToolbarAdditionService
     ) {
     this.route.params.subscribe( params => this.groupId = params.id );
   }
@@ -30,6 +32,7 @@ export class GroupAddMembersComponent implements OnInit {
     const request = this._groupService.getGroupMemberEmails(this.groupId);
     request.subscribe((result: ApolloQueryResult<GetGroup>) => {
       this.usedEmails = result.data.getGroup.members.map(x => x.user.email);
+      this._titleService.changeTitleMessage(result.data.getGroup.name);
     },
     (error: HttpErrorResponse) => {
       console.log(error);

@@ -8,20 +8,23 @@ import { GraphqlWrapper } from '../graphql-wrapper.service';
 const USER_APP_EVENTS = gql`
   query{
     getUser{
-    memberships{
-      group{
-        name,
-        id,
-        appEvents{
-          id,
+      attendences{
+        appEventId
+      }
+      memberships{
+        group{
           name,
-          startTime,
-          endTime
+          id,
+          appEvents{
+            id,
+            name,
+            startTime,
+            endTime
+          }
         }
       }
     }
-  }
-}`;
+  }`;
 
 
 

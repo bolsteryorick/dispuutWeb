@@ -1,7 +1,17 @@
 <li>
+    <div (click)="goToOtherProfile()" class="columns portrait-columns is-mobile">
+        <div class="column is-one-fifth portrait-column">
+            <div class="portrait"><fa-icon [icon]="faUser"></fa-icon></div>
+        </div>
+        <div class="column is-three-fifth">
+            {{member.user.userName}}
+        </div>
+        <div class="column is is-one-fifth">
+            <span *ngIf="member.isAdmin">Admin</span>
+        </div>
+    </div>
+
     <ul>
-        <li (click)="goToOtherProfile()">{{member.user.userName}}</li>
-        <li *ngIf="member.isAdmin">Admin</li>      
         <li *ngIf="showDeleteMember()">
             <app-confirm-dialog
                     [modalId]="'delete-member-modal'"
